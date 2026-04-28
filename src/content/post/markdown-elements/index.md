@@ -140,30 +140,30 @@ function demo() {
 
 ## 表格（Tables）
 
-| 选项   | 说明                                                                      |
-| ------ | ------------------------------------------------------------------------- |
-| data   | 数据文件路径：提供将被传入模板的数据。                                     |
-| engine | 模板处理引擎。默认使用 Handlebars。                                       |
-| ext    | 目标文件的扩展名。                                                        |
+| 选项   | 说明                                   |
+| ------ | -------------------------------------- |
+| data   | 数据文件路径：提供将被传入模板的数据。 |
+| engine | 模板处理引擎。默认使用 Handlebars。    |
+| ext    | 目标文件的扩展名。                     |
 
 ### 表格对齐（Table Alignment）
 
-| 商品         | 价格  | 库存数量 |
-| ------------ | :---: | ---------: |
-| Juicy Apples | 1.99  |        739 |
-| Bananas      | 1.89  |          6 |
+| 商品         | 价格 | 库存数量 |
+| ------------ | :--: | -------: |
+| Juicy Apples | 1.99 |      739 |
+| Bananas      | 1.89 |        6 |
 
 ### 键盘按键（Keyboard elements）
 
-| 操作                  | 快捷键                                     |
-| --------------------- | ------------------------------------------ |
-| 垂直分屏              | <kbd>Alt+Shift++</kbd>                     |
-| 水平分屏              | <kbd>Alt+Shift+-</kbd>                     |
-| 自动分屏              | <kbd>Alt+Shift+d</kbd>                     |
-| 在分屏间切换          | <kbd>Alt</kbd> + 方向键                    |
-| 调整分屏尺寸          | <kbd>Alt+Shift</kbd> + 方向键              |
-| 关闭分屏              | <kbd>Ctrl+Shift+W</kbd>                    |
-| 最大化当前面板        | <kbd>Ctrl+Shift+P</kbd> + Toggle pane zoom |
+| 操作           | 快捷键                                     |
+| -------------- | ------------------------------------------ |
+| 垂直分屏       | <kbd>Alt+Shift++</kbd>                     |
+| 水平分屏       | <kbd>Alt+Shift+-</kbd>                     |
+| 自动分屏       | <kbd>Alt+Shift+d</kbd>                     |
+| 在分屏间切换   | <kbd>Alt</kbd> + 方向键                    |
+| 调整分屏尺寸   | <kbd>Alt+Shift</kbd> + 方向键              |
+| 关闭分屏       | <kbd>Ctrl+Shift+W</kbd>                    |
+| 最大化当前面板 | <kbd>Ctrl+Shift+P</kbd> + Toggle pane zoom |
 
 ## 图片（Images）
 

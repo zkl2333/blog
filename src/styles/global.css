@@ -57,8 +57,7 @@
 		"LXGW WenKai Screen", "Lucida Grande", "Helvetica Neue", Arial, "Hiragino Sans GB",
 		"Noto Sans CJK SC", "Heiti SC", "Microsoft YaHei", "WenQuanYi Microhei", sans-serif;
 	--font-family-mono:
-		"Roboto Mono", "SFMono-Regular", "SF Mono", Consolas, "Liberation Mono", Menlo,
-		monospace;
+		"Roboto Mono", "SFMono-Regular", "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
 }
 
 @layer base {

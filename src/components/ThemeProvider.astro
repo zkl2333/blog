@@ -9,9 +9,7 @@
 
 	function setTheme(newTheme) {
 		if (newTheme !== "light" && newTheme !== "dark") {
-			return console.warn(
-				`收到无效主题值 '${newTheme}'，应为 'light' 或 'dark'。`,
-			);
+			return console.warn(`收到无效主题值 '${newTheme}'，应为 'light' 或 'dark'。`);
 		}
 
 		const root = document.documentElement;
