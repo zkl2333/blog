@@ -1,4 +1,4 @@
-name: ci
+name: 持续集成
 
 on:
   push:
@@ -11,32 +11,32 @@ permissions:
 
 jobs:
   lint:
-    name: Check for build and type issues
+    name: 检查构建与类型问题
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: 检出代码
         uses: actions/checkout@v6
 
-      - name: Install pnpm
+      - name: 安装 pnpm
         uses: pnpm/action-setup@v6
         with:
           version: 10
           run_install: false
 
-      - name: Setup node
+      - name: 配置 Node.js
         uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: "pnpm"
 
-      - name: Install dependencies
+      - name: 安装依赖
         run: pnpm install
 
-        # use astro check for issues
-      - name: Run Astro check
+        # 使用 astro check 检查类型和配置问题
+      - name: 运行 Astro 检查
         run: pnpm astro check
 
-        # ensure build works
-      - name: Run Astro build
+        # 确认生产构建可以正常完成
+      - name: 运行 Astro 构建
         run: pnpm build

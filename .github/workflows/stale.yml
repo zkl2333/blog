@@ -1,9 +1,10 @@
-# This workflow warns and then closes issues and PRs that have had no activity for a specified amount of time.
+# 这个工作流会为在指定时间内没有活动的 issue 和 PR 打上 stale 标记，
+# 并按配置自动关闭对应 issue。
 #
-# You can adjust the behavior by modifying this file.
-# For more information, see:
+# 你可以通过修改本文件来调整行为。
+# 更多信息见：
 # https://github.com/actions/stale
-name: Mark stale issues and pull requests
+name: 标记过期的 issue 和拉取请求
 
 on:
   schedule:
@@ -22,9 +23,9 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           stale-issue-label: "no-issue-activity"
           stale-pr-label: "no-pr-activity"
-          stale-issue-message: "This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions."
-          stale-pr-message: "This PR has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions."
-          close-issue-message: "This issue was closed because it has been stalled for 5 days with no activity."
+          stale-issue-message: "这个 issue 因近期没有活动而被自动标记为 stale；如果后续仍无新活动，它将被关闭。感谢你的贡献。"
+          stale-pr-message: "这个 PR 因近期没有活动而被自动标记为 stale；如果后续仍无新活动，它将保持该状态。感谢你的贡献。"
+          close-issue-message: "这个 issue 因被标记为 stale 后连续 5 天没有活动而自动关闭。"
           days-before-stale: 30
           days-before-close: 5
           days-before-pr-close: -1

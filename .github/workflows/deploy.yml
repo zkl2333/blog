@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: 部署到 GitHub Pages
 
 on:
   push:
@@ -14,10 +14,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout your repository
+      - name: 检出仓库
         uses: actions/checkout@v6
 
-      - name: Install, build, and upload your site
+      - name: 安装依赖、构建并上传站点
         uses: withastro/action@v6
         with:
           package-manager: pnpm@latest
@@ -29,7 +29,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy to GitHub Pages
+      - name: 部署到 GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
-
