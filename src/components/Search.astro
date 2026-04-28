@@ -1,5 +1,5 @@
 ---
-// Heavy inspiration taken from Astro Starlight -> https://github.com/withastro/starlight/blob/main/packages/starlight/components/Search.astro
+// 主要参考了 Astro Starlight -> https://github.com/withastro/starlight/blob/main/packages/starlight/components/Search.astro
 
 import "@/styles/blocks/search.css";
 ---
@@ -27,23 +27,25 @@ import "@/styles/blocks/search.css";
 			<path d="M0 0h24v24H0z" stroke="none"></path>
 			<path d="M3 10a7 7 0 1 0 14 0 7 7 0 1 0-14 0M21 21l-6-6"></path>
 		</svg>
-		<span class="sr-only">Open Search</span>
+		<span class="sr-only">打开搜索</span>
 	</button>
 	<dialog
-		aria-label="search"
+		aria-label="搜索"
 		class="bg-global-bg h-full max-h-full w-full max-w-full border border-zinc-400 shadow-sm backdrop:backdrop-blur-sm open:flex sm:mx-auto sm:mt-16 sm:mb-auto sm:h-max sm:max-h-[calc(100%-8rem)] sm:min-h-[15rem] sm:w-5/6 sm:max-w-[48rem] sm:rounded-md"
 	>
 		<div class="dialog-frame flex grow flex-col gap-4 p-6 pt-12 sm:pt-6">
 			<button
 				class="ms-auto cursor-pointer rounded-md bg-zinc-200 p-2 font-semibold dark:bg-zinc-700"
-				data-close-modal>Close</button
+				data-close-modal
 			>
+				关闭
+			</button>
 			{
 				import.meta.env.DEV ? (
 					<div class="mx-auto text-center">
 						<p>
-							Search is only available in production builds. <br />
-							Try building and previewing the site to test it out locally.
+							搜索仅在生产构建中可用。<br />
+							你可以先构建并预览站点，在本地测试它。
 						</p>
 					</div>
 				) : (
@@ -77,13 +79,13 @@ import "@/styles/blocks/search.css";
 				this.#openBtn.addEventListener("click", this.openModal);
 				this.#openBtn.disabled = false;
 			} else {
-				console.warn("Search button not found");
+				console.warn("未找到搜索按钮");
 			}
 
 			if (this.#closeBtn) {
 				this.#closeBtn.addEventListener("click", this.closeModal);
 			} else {
-				console.warn("Close button not found");
+				console.warn("未找到关闭按钮");
 			}
 
 			if (this.#dialog) {
@@ -91,7 +93,7 @@ import "@/styles/blocks/search.css";
 					window.removeEventListener("click", this.onWindowClick);
 				});
 			} else {
-				console.warn("Dialog not found");
+				console.warn("未找到对话框");
 			}
 
 			// only add pagefind in production
@@ -120,7 +122,7 @@ import "@/styles/blocks/search.css";
 
 		openModal = (event?: MouseEvent) => {
 			if (!this.#dialog) {
-				console.warn("Dialog not found");
+				console.warn("未找到对话框");
 				return;
 			}
 
@@ -147,7 +149,7 @@ import "@/styles/blocks/search.css";
 
 		onWindowKeydown = (e: KeyboardEvent) => {
 			if (!this.#dialog) {
-				console.warn("Dialog not found");
+				console.warn("未找到对话框");
 				return;
 			}
 			// check if it's the Control+K or ⌘+K shortcut

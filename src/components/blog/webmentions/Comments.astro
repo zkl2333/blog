@@ -20,7 +20,7 @@ const comments = mentions.filter(
 	!!comments.length && (
 		<div>
 			<p class="text-accent-2 mb-0">
-				<strong>{comments.length}</strong> Mention{comments.length > 1 ? "s" : ""}
+				<strong>{comments.length}</strong> 条提及
 			</p>
 			<ul class="divide-global-text/20 mt-0 divide-y ps-0" role="list">
 				{comments.map((mention) => (
@@ -64,9 +64,7 @@ const comments = mentions.filter(
 									rel="noreferrer"
 									target="_blank"
 								>
-									<span class="hidden" id="cmt-source">
-										Visit the source of this webmention
-									</span>
+									<span class="hidden" id="cmt-source">查看这条 webmention 的来源</span>
 									<Icon
 										aria-hidden="true"
 										class="h-5 w-5"

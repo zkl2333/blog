@@ -1,21 +1,21 @@
-<!-- Thank you for opening a PR and making this theme even better, I appreciate you taking the time to help out 🙌 -->
+<!-- 感谢你提交 PR，让这个主题变得更好；也谢谢你愿意花时间帮忙 🙌 -->
 
-#### What kind of changes does this PR include?
+#### 这个 PR 包含哪类改动？
 
-<!-- Delete any that don’t apply -->
+<!-- 删除不适用的选项 -->
 
-- Minor fixes (broken links, typos, css, etc.)
-- Changes with larger consequences (logic, library updates, etc.)
-- Something else!
+- 小修小补（坏链接、错别字、CSS 等）
+- 影响范围更大的改动（逻辑、依赖更新等）
+- 其他
 
-#### Description
+#### 说明
 
-- Closes # <!-- Add an issue number if this PR will close it. -->
-- What does this PR change? A brief description would be great.
-- Did you change something visual? A before/after screenshot can be helpful.
+- Closes # <!-- 如果这个 PR 会关闭某个 issue，请补上 issue 编号 -->
+- 这个 PR 改了什么？用几句话概括一下就很好。
+- 如果改动涉及 UI/视觉效果，提供对比截图（前/后）会很有帮助。
 
 <!--
-Here’s what will happen next:
-Hopefully I'll get time soon after your pull request to take a look and may ask you to make changes.
-I'll try to be responsive, but don’t worry if this takes a week or 2.
+接下来会发生什么：
+我会在有时间时尽快查看你的 PR，必要时可能会请你做一些调整。
+我会尽量及时回复，但如果需要一到两周也不用担心。
 -->

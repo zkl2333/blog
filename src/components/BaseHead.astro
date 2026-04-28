@@ -18,12 +18,12 @@ const socialImageURL = new URL(ogImage ? ogImage : "/social-card.png", Astro.url
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <title>{siteTitle}</title>
 
-{/* Icons */}
+{/* 图标 */}
 <link href="/icon.svg" rel="icon" type="image/svg+xml" />
 {
 	import.meta.env.PROD && (
 		<>
-			{/* Favicon & Apple Icon */}
+			{/* Favicon 与 Apple 图标 */}
 			<link rel="icon" href="/favicon-32x32.png" type="image/png" />
 			<link href="/icons/apple-touch-icon.png" rel="apple-touch-icon" />
 			{/* Manifest */}
@@ -32,10 +32,10 @@ const socialImageURL = new URL(ogImage ? ogImage : "/social-card.png", Astro.url
 	)
 }
 
-{/* Canonical URL */}
+{/* 规范链接 */}
 <link href={canonicalURL} rel="canonical" />
 
-{/* Primary Meta Tags */}
+{/* 主要 Meta 标签 */}
 <meta content={siteTitle} name="title" />
 <meta content={description} name="description" />
 <meta content={siteConfig.author} name="author" />
@@ -69,9 +69,9 @@ const socialImageURL = new URL(ogImage ? ogImage : "/social-card.png", Astro.url
 {/* Sitemap */}
 <link href="/sitemap-index.xml" rel="sitemap" />
 
-{/* RSS auto-discovery */}
-<link href="/rss.xml" title="Blog" rel="alternate" type="application/rss+xml" />
-<link href="/notes/rss.xml" title="Notes" rel="alternate" type="application/rss+xml" />
+{/* RSS 自动发现 */}
+<link href="/rss.xml" title="博客" rel="alternate" type="application/rss+xml" />
+<link href="/notes/rss.xml" title="笔记" rel="alternate" type="application/rss+xml" />
 
 {/* Webmentions */}
 {

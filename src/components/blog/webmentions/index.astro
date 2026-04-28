@@ -7,17 +7,17 @@ const url = new URL(Astro.url.pathname, Astro.site);
 
 const webMentions = await getWebmentionsForUrl(`${url}`);
 
-// Return if no webmentions
+// 如果没有 webmentions，就直接不渲染
 if (!webMentions.length) return;
 ---
 
 <hr class="border-solid" />
-<h2 class="mb-8 before:hidden">Webmentions for this post</h2>
+<h2 class="mb-8 before:hidden">本篇的 Webmentions</h2>
 <div class="space-y-10">
 	<Likes mentions={webMentions} />
 	<Comments mentions={webMentions} />
 </div>
 <p class="mt-8">
-	Responses powered by{" "}
+	互动数据由{" "}
 	<a href="https://webmention.io" rel="noreferrer" target="_blank">Webmentions</a>
 </p>
