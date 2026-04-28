@@ -1,0 +1,55 @@
+---
+import PageLayout from "@/layouts/Base.astro";
+
+const candidateLinks = [
+	{ domain: "blog.lwl12.com", label: "lwl12 的博客" },
+	{ domain: "blog.stephencode.com", label: "Stephencode" },
+	{ domain: "bobiji.com", label: "Bobiji" },
+	{ domain: "zhujiboke.com", label: "主机博客" },
+	{ domain: "qqdie.com", label: "QQIE" },
+	{ domain: "dreamwings.cn", label: "Dreamwings" },
+	{ domain: "hishare.site", label: "HiShare" },
+	{ domain: "ixh.me", label: "ixh" },
+	{ domain: "mocurio.com", label: "Mocurio" },
+	{ domain: "nickjun.com", label: "NickJun" },
+	{ domain: "youngdream.net", label: "YoungDream" },
+	{ domain: "zrj96.com", label: "ZRJ96" },
+	{ domain: "xiaoguo123.com", label: "小果博客" },
+	{ domain: "yinjuren.cn", label: "隐居人" },
+	{ domain: "cclmz.cn", label: "CCLMZ" },
+];
+
+const meta = {
+	description: "先收集的友链候选，后续逐个验证",
+	title: "友链",
+};
+---
+
+<PageLayout meta={meta}>
+	<h1 class="title mb-6">友链</h1>
+	<p class="text-muted mb-8 max-w-2xl">
+		先把旧友链页和外链痕迹里搜到的站点放进来，后面再慢慢核验、补全名称和简介。
+	</p>
+
+	<section aria-labelledby="candidate-links-title">
+		<h2 id="candidate-links-title" class="title mb-4 text-xl">待验证友链</h2>
+		<ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3" role="list">
+			{
+				candidateLinks.map((link) => (
+					<li>
+						<a
+							class="block rounded-md border border-muted/30 bg-global-text/5 px-4 py-3 transition-colors hover:border-link hover:bg-global-text/8"
+							href={`https://${link.domain}/`}
+							rel="noreferrer noopener"
+							target="_blank"
+						>
+							<span class="block text-base font-semibold">{link.label}</span>
+							<span class="text-muted block text-sm">{link.domain}</span>
+							<span class="text-muted mt-2 inline-block text-xs">待验证</span>
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</section>
+</PageLayout>
