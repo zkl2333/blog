@@ -46,7 +46,7 @@ export const menuLinks: { path: string; title: string }[] = [
 	},
 	{
 		path: "/notes/",
-		title: "笔记",
+		title: "碎念",
 	},
 ];
 

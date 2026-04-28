@@ -7,4 +7,5 @@ coverImage:
   src: "./cover.png"
   alt: "Astro 构建壁纸"
 tags: ["test", "image"]
+draft: true
 ---

@@ -4,6 +4,7 @@ publishDate: "27 January 2023"
 description: "以 Astro Cactus 为例，介绍如何在 frontmatter 中为单篇文章配置自定义社交分享图（OG image）"
 tags: ["example", "blog", "image"]
 ogImage: "/social-card.png"
+draft: true
 ---
 
 ## 为文章添加自定义社交分享图

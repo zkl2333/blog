@@ -54,8 +54,8 @@
 	--color-accent-2: oklch(18.15% 0 0);
 	--color-quote: oklch(55.27% 0.195 19.06);
 	--font-family-sans:
-		"PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC",
-		"Source Han Sans SC", "WenQuanYi Micro Hei", ui-sans-serif, sans-serif;
+		"LXGW WenKai Screen", "Lucida Grande", "Helvetica Neue", Arial, "Hiragino Sans GB",
+		"Noto Sans CJK SC", "Heiti SC", "Microsoft YaHei", "WenQuanYi Microhei", sans-serif;
 	--font-family-mono:
 		"Roboto Mono", "SFMono-Regular", "SF Mono", Consolas, "Liberation Mono", Menlo,
 		monospace;
