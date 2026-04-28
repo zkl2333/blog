@@ -24,7 +24,7 @@ export const siteConfig: SiteConfig = {
 		locale: "zh-CN",
 		options: {
 			day: "numeric",
-			month: "short",
+			month: "long",
 			year: "numeric",
 		},
 	},
