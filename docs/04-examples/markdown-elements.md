@@ -167,7 +167,7 @@ function demo() {
 
 ## 图片（Images）
 
-同目录图片：`src/content/post/markdown-elements/logo.png`
+同目录图片：`docs/04-examples/logo.png`
 
 ![Astro theme cactus logo](./logo.png)
 
