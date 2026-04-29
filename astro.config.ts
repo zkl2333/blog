@@ -12,6 +12,7 @@ import webmanifest from "astro-webmanifest";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeExternalLinks from "rehype-external-links";
 import rehypeUnwrapImages from "rehype-unwrap-images";
+import rehypeMermaid from "rehype-mermaid";
 // Remark plugins
 import remarkDirective from "remark-directive"; /* Handle ::: directives as nodes */
 import { remarkAdmonitions } from "./src/plugins/remark-admonitions"; /* Add admonitions */
@@ -78,6 +79,7 @@ export default defineConfig({
 				},
 			],
 			rehypeUnwrapImages,
+			[rehypeMermaid, { strategy: "img" }],
 		],
 		remarkPlugins: [remarkReadingTime, remarkDirective, remarkGithubCard, remarkAdmonitions],
 		remarkRehype: {
