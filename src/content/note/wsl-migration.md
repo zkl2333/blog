@@ -1,7 +1,7 @@
 ---
 title: "WSL 迁移"
 description: "介绍如何将 WSL（Windows Subsystem for Linux）中的发行版迁移到其他磁盘路径，以 Docker Desktop 数据盘为例。"
-publishDate: "2025-12-04T11:12:02+08:00"
+publishDate: "2023-10-23T00:00:00+08:00"
 tags: ["wsl", "docker", "windows"]
 ---
 

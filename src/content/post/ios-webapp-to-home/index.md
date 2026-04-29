@@ -1,7 +1,7 @@
 ---
 title: "iOS 将网页保存到桌面"
 description: "以哪吒面板为例，介绍如何通过添加 meta 标签和 apple-touch-icon，让网页在 iOS Safari 中可以被保存到桌面并像原生应用一样运行。"
-publishDate: "2024-08-09T10:00:00+08:00"
+publishDate: "2023-10-23T00:00:00+08:00"
 tags: ["ios", "pwa", "前端", "safari"]
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: "前端玩 LangChain 之简单联网查询"
 description: "最近玩 GPT 的小伙伴大概都听过 LangChain 吧，这是一个强大的框架，可以简化构建高级语言模型应用程序的过程。本文介绍了如何使用 LangChain JS 版本实现简单的联网搜索查询功能。"
-publishDate: "2024-08-09T10:00:00+08:00"
+publishDate: "2023-10-23T00:00:00+08:00"
 tags: ["langchain", "ai", "nodejs", "前端"]
 ---
 
