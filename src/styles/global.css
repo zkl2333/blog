@@ -420,7 +420,12 @@
 	}
 }
 
-@utility prose {
+/*
+ * Higher-specificity overrides for the typography plugin's default color
+ * modifier (`prose-gray`), which would otherwise reset --tw-prose-* to its
+ * fixed gray palette and ignore our theme-aware custom properties.
+ */
+html :where(.prose) {
 	--tw-prose-body: var(--color-global-text);
 	--tw-prose-bold: var(--color-global-text);
 	--tw-prose-bullets: var(--color-global-text);
@@ -430,7 +435,9 @@
 	--tw-prose-links: var(--color-global-text);
 	--tw-prose-quotes: var(--color-quote);
 	--tw-prose-th-borders: #666;
+}
 
+@utility prose {
 	font-family: var(--font-family-sans);
 	line-height: 1.9;
 	text-wrap: pretty;
