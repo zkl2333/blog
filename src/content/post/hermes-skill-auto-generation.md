@@ -48,23 +48,13 @@ flowchart TD
 
 **两个计数器对比：**
 
-```mermaid
-flowchart TD
-    subgraph Memory ["Memory Nudge"]
-        M1["_turns_since_memory"] --> M2["粒度：每个用户消息 +1"]
-        M2 --> M3["时机：Turn 开始 (line 9744)"]
-        M3 --> M4["配置：memory.nudge_interval"]
-    end
-    
-    subgraph Skill ["Skill Nudge"]
-        S1["_iters_since_skill"] --> S2["粒度：每轮 tool iteration +1"]
-        S2 --> S3["时机：Turn 结束 (line 12986)"]
-        S3 --> S4["配置：skills.creation_nudge_interval"]
-    end
-    
-    Memory -->|默认值| D1["10 turns"]
-    Skill -->|默认值| D2["10 iterations"]
-```
+| | Memory Nudge | Skill Nudge |
+|---|---|---|
+| 变量 | `_turns_since_memory` | `_iters_since_skill` |
+| 粒度 | 每个用户消息 +1 | 每轮 tool iteration +1 |
+| 时机 | Turn 开始 (line 9744) | Turn 结束 (line 12986) |
+| 配置 | `memory.nudge_interval` | `skills.creation_nudge_interval` |
+| 默认 | 10 turns | 10 iterations |
 
 几条关键规则：
 
@@ -132,16 +122,12 @@ skills:
 
 ## 四、调用计数：被动式的"翻旧账"
 
-```mermaid
-flowchart TD
-    A["用户打开 /insights"] --> B["agent/insights.py"]
-    B --> C["查 session DB (SQLite)"]
-    C --> D["扫描历史 tool_calls"]
-    D --> E{"tool_name?"}
-    E -->|skill_view| F["view_count += 1"]
-    E -->|skill_manage| G["manage_count += 1"]
-    F & G --> H["聚合: last_used_at"]
-```
+调用链很简单：
+
+1. 用户打开 `/insights` → `agent/insights.py`
+2. 查 session DB (SQLite) → 扫描历史 `tool_calls`
+3. 按 `tool_name` 分发：`skill_view` → `view_count += 1`，`skill_manage` → `manage_count += 1`
+4. 聚合 `last_used_at`
 
 不是实时计数器。每次查询现场扫一遍历史记录。好处是不需要额外持久化；坏处是只能事后审计，无法用于实时触发清理。
 
@@ -149,17 +135,14 @@ flowchart TD
 
 ## 五、所有 Skill 描述都拼进 System Prompt
 
-```mermaid
-flowchart TD
-    A["build_skills_system_prompt()"] --> B["扫描 ~/.hermes/skills/ 所有 SKILL.md"]
-    B --> C["读 frontmatter: name, description, category"]
-    C --> D["过滤：平台/disabled/conditions"]
-    D --> E["description 截断到 60 字符"]
-    E --> F["两层缓存：LRU + 磁盘 snapshot"]
-    F --> G["拼成 XML 块注入 system prompt"]
-    
-    G --> H["每次 API 调用都带"]
-```
+`build_skills_system_prompt()` 的流程：
+
+1. 扫描 `~/.hermes/skills/` 下所有 `SKILL.md`
+2. 读 frontmatter：`name`、`description`、`category`
+3. 过滤：按平台/disabled/conditions 筛掉不适用的
+4. description 截断到 60 字符
+5. 两层缓存（LRU + 磁盘 snapshot）
+6. 拼成 XML 块注入 system prompt → **每次 API 调用都带**
 
 ---
 
@@ -201,57 +184,23 @@ flowchart TD
 
 ## 八、社区看清楚了，官方还没排期
 
-```mermaid
-flowchart TD
-    subgraph 已提出
-        A["#11425 Skills lifecycle management
-        归档 + 重要性分级 + 自动清理"]
-        B["#13534 Usage tracking + 冲突检测
-        Token 成本量化"]
-        C["#10164 System prompt 预算管控
-        Context overflow 防治"]
-        D["#429 Skill 描述质量 + 改进循环"]
-    end
-    subgraph 类比
-        E["#15471 Memory 淘汰机制"]
-    end
-    A -.->|全部 Open| X["0 个 assignee
-    0 个 milestone
-    0 个 PR"]
-    B -.-> X
-    C -.-> X
-    D -.-> X
-    E -.-> X
-```
+四个核心 Issue，全部 Open，零 assignee，零 milestone，零 PR：
+
+- **[#11425](https://github.com/NousResearch/hermes-agent/issues/11425)** Skills lifecycle management — 归档 + 重要性分级 + 自动清理
+- **[#13534](https://github.com/NousResearch/hermes-agent/issues/13534)** Usage tracking + 冲突检测 — Token 成本量化
+- **[#10164](https://github.com/NousResearch/hermes-agent/issues/10164)** System prompt 预算管控 — Context overflow 防治
+- **[#429](https://github.com/NousResearch/hermes-agent/issues/429)** Skill 描述质量 + 改进循环
+- **[#15471](https://github.com/NousResearch/hermes-agent/issues/15471)** Memory 淘汰机制（同类问题）
 
 全部 Open，没有 assignee，没有 milestone，没有合并中的 PR。
 
-#11425 提了最完整的方案：
-
-```mermaid
-flowchart TD
-    P1["Phase 1: 使用追踪"] --> P2["Phase 2: 重要性分级"]
-    P2 --> P3["Phase 3: 归档状态"]
-    P3 --> P4["Phase 4: 可选自动归档"]
-    
-    P2 -..-> C["critical: 永不归档"]
-    P2 -..-> I["important: 警告但不动"]
-    P2 -..-> N["normal: 可归档"]
-    P2 -..-> L["low: 首批候选"]
-```
+#11425 提了最完整的方案：**Phase 1** 使用追踪 → **Phase 2** 重要性分级（critical 永不归档 / important 警告不动 / normal 可归档 / low 首批候选）→ **Phase 3** 归档状态 → **Phase 4** 可选自动归档。
 
 ---
 
 ## 九、总结
 
-```mermaid
-flowchart TD
-    T["触发：两个独立计数器"] --> F["Fork：独立线程 + 继承凭证"]
-    F --> R["Review：创建/更新（不删不合）"]
-    R --> I["注入：每个 Skill → system prompt"]
-    I --> G["膨胀：只增不减"]
-    G --> S["现状：5 个 Open Issue，0 个 PR"]
-```
+**触发**（两个独立计数器）→ **Fork**（独立线程 + 继承凭证）→ **Review**（创建/更新，不删不合）→ **注入**（每个 Skill → system prompt）→ **膨胀**（只增不减）→ **现状**（5 个 Open Issue，0 个 PR）
 
 这不是 Bug，是设计取舍。保守哲学本身没问题——不主动删用户的东西是负责任的。但"自动创建"和"零淘汰"的组合拳意味着系统随时间线性膨胀。
 
