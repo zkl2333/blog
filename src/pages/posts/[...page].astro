@@ -59,7 +59,7 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 ---
 
 <PageLayout meta={meta}>
-	<div class="mb-12 flex items-center gap-3">
+	<div class="mb-10 flex items-center gap-3">
 		<h1 class="title">文章</h1>
 		<a class="text-accent" href="/rss.xml" target="_blank">
 			<span class="sr-only">RSS 订阅源</span>
@@ -71,11 +71,14 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 			{
 				pinnedPosts.length > 0 && (
 					<section class="mb-16">
-						<h2 class="title mb-6 text-xl">置顶文章</h2>
-						<ul class="space-y-4" role="list">
+						<header class="section-head">
+							<span class="section-head__badge">招牌菜</span>
+							<h2 class="section-head__title">置顶文章</h2>
+						</header>
+						<ul class="dish-grid" role="list">
 							{pinnedPosts.map((p) => (
-								<li class="grid gap-1 sm:grid-cols-[auto_1fr]">
-									<PostPreview post={p} />
+								<li>
+									<PostPreview post={p} withDesc as="h3" />
 								</li>
 							))}
 						</ul>
@@ -85,14 +88,17 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 			{
 				descYearKeys.map((yearKey) => (
 					<section class="mb-16">
-						<h2 id={`year-${yearKey}`} class="title text-lg">
-							<span class="sr-only">年份</span>
-							{yearKey}
-						</h2>
-						<ul class="mt-5 space-y-4 text-start">
+						<header class="section-head section-head--sub">
+							<span class="section-head__badge section-head__badge--side">{yearKey} 年</span>
+							<h2 id={`year-${yearKey}`} class="section-head__title section-head__title--sub">
+								<span class="sr-only">年份</span>
+								这一年的菜
+							</h2>
+						</header>
+						<ul class="dish-grid" role="list">
 							{groupedByYear[yearKey]?.map((p) => (
-								<li class="grid gap-1 sm:grid-cols-[auto_1fr] sm:[&_q]:col-start-2">
-									<PostPreview post={p} />
+								<li>
+									<PostPreview post={p} withDesc as="h3" />
 								</li>
 							))}
 						</ul>

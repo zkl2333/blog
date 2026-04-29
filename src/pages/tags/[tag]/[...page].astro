@@ -66,11 +66,11 @@ const paginationProps = {
 		{tagMeta?.data.description && <p>{tagMeta.data.description}</p>}
 		{TagContent && <TagContent />}
 	</div>
-	<ul class="space-y-4">
+	<ul class="dish-grid" role="list">
 		{
 			page.data.map((p) => (
-				<li class="grid gap-1 sm:grid-cols-[auto_1fr]">
-					<PostPreview as="h2" post={p} />
+				<li>
+					<PostPreview as="h2" post={p} withDesc />
 				</li>
 			))
 		}

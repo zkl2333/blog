@@ -21,7 +21,7 @@ const pinnedPosts = allPostsByDate
 	.take(MAX_PINNED_POSTS)
 	.toArray();
 
-// Notes, set to a max of 5
+// Notes — 桌边碎念，份量轻一点
 const MAX_NOTES = 5;
 const allNotes = await getCollection("note");
 const latestNotes = allNotes
@@ -30,54 +30,69 @@ const latestNotes = allNotes
 ---
 
 <PageLayout meta={{ title: "首页" }}>
-	<section>
-		<p class="mb-3">
-			嘿，到小饭桌了 🍚 这是我的博客。本来想叫「菜谱」「菜单」，听着像正经餐厅太端着，最后选了「小饭桌」——支张桌、摆几道菜，谁路过都能坐，扒两口就走也行。
+	<section class="hero-board">
+		<span class="hero-board__stamp" aria-hidden="true">今日营业中</span>
+		<p class="hero-board__line">
+			嘿，到小饭桌了 <span class="hero-board__emoji">🍚</span> 这是我的博客。本来想叫「菜谱」「菜单」，听着像正经餐厅太端着，最后选了「小饭桌」——支张桌、摆几道菜，谁路过都能坐，扒两口就走也行。
 		</p>
-		<p class="mb-3">
-			桌上端的都是自己做的：写的代码、追的源码、折腾的小工具，外加一堆没啥用但挺好玩的念头。有的是大菜配图配流程图，有的就一口炸鸡 🍗 看心情上。
+		<p class="hero-board__line">
+			桌上端的都是自己做的：写的代码、追的源码、折腾的小工具，外加一堆没啥用但挺好玩的念头。有的是大菜配图配流程图，有的就一口炸鸡 <span class="hero-board__emoji">🍗</span> 看心情上。
 		</p>
-		<p class="text-muted mb-4">
-			想吃硬菜就翻<a class="cactus-link" href="/posts/">文章</a>，想配点小酒闲聊就去<a class="cactus-link" href="/notes/">碎念</a>那边坐坐——那边更下饭。
+		<p class="hero-board__line text-muted">
+			想吃硬菜就翻 <a class="cactus-link font-semibold" href="/posts/">文章</a>，想配点小酒闲聊就去 <a class="cactus-link font-semibold" href="/notes/">碎念</a> 那边坐坐——那边更下饭。
 		</p>
-		<SocialList />
+		<div class="mt-5"><SocialList /></div>
 	</section>
+
 	{
 		pinnedPosts.length > 0 && (
-			<section class="mt-16">
-				<h2 class="title mb-6 text-xl">置顶文章</h2>
-				<ul class="space-y-4" role="list">
+			<section class="mt-20">
+				<header class="section-head">
+					<span class="section-head__badge">招牌菜</span>
+					<h2 class="section-head__title">置顶文章</h2>
+				</header>
+				<ul class="dish-grid" role="list">
 					{pinnedPosts.map((p) => (
-						<li class="grid gap-1 sm:grid-cols-[auto_1fr]">
-							<PostPreview post={p} withDesc />
+						<li>
+							<PostPreview post={p} withDesc as="h3" />
 						</li>
 					))}
 				</ul>
 			</section>
 		)
 	}
-	<section class="mt-16">
-		<h2 class="title text-accent mb-6 text-xl"><a href="/posts/">文章</a></h2>
-		<ul class="space-y-4" role="list">
+
+	<section class="mt-20">
+		<header class="section-head">
+			<span class="section-head__badge section-head__badge--main">今日主菜</span>
+			<h2 class="section-head__title">
+				<a class="hover:text-accent transition-colors" href="/posts/">文章 →</a>
+			</h2>
+		</header>
+		<ul class="dish-grid" role="list">
 			{
 				latestPosts.map((p) => (
-					<li class="grid gap-1 sm:grid-cols-[auto_1fr]">
-						<PostPreview post={p} withDesc />
+					<li>
+						<PostPreview post={p} withDesc as="h3" />
 					</li>
 				))
 			}
 		</ul>
 	</section>
+
 	{
 		latestNotes.length > 0 && (
-			<section class="mt-16">
-				<h2 class="title text-accent mb-6 text-xl">
-					<a href="/notes/">碎念</a>
-				</h2>
-				<ul class="space-y-3" role="list">
+			<section class="mt-20">
+				<header class="section-head section-head--sub">
+					<span class="section-head__badge section-head__badge--side">下酒小菜</span>
+					<h2 class="section-head__title section-head__title--sub">
+						<a class="hover:text-accent transition-colors" href="/notes/">碎念 →</a>
+					</h2>
+				</header>
+				<ul class="note-list" role="list">
 					{latestNotes.map((note) => (
 						<li>
-							<Note note={note} as="h3" isPreview />
+							<Note note={note} compact />
 						</li>
 					))}
 				</ul>
