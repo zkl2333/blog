@@ -467,4 +467,50 @@
 	:where(pre code) {
 		font-size: inherit;
 	}
+
+	:where(.mermaid-code .mm-keyword) {
+		color: oklch(76% 0.13 290);
+	}
+	:where(.mermaid-code .mm-arrow) {
+		color: oklch(78% 0.14 25);
+	}
+	:where(.mermaid-code .mm-bracket) {
+		color: oklch(80% 0.12 200);
+	}
+	:where(.mermaid-code .mm-string) {
+		color: oklch(82% 0.13 130);
+	}
+	:where(.mermaid-code .mm-comment) {
+		color: oklch(55% 0.02 250);
+		font-style: italic;
+	}
+
+	:where(pre.mermaid) {
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		overflow: visible;
+		background: transparent;
+		user-select: none;
+	}
+
+	:where(pre.mermaid svg) {
+		display: block;
+		margin-inline: auto;
+		/* biome-ignore lint/complexity/noImportantStyles: Mermaid SVG uses inline styles */
+		background: transparent !important;
+	}
+
+	:where(pre.mermaid svg .cluster rect) {
+		/* biome-ignore lint/complexity/noImportantStyles: Mermaid SVG uses inline styles */
+		fill: transparent !important;
+	}
+
+	:where(pre.mermaid svg .edgeLabel rect) {
+		/* biome-ignore lint/complexity/noImportantStyles: Mermaid SVG uses inline styles */
+		fill: #131414 !important;
+	}
 }

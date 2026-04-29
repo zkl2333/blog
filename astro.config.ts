@@ -79,7 +79,7 @@ export default defineConfig({
 				},
 			],
 			rehypeUnwrapImages,
-			[rehypeMermaid, { strategy: "img" }],
+			[rehypeMermaid, { strategy: "pre-mermaid" }],
 		],
 		remarkPlugins: [remarkReadingTime, remarkDirective, remarkGithubCard, remarkAdmonitions],
 		remarkRehype: {
