@@ -22,21 +22,23 @@ pnpm install
 
 ## 常用命令
 
-| 命令 | 说明 |
-|------|------|
-| `pnpm install` | 安装项目依赖 |
-| `pnpm dev` | 启动本地开发服务器（localhost:3000） |
-| `pnpm build` | 构建生产版本到 `./dist/` |
-| `pnpm postbuild` | 运行 Pagefind，生成搜索索引 |
-| `pnpm preview` | 预览构建产物 |
-| `pnpm sync` | 根据 schema 生成类型 |
+| 命令             | 说明                                 |
+| ---------------- | ------------------------------------ |
+| `pnpm install`   | 安装项目依赖                         |
+| `pnpm dev`       | 启动本地开发服务器（localhost:3000） |
+| `pnpm build`     | 构建生产版本到 `./dist/`             |
+| `pnpm postbuild` | 运行 Pagefind，生成搜索索引          |
+| `pnpm preview`   | 预览构建产物                         |
+| `pnpm sync`      | 根据 schema 生成类型                 |
 
 ## 开发工作流
 
 1. **启动开发环境**
+
    ```bash
    pnpm dev
    ```
+
    访问 `http://localhost:3000` 即可看到实时预览
 
 2. **创建新内容**

@@ -8,10 +8,10 @@
 
 ```typescript
 // 必须修改
-url: "https://your-domain.com"  // 你的域名
-title: "Your Site Title"         // 站点标题
-description: "Your description"  // 站点描述
-author: "Your Name"              // 作者名称
+url: "https://your-domain.com"; // 你的域名
+title: "Your Site Title"; // 站点标题
+description: "Your description"; // 站点描述
+author: "Your Name"; // 作者名称
 ```
 
 ### 2. Markdown 代码块样式
@@ -20,8 +20,8 @@ author: "Your Name"              // 作者名称
 
 ```typescript
 export const codeConfig = {
-  themes: ["dracula", "github-light"],  // 深色和浅色主题
-}
+	themes: ["dracula", "github-light"], // 深色和浅色主题
+};
 ```
 
 可选的主题列表：[Expressive Code 主题](https://expressive-code.com/guides/themes/#available-themes)
@@ -43,14 +43,14 @@ export const codeConfig = {
 ```css
 /* 深色模式变量 */
 :root.dark {
-  --color-primary: #your-color;
-  /* ... 更多变量 */
+	--color-primary: #your-color;
+	/* ... 更多变量 */
 }
 
 /* 浅色模式变量 */
 :root {
-  --color-primary: #your-color;
-  /* ... 更多变量 */
+	--color-primary: #your-color;
+	/* ... 更多变量 */
 }
 ```
 
@@ -61,9 +61,12 @@ export const codeConfig = {
 编辑 `src/components/SocialList.astro` 添加或修改你的社交账号：
 
 ```astro
-<Icon name="mdi:github" />          <!-- GitHub -->
-<Icon name="mdi:twitter" />         <!-- Twitter -->
-<Icon name="mdi:linkedin" />        <!-- LinkedIn -->
+<Icon name="mdi:github" />
+<!-- GitHub -->
+<Icon name="mdi:twitter" />
+<!-- Twitter -->
+<Icon name="mdi:linkedin" />
+<!-- LinkedIn -->
 <!-- 更多图标在 icones.js.org 查找 -->
 ```
 

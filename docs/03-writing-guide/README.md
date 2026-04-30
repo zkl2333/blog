@@ -7,6 +7,7 @@
 Astro Cactus 支持两种主要内容类型：
 
 ### 📝 文章 (Posts)
+
 位置：`src/content/post/`
 
 - 完整、正式的长篇内容
@@ -17,6 +18,7 @@ Astro Cactus 支持两种主要内容类型：
 👉 [文章写作指南](./posts.md)
 
 ### 📔 笔记 (Notes)
+
 位置：`src/content/note/`
 
 - 简洁的快速记录和学习笔记
@@ -27,6 +29,7 @@ Astro Cactus 支持两种主要内容类型：
 👉 [笔记写作指南](./notes.md)
 
 ### 🏷️ 标签 (Tags)
+
 位置：`src/content/tag/`（可选）
 
 - 为特定标签创建自定义页面
@@ -177,7 +180,7 @@ console.log(x + y);
   - 子项目
 
 | 列 1 | 列 2 |
-|------|------|
+| ---- | ---- |
 | 数据 | 数据 |
 ```
 

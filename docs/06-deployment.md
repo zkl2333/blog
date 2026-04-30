@@ -37,6 +37,7 @@ pnpm preview
 Netlify 提供简单的一键部署和自动持续集成。
 
 **优点：**
+
 - 一键部署
 - 自动 HTTPS
 - 自动预构建和部署
@@ -67,6 +68,7 @@ Publish directory: dist
 Vercel 对 Astro 有很好的支持，提供边缘计算和分析。
 
 **优点：**
+
 - 集成 Vercel Analytics
 - 边缘部署
 - 自动预览链接
@@ -94,6 +96,7 @@ pnpm build && pnpm postbuild
 Cloudflare Pages 提供全球 CDN 和免费的边缘计算。
 
 **优点：**
+
 - 完全免费
 - 全球 CDN
 - 集成 Cloudflare 服务
@@ -177,17 +180,17 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'pnpm'
-      
+          cache: "pnpm"
+
       - name: Install dependencies
         run: pnpm install
-      
+
       - name: Build
         run: pnpm build
-      
+
       - name: Generate search
         run: pnpm postbuild
-      
+
       - name: Deploy
         # 根据你的部署服务配置
         run: |

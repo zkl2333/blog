@@ -18,18 +18,18 @@ npm install rollup-plugin-visualizer -D
 在 `vite.config.js` 中引入，仅在生产环境启用：
 
 ```js
-import { visualizer } from 'rollup-plugin-visualizer'
+import { visualizer } from "rollup-plugin-visualizer";
 
-const plugins = []
+const plugins = [];
 
-if (process.env.NODE_ENV === 'production') {
-  plugins.push(
-    visualizer({
-      open: true,
-      gzipSize: true,
-      brotliSize: true,
-    })
-  )
+if (process.env.NODE_ENV === "production") {
+	plugins.push(
+		visualizer({
+			open: true,
+			gzipSize: true,
+			brotliSize: true,
+		}),
+	);
 }
 ```
 
@@ -50,18 +50,18 @@ if (process.env.NODE_ENV === 'production') {
 ```js
 // vite.config.js
 export default {
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ['vue', 'vue-router', 'pinia'],
-          charts: ['echarts'],
-          utils: ['lodash-es', 'dayjs'],
-        },
-      },
-    },
-  },
-}
+	build: {
+		rollupOptions: {
+			output: {
+				manualChunks: {
+					vendor: ["vue", "vue-router", "pinia"],
+					charts: ["echarts"],
+					utils: ["lodash-es", "dayjs"],
+				},
+			},
+		},
+	},
+};
 ```
 
 ### 按需引入
@@ -70,10 +70,10 @@ export default {
 
 ```js
 // ❌ 整包引入，体积大
-import _ from 'lodash'
+import _ from "lodash";
 
 // ✅ 按需引入
-import { debounce, throttle } from 'lodash-es'
+import { debounce, throttle } from "lodash-es";
 ```
 
 ### 优化后

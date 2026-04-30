@@ -38,21 +38,21 @@ coverImage:
 
 ### 必填字段 ⭐
 
-| 字段 | 说明 | 示例 |
-|------|------|------|
-| **title** | 文章标题，最多 60 字符 | `"我的第一篇文章"` |
-| **description** | SEO 描述，50-160 字符 | `"一篇关于 Astro 的介绍文章"` |
-| **publishDate** | 发布时间，ISO 8601 格式 | `"2024-04-29T10:00:00Z"` |
+| 字段            | 说明                    | 示例                          |
+| --------------- | ----------------------- | ----------------------------- |
+| **title**       | 文章标题，最多 60 字符  | `"我的第一篇文章"`            |
+| **description** | SEO 描述，50-160 字符   | `"一篇关于 Astro 的介绍文章"` |
+| **publishDate** | 发布时间，ISO 8601 格式 | `"2024-04-29T10:00:00Z"`      |
 
 ### 可选字段 💡
 
-| 字段 | 说明 | 示例 |
-|------|------|------|
-| **updatedDate** | 最后更新时间 | `"2024-04-30T10:00:00Z"` |
-| **tags** | 标签数组 | `["javascript", "react"]` |
-| **coverImage** | 封面图对象 | 见下方示例 |
-| **ogImage** | 自定义 OG 图片路径 | `"/og-custom.png"` |
-| **draft** | 是否为草稿（默认 false） | `true` |
+| 字段            | 说明                     | 示例                      |
+| --------------- | ------------------------ | ------------------------- |
+| **updatedDate** | 最后更新时间             | `"2024-04-30T10:00:00Z"`  |
+| **tags**        | 标签数组                 | `["javascript", "react"]` |
+| **coverImage**  | 封面图对象               | 见下方示例                |
+| **ogImage**     | 自定义 OG 图片路径       | `"/og-custom.png"`        |
+| **draft**       | 是否为草稿（默认 false） | `true`                    |
 
 ### 日期格式
 
@@ -67,7 +67,7 @@ publishDate: "2024-04-29T10:00:00-05:00"     # 美国东部
 也支持简化格式：
 
 ```yaml
-publishDate: "2024-04-29"                    # 仅日期
+publishDate: "2024-04-29" # 仅日期
 ```
 
 ## 常用 Frontmatter 示例
@@ -133,12 +133,14 @@ tags: ["wip"]
 
 ```markdown
 # 一级标题
+
 ## 二级标题
+
 ### 三级标题
 
 **粗体文本**
-*斜体文本*
-***加粗斜体***
+_斜体文本_
+**_加粗斜体_**
 
 - 无序列表项 1
 - 无序列表项 2
@@ -197,7 +199,7 @@ console.log(`${greeting}, ${name}!`);
 ```mdx
 # 我的交互式文章
 
-import { Counter } from '../components/Counter.astro'
+import { Counter } from "../components/Counter.astro";
 
 <Counter client:load />
 ```
@@ -219,9 +221,9 @@ import { Counter } from '../components/Counter.astro'
 
 ```yaml
 ---
-title: 
-description: 
-publishDate: 
+title:
+description:
+publishDate:
 ---
 ```
 

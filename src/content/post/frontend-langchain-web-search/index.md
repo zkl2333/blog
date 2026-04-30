@@ -13,13 +13,13 @@ tags: ["langchain", "ai", "nodejs", "前端"]
 
 1. 安装 langchain
 
-    ```Shell
-    npm install -S langchain
-    ```
+   ```Shell
+   npm install -S langchain
+   ```
 
 2. 注册相关账号：
-    1. 访问 openai 的稳定渠道，我使用的是 aiproxy，可以点击我的[邀请链接](https://aiproxy.io/?i=duochidian)注册，用了好久真的非常稳定。网络环境好的小伙伴也可以直接使用官方接口。
-    2. 注册 Serper，这是一个基于谷歌搜索的服务。这个服务可以免费一千次查询并且是按量付费不是按月订阅，对小量使用的我们比较友好。
+   1. 访问 openai 的稳定渠道，我使用的是 aiproxy，可以点击我的[邀请链接](https://aiproxy.io/?i=duochidian)注册，用了好久真的非常稳定。网络环境好的小伙伴也可以直接使用官方接口。
+   2. 注册 Serper，这是一个基于谷歌搜索的服务。这个服务可以免费一千次查询并且是按量付费不是按月订阅，对小量使用的我们比较友好。
 
 然后闲话不多说就直接上代码，这是基于[官方文档](https://js.langchain.com/docs/modules/agents/agents/action/chat_mrkl)修改的简单实现
 

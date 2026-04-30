@@ -33,15 +33,15 @@ publishDate: "2024-04-29T10:00:00Z"
 
 ### 必填字段 ⭐
 
-| 字段 | 说明 | 示例 |
-|------|------|------|
-| **title** | 笔记标题，最多 60 字符 | `"React Hooks 学习笔记"` |
+| 字段            | 说明                    | 示例                     |
+| --------------- | ----------------------- | ------------------------ |
+| **title**       | 笔记标题，最多 60 字符  | `"React Hooks 学习笔记"` |
 | **publishDate** | 发布日期，ISO 8601 格式 | `"2024-04-29T10:00:00Z"` |
 
 ### 可选字段 💡
 
-| 字段 | 说明 | 示例 |
-|------|------|------|
+| 字段            | 说明           | 示例                   |
+| --------------- | -------------- | ---------------------- |
 | **description** | SEO 描述和摘要 | `"关键概念和用法总结"` |
 
 ## 笔记示例
@@ -81,25 +81,27 @@ description: "Promise、async/await 的学习总结"
 ## 核心概念
 
 ### Promise
+
 Promise 是一个代表异步操作最终完成（或失败）及其结果值的对象。
 
 \`\`\`javascript
 const promise = new Promise((resolve, reject) => {
-  setTimeout(() => resolve("完成!"), 1000);
+setTimeout(() => resolve("完成!"), 1000);
 });
 \`\`\`
 
 ### Async/Await
+
 更简洁的异步代码写法。
 
 \`\`\`javascript
 async function fetchData() {
-  try {
-    const data = await fetch('/api/data');
-    return data.json();
-  } catch (error) {
-    console.error(error);
-  }
+try {
+const data = await fetch('/api/data');
+return data.json();
+} catch (error) {
+console.error(error);
+}
 }
 \`\`\`
 
@@ -148,15 +150,15 @@ JSX 是 JavaScript 的扩展，让我们可以在 JS 中写类似 HTML 的代码
 
 ## 笔记 vs 文章
 
-| 特性 | 文章 | 笔记 |
-|------|------|------|
-| 位置 | `src/content/post/` | `src/content/note/` |
-| 完整性 | 完整的长篇内容 | 简洁的快速记录 |
-| 标签 | 支持 | 不支持 |
-| 封面 | 支持 | 不支持 |
-| 更新日期 | 支持 | 不支持 |
-| OG 图片 | 支持自定义 | 默认生成 |
-| 目的 | 正式发布 | 知识积累 |
+| 特性     | 文章                | 笔记                |
+| -------- | ------------------- | ------------------- |
+| 位置     | `src/content/post/` | `src/content/note/` |
+| 完整性   | 完整的长篇内容      | 简洁的快速记录      |
+| 标签     | 支持                | 不支持              |
+| 封面     | 支持                | 不支持              |
+| 更新日期 | 支持                | 不支持              |
+| OG 图片  | 支持自定义          | 默认生成            |
+| 目的     | 正式发布            | 知识积累            |
 
 ## 最佳实践
 
@@ -169,6 +171,7 @@ JSX 是 JavaScript 的扩展，让我们可以在 JS 中写类似 HTML 的代码
 ## 使用场景
 
 ✅ **适合笔记**
+
 - 学习笔记和总结
 - 代码片段收集
 - 快速参考
@@ -176,6 +179,7 @@ JSX 是 JavaScript 的扩展，让我们可以在 JS 中写类似 HTML 的代码
 - 项目文档
 
 ❌ **不适合笔记**
+
 - 需要展示的正式内容 → 用文章
 - 需要标签分类 → 用文章
 - 需要社交分享优化 → 用文章

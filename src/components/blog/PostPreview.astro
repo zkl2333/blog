@@ -13,14 +13,15 @@ const { as: Tag = "h3", post, withDesc = false } = Astro.props;
 
 <article class="dish-card">
 	<div class="dish-card__meta">
-		<FormattedDate class="text-muted text-xs font-medium tracking-wide" date={post.data.publishDate} />
+		<FormattedDate
+			class="text-muted text-xs font-medium tracking-wide"
+			date={post.data.publishDate}
+		/>
 		{post.data.draft && <span class="dish-card__tag dish-card__tag--draft">草稿</span>}
 		{post.data.pinned && <span class="dish-card__tag dish-card__tag--pin">招牌</span>}
 	</div>
 	<Tag class="dish-card__title">
 		<a class="dish-card__link" href={`/posts/${post.id}/`}>{post.data.title}</a>
 	</Tag>
-	{withDesc && post.data.description && (
-		<p class="dish-card__desc">{post.data.description}</p>
-	)}
+	{withDesc && post.data.description && <p class="dish-card__desc">{post.data.description}</p>}
 </article>

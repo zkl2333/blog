@@ -86,13 +86,11 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 	let mermaidInitialized = false;
 	const viewerInstances = new WeakMap();
 
-	const MERMAID_KEYWORDS = /\b(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram(?:-v2)?|erDiagram|gantt|pie|journey|mindmap|timeline|gitGraph|requirementDiagram|quadrantChart|xychart-beta|sankey-beta|subgraph|end|direction|click|class|classDef|style|linkStyle|note|loop|alt|opt|par|rect|activate|deactivate|participant|actor|as|TB|TD|BT|RL|LR)\b/g;
+	const MERMAID_KEYWORDS =
+		/\b(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram(?:-v2)?|erDiagram|gantt|pie|journey|mindmap|timeline|gitGraph|requirementDiagram|quadrantChart|xychart-beta|sankey-beta|subgraph|end|direction|click|class|classDef|style|linkStyle|note|loop|alt|opt|par|rect|activate|deactivate|participant|actor|as|TB|TD|BT|RL|LR)\b/g;
 
 	function escapeHtml(value: string) {
-		return value
-			.replace(/&/g, "&amp;")
-			.replace(/</g, "&lt;")
-			.replace(/>/g, "&gt;");
+		return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 	}
 
 	function highlightMermaid(source: string) {
@@ -104,9 +102,18 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 					return `${commentMatch[1]}<span class="mm-comment">${escapeHtml(commentMatch[2]!)}</span>`;
 				}
 				let html = escapeHtml(line);
-				html = html.replace(/(&quot;[^&]*?&quot;|&#39;[^&]*?&#39;|"[^"]*"|'[^']*')/g, '<span class="mm-string">$1</span>');
-				html = html.replace(/(--&gt;|--[xo]|==&gt;|-\.-&gt;|-\.-|---|--|&lt;--&gt;|&lt;--|::|:::)/g, '<span class="mm-arrow">$1</span>');
-				html = html.replace(/(\[\[?|\]\]?|\{\{?|\}\}?|\(\(?|\)\)?|&gt;|&lt;)/g, '<span class="mm-bracket">$1</span>');
+				html = html.replace(
+					/(&quot;[^&]*?&quot;|&#39;[^&]*?&#39;|"[^"]*"|'[^']*')/g,
+					'<span class="mm-string">$1</span>',
+				);
+				html = html.replace(
+					/(--&gt;|--[xo]|==&gt;|-\.-&gt;|-\.-|---|--|&lt;--&gt;|&lt;--|::|:::)/g,
+					'<span class="mm-arrow">$1</span>',
+				);
+				html = html.replace(
+					/(\[\[?|\]\]?|\{\{?|\}\}?|\(\(?|\)\)?|&gt;|&lt;)/g,
+					'<span class="mm-bracket">$1</span>',
+				);
 				html = html.replace(MERMAID_KEYWORDS, '<span class="mm-keyword">$1</span>');
 				return html;
 			})
@@ -294,8 +301,7 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 		}
 
 		viewer.addEventListener("click", (event) => {
-			const button =
-				event.target instanceof Element ? event.target.closest(".mermaid-btn") : null;
+			const button = event.target instanceof Element ? event.target.closest(".mermaid-btn") : null;
 			if (!button) {
 				return;
 			}
