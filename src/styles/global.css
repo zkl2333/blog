@@ -475,6 +475,28 @@ html :where(.prose) {
 		font-size: inherit;
 	}
 
+	:where(table) {
+		display: block;
+		max-width: 100%;
+		overflow-x: auto;
+		white-space: nowrap;
+		scrollbar-width: thin;
+		scrollbar-color: var(--color-muted) transparent;
+	}
+
+	:where(table)::-webkit-scrollbar {
+		height: 0.55rem;
+	}
+
+	:where(table)::-webkit-scrollbar-thumb {
+		background: var(--color-muted);
+		border-radius: 999px;
+	}
+
+	:where(table)::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
 	:where(.mermaid-code .mm-keyword) {
 		color: oklch(76% 0.13 290);
 	}
