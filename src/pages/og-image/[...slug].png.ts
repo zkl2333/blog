@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { Resvg } from "@resvg/resvg-js";
 import type { APIContext, InferGetStaticPropsType } from "astro";
 import satori, { type SatoriOptions } from "satori";
@@ -7,9 +9,27 @@ import { getAllPosts } from "@/data/post";
 import { getFormattedDate } from "@/utils/date";
 import { ogMarkup } from "./_ogMarkup";
 
+const getAssetPath = (fileName: string) => resolve(process.cwd(), "src", "assets", fileName);
+const lxgwWenKaiLite = readFileSync(getAssetPath("lxgw-wenkai-lite-regular.ttf"));
+const lxgwWenKaiLiteMedium = readFileSync(getAssetPath("lxgw-wenkai-lite-medium.ttf"));
+
 const ogOptions: SatoriOptions = {
 	// debug: true,
 	fonts: [
+		{
+			data: lxgwWenKaiLite,
+			lang: "zh-CN",
+			name: "LXGW WenKai Lite",
+			style: "normal",
+			weight: 400,
+		},
+		{
+			data: lxgwWenKaiLiteMedium,
+			lang: "zh-CN",
+			name: "LXGW WenKai Lite",
+			style: "normal",
+			weight: 700,
+		},
 		{
 			data: Buffer.from(RobotoMono),
 			name: "Roboto Mono",

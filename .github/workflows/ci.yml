@@ -1,17 +1,20 @@
-name: 持续集成
+name: 检查与部署
 
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
+  id-token: write
+  pages: write
 
 jobs:
-  lint:
-    name: 检查构建与类型问题
+  build:
+    name: 检查并构建站点
     runs-on: ubuntu-latest
 
     steps:
@@ -30,13 +33,44 @@ jobs:
           node-version: 22
           cache: "pnpm"
 
+      - name: 恢复 OG 字体缓存
+        uses: actions/cache@v4
+        with:
+          path: src/assets/lxgw-wenkai-lite-*.ttf
+          key: ${{ runner.os }}-og-fonts-${{ hashFiles('scripts/download-og-fonts.mjs') }}
+
       - name: 安装依赖
         run: pnpm install
 
-        # 使用 astro check 检查类型和配置问题
+      - name: 下载 OG 字体
+        run: pnpm download:og-fonts
+
       - name: 运行 Astro 检查
         run: pnpm astro check
 
-        # 确认生产构建可以正常完成
-      - name: 运行 Astro 构建
+      - name: 构建站点
         run: pnpm build
+
+      - name: 配置 GitHub Pages
+        if: github.event_name != 'pull_request'
+        uses: actions/configure-pages@v6
+
+      - name: 上传 GitHub Pages 构建产物
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+  deploy:
+    name: 部署到 GitHub Pages
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: 部署到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
