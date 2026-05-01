@@ -21,7 +21,7 @@
 		"@astrojs/sitemap": "3.7.2",
 		"@panzoom/panzoom": "^4.6.2",
 		"@tailwindcss/vite": "4.2.4",
-		"astro": "6.1.9",
+		"astro": "6.2.1",
 		"astro-expressive-code": "^0.41.7",
 		"astro-icon": "^1.1.5",
 		"astro-robots-txt": "^1.0.0",
@@ -46,7 +46,7 @@
 		"unist-util-visit": "^5.1.0"
 	},
 	"devDependencies": {
-		"@astrojs/check": "^0.9.8",
+		"@astrojs/check": "^0.9.9",
 		"@biomejs/biome": "^2.4.13",
 		"@iconify-json/mdi": "^1.2.2",
 		"@pagefind/default-ui": "^1.5.2",
