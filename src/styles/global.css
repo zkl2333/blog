@@ -441,6 +441,7 @@ html :where(.prose) {
 	font-family: var(--font-family-sans);
 	line-height: 1.9;
 	text-wrap: pretty;
+	letter-spacing: 0.01em;
 
 	:where(h1, h2, h3, h4) {
 		font-weight: 700;
