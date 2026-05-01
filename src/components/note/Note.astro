@@ -35,11 +35,11 @@ const { Content } = await render(note);
 			</Tag>
 			<FormattedDate class="text-muted font-semibold" date={note.data.publishDate} />
 			{isPreview ? (
-				<div class="prose prose-cactus text-muted mt-1 line-clamp-2 max-w-none [&>p:last-of-type]:mb-0">
+				<div class="prose prose-cactus text-muted mt-1 line-clamp-2 !max-w-none [&>p:last-of-type]:mb-0">
 					<Content />
 				</div>
 			) : (
-				<div class="prose prose-cactus mt-4 max-w-none [&>p:last-of-type]:mb-0">
+				<div class="prose prose-cactus mt-4 !max-w-none [&>p:last-of-type]:mb-0">
 					<Content />
 				</div>
 			)}
