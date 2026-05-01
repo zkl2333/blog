@@ -34,7 +34,7 @@ jobs:
           cache: "pnpm"
 
       - name: 恢复 OG 字体缓存
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: src/assets/lxgw-wenkai-lite-*.ttf
           key: ${{ runner.os }}-og-fonts-${{ hashFiles('scripts/download-og-fonts.mjs') }}
