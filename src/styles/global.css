@@ -435,13 +435,13 @@ html :where(.prose) {
 	--tw-prose-links: var(--color-global-text);
 	--tw-prose-quotes: var(--color-muted);
 	--tw-prose-th-borders: #666;
+	max-width: none;
 }
 
 @utility prose {
 	font-family: var(--font-family-sans);
 	line-height: 1.9;
 	letter-spacing: 0.01em;
-	max-width: none;
 
 	:where(h1, h2, h3, h4) {
 		font-weight: 700;
