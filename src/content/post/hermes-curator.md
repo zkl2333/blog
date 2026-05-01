@@ -125,24 +125,67 @@ for row in _u.agent_created_report():
 |------|------|------|
 | 独立模型 | [`_resolve_review_model()` L1118-L1158](https://github.com/NousResearch/hermes-agent/blob/0c35092accdc4e306e982c7b1913bf97b9bb3d3d/agent/curator.py#L1118-L1158) | 走 `auxiliary.curator.{provider,model}`，可不走主模型 |
 | 高迭代上限 | [L1237](https://github.com/NousResearch/hermes-agent/blob/0c35092accdc4e306e982c7b1913bf97b9bb3d3d/agent/curator.py#L1237) `max_iterations=9999` | 伞形合并可能需要 50-100 次 API 调用 |
-| 禁自我审查 | [L1244-L1245](https://github.com/NousResearch/hermes-agent/blob/0c35092accdc4e306e982c7b1913bf97b9bb3d3d/agent/curator.py#L1244-L1245) `_memory_nudge_interval = 0; _skill_nudge_interval = 0` | 策展过程不会触发新的 Background Review |
+| 禁自我审查 | [L1244-L1245](https://github.com/NousResearch/hermes-agent/blob/0c35092accdc4e306e982c7b1913bf97b9bb3d3d/agent/curator.py#L1244-L1245) | 策展过程不会触发新的 Background Review |
 | 无上下文文件 | [L1240](https://github.com/NousResearch/hermes-agent/blob/0c35092accdc4e306e982c7b1913bf97b9bb3d3d/agent/curator.py#L1240) `skip_context_files=True` | 不加载 AGENTS.md 等 |
 | 无记忆 | [L1241](https://github.com/NousResearch/hermes-agent/blob/0c35092accdc4e306e982c7b1913bf97b9bb3d3d/agent/curator.py#L1241) `skip_memory=True` | 不污染长期记忆 |
 | 静默输出 | [L1252-L1254](https://github.com/NousResearch/hermes-agent/blob/0c35092accdc4e306e982c7b1913bf97b9bb3d3d/agent/curator.py#L1252-L1254) stdout/stderr → `/dev/null` | 工具调用日志不污染终端 |
 
 策展 agent 收到两份输入：一份候选名单（由 [`_render_candidate_list()`](https://github.com/NousResearch/hermes-agent/blob/0c35092accdc4e306e982c7b1913bf97b9bb3d3d/agent/curator.py#L973-L990) 生成，包含每个 Skill 的名称、状态、使用计数、最后活跃时间），以及一个长达 110 行的策展 prompt（[`CURATOR_REVIEW_PROMPT`，L262-L372](https://github.com/NousResearch/hermes-agent/blob/0c35092accdc4e306e982c7b1913bf97b9bb3d3d/agent/curator.py#L262-L372)）。
 
-**这个 prompt 是 Curator 的灵魂。** 它明确要求策展 agent 不是做"这个 Skill 有没有用"的二选一判断，而是做**前缀聚类 + 伞形合并**——把散落的碎片拼成类级别的知识条目。
+**这个 prompt 是 Curator 的灵魂。** 它要求策展 agent 做一件很具体的事：扫一遍所有 agent 自动创建的 Skill，把属于同一个领域的碎片拼成一张大图——这就是「伞形合并」。
 
-Prompt 的核心指令（[L293-L331](https://github.com/NousResearch/hermes-agent/blob/0c35092accdc4e306e982c7b1913bf97b9bb3d3d/agent/curator.py#L293-L331)）：
+先看一个具体例子，再讲它怎么做到的。假设你的 Skill 库里有这样三个条目：
 
-1. **识别前缀聚类**——比如 `hermes-config-debug`、`hermes-config-migration`、`hermes-config-rollback` 属于同一类
-2. **判断是否需要伞形 Skill**——"Would a human maintainer write this as N separate skills, or as one skill with N labeled subsections?"
-3. **三种合并方式**：
-   - merge into existing umbrella（已有伞 → 追加小节）
-   - create new umbrella（太碎 → 新建伞形 SKILL.md）
-   - demote to references/templates/scripts（窄但有价值 → 降级为支持文件）
-4. **迭代**——"Don't stop after 3 merges."
+```
+hermes-config-debug/SKILL.md      ← 某次调试 config.yaml 的经验
+hermes-config-migration/SKILL.md  ← 升级后迁移旧配置的步骤
+hermes-config-rollback/SKILL.md   ← 配置改崩了怎么回滚
+```
+
+这三个 Skill 各自独立时，Hermes 每次做配置相关的任务都要搜三遍、匹配三次。策展 agent 看到 `hermes-config-` 这个共同前缀，判断它们属于同一个领域，于是执行合并。合并之后变成：
+
+```
+hermes-config/SKILL.md            ← 一个 Skill，内含三节
+  ## Debug
+  之前的 debug 经验...
+  ## Migration
+  迁移步骤...
+  ## Rollback
+  回滚方法...
+
+.archive/
+  hermes-config-debug/            ← 已归档
+  hermes-config-migration/        ← 已归档
+  hermes-config-rollback/         ← 已归档
+```
+
+下次 Hermes 做配置相关任务时，匹配到 `hermes-config` 这一个 Skill 就够了——它自己会在三节里找最相关的那段。
+
+用一张流程图来概括策展 agent 的决策过程：
+
+```mermaid
+flowchart TD
+    A[扫描所有 agent-created Skill] --> B{有共同前缀聚类?}
+    B -->|无| C[跳过，保持原样]
+    B -->|有| D{聚类中有一个够宽的<br/>Skill 能做伞?}
+    D -->|有| E[用 patch 把其他 Skill<br/>的内容追加到伞下<br/>然后归档窄 Skill]
+    D -->|无| F{窄 Skill 的内容<br/>有独立价值?}
+    F -->|有| G[创建新伞形 SKILL.md<br/>窄内容降级为 references/ 文件<br/>然后归档原 Skill]
+    F -->|无| H[直接归档<br/>标记为 pruned]
+    E --> I[继续扫描下一个聚类]
+    G --> I
+    H --> I
+    C --> I
+    I --> B
+```
+
+这就是 prompt 里要求的三种操作（[L293-L331](https://github.com/NousResearch/hermes-agent/blob/0c35092accdc4e306e982c7b1913bf97b9bb3d3d/agent/curator.py#L293-L331)）：
+
+| 操作 | 什么时候用 | 上面对应 |
+|------|-----------|---------|
+| 合并到已有伞 | 聚类里正好有一个够宽的 Skill | `hermes-config` 吸收另外两个 |
+| 新建伞形 Skill | 聚类里全是窄的，需要从零建伞 | 如果三个都窄，新建一个 `hermes-config` |
+| 降级为支持文件 | 窄但有独立价值，不配做独立 Skill | 比如某次 bug 的复现日志，放进 `references/` |
 
 Prompt 里有一句直指核心：
 
