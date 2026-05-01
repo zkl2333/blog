@@ -435,7 +435,6 @@ html :where(.prose) {
 	--tw-prose-links: var(--color-global-text);
 	--tw-prose-quotes: var(--color-muted);
 	--tw-prose-th-borders: #666;
-	max-width: none;
 }
 
 @utility prose {

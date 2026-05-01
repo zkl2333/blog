@@ -7,6 +7,7 @@ export default {
 			typography: () => ({
 				DEFAULT: {
 					css: {
+						maxWidth: null,
 						a: {
 							textUnderlineOffset: "2px",
 							"&:hover": {
