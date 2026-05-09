@@ -1477,6 +1477,49 @@
 		white-space: nowrap;
 	}
 
+	/* —— 404 页 —— */
+	.not-found {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 0.85rem;
+		padding: 4rem 1rem;
+		text-align: center;
+	}
+	.not-found__mark {
+		opacity: 0.95;
+		filter: drop-shadow(0 6px 18px color-mix(in oklch, var(--color-accent) 25%, transparent));
+	}
+	.not-found__code {
+		font-family: var(--font-family-mono);
+		font-size: 0.85rem;
+		font-weight: 600;
+		letter-spacing: 0.2em;
+		color: var(--color-muted);
+		margin: 0.5rem 0 -0.25rem;
+	}
+	.not-found__title {
+		font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2rem);
+		font-weight: 700;
+		color: var(--color-accent-2);
+		margin: 0;
+	}
+	.not-found__desc {
+		max-width: 28rem;
+		font-size: 0.92rem;
+		line-height: 1.85;
+		color: var(--color-muted);
+		margin: 0;
+	}
+	.not-found__cta {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.6rem;
+		margin-top: 0.85rem;
+	}
+
 	/* —— 站点页脚 —— */
 	.site-footer {
 		margin-top: 5rem;
