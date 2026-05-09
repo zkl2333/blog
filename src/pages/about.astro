@@ -7,6 +7,8 @@ const meta = {
 	title: "关于",
 };
 
+const traits: string[] = ["前端", "杭州", "AI", "HomeLab", "折腾", "小饭桌"];
+
 const contacts: { icon: string; label: string; href: string; sub: string }[] = [
 	{ icon: "mdi:github", label: "GitHub", href: "https://github.com/zkl2333", sub: "@zkl2333" },
 	{ icon: "mdi:rss", label: "RSS 订阅", href: "/rss.xml", sub: "/rss.xml" },
@@ -19,20 +21,61 @@ const contacts: { icon: string; label: string; href: string; sub: string }[] = [
 		<h1 class="page-head__title">关于我 <span class="hero-board__emoji">🥣</span></h1>
 	</header>
 
-	<div class="prose prose-cactus !max-w-none">
-		<p>
-			这里是我的博客，也是我的小饭桌 🍚
-			名字本来想叫「菜谱」「菜单」，听着像正经餐厅，太端着，干脆改叫小饭桌——支张桌、摆几道菜，谁路过都能坐。
-		</p>
-		<p>
-			我叫<strong>多吃点</strong>，住在杭州，前端工程师。白天上班写前端，下班自己折腾的就杂了。AI
-			Agent 玩过几个，HomeLab 搭着在跑，想偷懒就写点脚本，要用啥服务就自己部署一个。
-		</p>
-		<p>
-			奶茶咖啡轮着喝 ☕ 馋了就点炸鸡火锅 🍗
-			博客也跟我吃饭一个路子，啥都来点：碰上想琢磨明白的东西就一篇长的，平时一句话两句话的就丢碎念，全看那段时间在玩啥。
-		</p>
-		<p>反正我自己端出来的，每道都是先自己尝过、觉得不错的。</p>
+	<section class="about-tags" aria-label="标签">
+		{
+			traits.map((t) => (
+				<span class="about-tag">
+					<span aria-hidden="true">#</span>
+					{t}
+				</span>
+			))
+		}
+	</section>
+
+	<div class="about-body">
+		<div class="prose prose-cactus !max-w-none">
+			<p>
+				这里是我的博客，也是我的小饭桌 🍚
+				名字本来想叫「菜谱」「菜单」，听着像正经餐厅，太端着，干脆改叫小饭桌——支张桌、摆几道菜，谁路过都能坐。
+			</p>
+			<p>
+				我叫<strong>多吃点</strong>，住在杭州，前端工程师。白天上班写前端，下班自己折腾的就杂了。AI
+				Agent 玩过几个，HomeLab 搭着在跑，想偷懒就写点脚本，要用啥服务就自己部署一个。
+			</p>
+			<p>
+				奶茶咖啡轮着喝 ☕ 馋了就点炸鸡火锅 🍗
+				博客也跟我吃饭一个路子，啥都来点：碰上想琢磨明白的东西就一篇长的，平时一句话两句话的就丢碎念，全看那段时间在玩啥。
+			</p>
+			<p>反正我自己端出来的，每道都是先自己尝过、觉得不错的。</p>
+		</div>
+
+		<aside class="about-aside" aria-label="桌边名片">
+			<div class="about-card">
+				<p class="about-card__heading">桌边名片</p>
+				<dl class="about-card__list">
+					<div>
+						<dt>名号</dt>
+						<dd>多吃点</dd>
+					</div>
+					<div>
+						<dt>坐标</dt>
+						<dd>杭州</dd>
+					</div>
+					<div>
+						<dt>主菜</dt>
+						<dd>前端 / 全栈 / AI 折腾</dd>
+					</div>
+					<div>
+						<dt>副菜</dt>
+						<dd>HomeLab / 自部署 / 小工具</dd>
+					</div>
+					<div>
+						<dt>馋啥</dt>
+						<dd>炸鸡 / 火锅 / 奶茶 ☕</dd>
+					</div>
+				</dl>
+			</div>
+		</aside>
 	</div>
 
 	<section class="contact-grid" aria-label="联系方式">
