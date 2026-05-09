@@ -340,6 +340,31 @@
 		border: 1px solid var(--color-border);
 		overflow: hidden;
 		box-shadow: 0 1px 0 color-mix(in oklch, var(--color-muted) 6%, transparent);
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1.25rem;
+	}
+	@media (min-width: 720px) {
+		.hero-board {
+			grid-template-columns: minmax(0, 1fr) 12rem;
+			gap: 2rem;
+			padding: 1.85rem 1.85rem 1.85rem 2rem;
+			align-items: start;
+		}
+	}
+	.hero-board__main {
+		min-width: 0;
+	}
+	.hero-board__menu {
+		display: none;
+	}
+	@media (min-width: 720px) {
+		.hero-board__menu {
+			display: flex;
+			justify-content: center;
+			align-items: flex-start;
+			padding-top: 0.4rem;
+		}
 	}
 	.hero-board::before {
 		/* 左侧 accent 立柱：饭桌的"灶火" */
@@ -448,6 +473,154 @@
 	}
 	.hero-board__line:hover .hero-board__emoji {
 		transform: rotate(-8deg) scale(1.15);
+	}
+
+	/* —— 今日推荐：木质小菜牌 —— */
+	.day-board {
+		position: relative;
+		width: 100%;
+		max-width: 11rem;
+		padding: 1rem 0.85rem 0.9rem;
+		border-radius: 0.55rem;
+		background: linear-gradient(
+			180deg,
+			color-mix(in oklch, var(--color-accent-warm, var(--color-accent)) 18%, var(--color-surface)),
+			color-mix(in oklch, var(--color-accent-warm, var(--color-accent)) 8%, var(--color-surface))
+		);
+		border: 1px solid color-mix(in oklch, var(--color-accent) 25%, var(--color-border));
+		box-shadow:
+			0 2px 0 color-mix(in oklch, var(--color-accent-2) 12%, transparent),
+			0 8px 18px -16px color-mix(in oklch, var(--color-accent-2) 30%, transparent);
+		transform: rotate(-1.2deg);
+		transition: transform 320ms cubic-bezier(0.34, 1.4, 0.64, 1);
+	}
+	.hero-board:hover .day-board {
+		transform: rotate(-0.4deg) translateY(-1px);
+	}
+	.day-board__binder {
+		position: absolute;
+		top: -8px;
+		left: 0.85rem;
+		right: 0.85rem;
+		display: flex;
+		justify-content: space-between;
+	}
+	.day-board__binder span {
+		display: block;
+		width: 6px;
+		height: 14px;
+		border-radius: 999px;
+		background: color-mix(in oklch, var(--color-accent-2) 60%, transparent);
+		opacity: 0.7;
+	}
+	.day-board__heading {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		margin: 0.15rem 0 0.6rem;
+		font-size: 0.82rem;
+		font-weight: 700;
+		color: var(--color-accent-2);
+		letter-spacing: 0.01em;
+	}
+	.day-board__heading::before {
+		content: "";
+		display: inline-block;
+		width: 0.45rem;
+		height: 0.45rem;
+		border-radius: 999px;
+		background: var(--color-accent);
+	}
+	.day-board__list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.3rem;
+	}
+	.day-board__list li {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.85rem;
+		font-weight: 500;
+		color: var(--color-global-text);
+		font-family: var(--font-family-sans);
+	}
+	.day-board__list li span {
+		font-size: 0.45rem;
+		color: var(--color-accent);
+		opacity: 0.8;
+	}
+	.day-board__sub {
+		margin: 0.5rem 0 0;
+		font-size: 0.85rem;
+		color: var(--color-muted);
+		letter-spacing: 0.15em;
+		opacity: 0.6;
+	}
+
+	/* —— 特色菜系：四件套 —— */
+	.feature-row {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.75rem;
+		margin-top: 1.25rem;
+	}
+	@media (min-width: 640px) {
+		.feature-row {
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+			gap: 0.9rem;
+			margin-top: 1.5rem;
+		}
+	}
+	.feature-pill {
+		display: flex;
+		align-items: center;
+		gap: 0.65rem;
+		padding: 0.7rem 0.85rem;
+		border-radius: 0.6rem;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		transition:
+			border-color 200ms ease,
+			background 200ms ease,
+			transform 200ms ease;
+	}
+	.feature-pill:hover {
+		border-color: color-mix(in oklch, var(--color-accent) 35%, var(--color-border));
+		background: color-mix(in oklch, var(--color-accent) 4%, var(--color-surface));
+		transform: translateY(-1px);
+	}
+	.feature-pill__icon {
+		flex: none;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 2rem;
+		height: 2rem;
+		border-radius: 0.5rem;
+		background: color-mix(in oklch, var(--color-accent) 12%, transparent);
+		font-size: 1.05rem;
+		line-height: 1;
+	}
+	.feature-pill__body {
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+		line-height: 1.25;
+	}
+	.feature-pill__title {
+		font-size: 0.84rem;
+		font-weight: 700;
+		color: var(--color-accent-2);
+		letter-spacing: 0.01em;
+	}
+	.feature-pill__sub {
+		font-size: 0.7rem;
+		color: var(--color-muted);
+		margin-top: 0.15rem;
 	}
 
 	/* —— 章节标题：菜单分隔条 —— */
