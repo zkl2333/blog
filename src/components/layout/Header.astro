@@ -1,19 +1,23 @@
 ---
+import BrandMark from "@/components/BrandMark.astro";
 import Search from "@/components/Search.astro";
 import ThemeToggle from "@/components/ThemeToggle.astro";
 import { menuLinks } from "@/site.config";
 import { siteConfig } from "../../site.config";
 ---
 
-<header class="group relative mb-24 flex items-center" id="main-header">
+<header class="group relative mb-20 flex items-center sm:mb-24" id="main-header">
 	<div class="flex sm:flex-col">
 		<a
 			aria-current={Astro.url.pathname === "/" ? "page" : false}
 			class="site-title-link"
 			href="/"
 		>
-			<span class="site-title">{siteConfig.title}</span>
-			{siteConfig.tagline && <span class="site-tagline">{siteConfig.tagline}</span>}
+			<BrandMark class="site-title-link__mark" size={40} />
+			<span class="site-title-link__text">
+				<span class="site-title">{siteConfig.title}</span>
+				{siteConfig.tagline && <span class="site-tagline">{siteConfig.tagline}</span>}
+			</span>
 		</a>
 		<nav
 			aria-label="主菜单"

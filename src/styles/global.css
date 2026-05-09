@@ -210,8 +210,8 @@
 	/* —— 站点 wordmark —— */
 	.site-title-link {
 		display: inline-flex;
-		flex-direction: column;
-		gap: 0.25rem;
+		align-items: center;
+		gap: 0.6rem;
 		text-decoration: none;
 		color: var(--color-accent-2);
 		transition: color 220ms ease;
@@ -219,25 +219,74 @@
 	.site-title-link:hover {
 		color: var(--color-accent);
 	}
+	.site-title-link__mark {
+		flex: none;
+		transition: transform 320ms cubic-bezier(0.34, 1.4, 0.64, 1);
+	}
+	.site-title-link:hover .site-title-link__mark {
+		transform: rotate(-6deg) scale(1.04);
+	}
+	.site-title-link__text {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+		min-width: 0;
+	}
 	.site-title {
 		display: block;
-		font-size: 1.35rem;
+		font-size: 1.3rem;
 		font-weight: 700;
 		letter-spacing: -0.005em;
 		line-height: 1.1;
 	}
 	@media (min-width: 640px) {
 		.site-title {
-			font-size: 1.5rem;
+			font-size: 1.45rem;
+		}
+		.site-title-link {
+			gap: 0.7rem;
 		}
 	}
 	.site-tagline {
 		display: block;
-		font-size: 0.74rem;
+		font-size: 0.72rem;
 		font-weight: 400;
 		color: var(--color-muted);
 		line-height: 1.3;
 		letter-spacing: 0.01em;
+	}
+
+	/* —— 品牌标志：饭碗 logo —— */
+	.brand-mark {
+		display: block;
+	}
+	.brand-mark__ring {
+		fill: none;
+		stroke: var(--color-accent);
+		opacity: 0.85;
+	}
+	.brand-mark__bg {
+		fill: color-mix(in oklch, var(--color-accent) 9%, var(--color-surface));
+	}
+	.brand-mark__steam {
+		fill: none;
+		stroke: var(--color-accent);
+		opacity: 0.6;
+	}
+	.brand-mark__bowl {
+		fill: var(--color-accent);
+	}
+	.brand-mark__rim {
+		fill: color-mix(in oklch, var(--color-accent) 18%, var(--color-surface));
+		stroke: color-mix(in oklch, var(--color-accent-2) 65%, transparent);
+		stroke-width: 0.6;
+	}
+	.brand-mark__rice {
+		fill: color-mix(in oklch, var(--color-surface) 92%, var(--color-accent));
+	}
+	.brand-mark__seed {
+		fill: color-mix(in oklch, var(--color-accent) 55%, var(--color-accent-2));
+		opacity: 0.55;
 	}
 
 	/* —— 主菜单链接 —— */
