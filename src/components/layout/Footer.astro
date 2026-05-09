@@ -6,15 +6,19 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
-	<img
-		alt=""
-		aria-hidden="true"
-		class="site-footer__deco"
-		height={220}
-		loading="lazy"
-		src="/illustrations/bowl.png"
-		width={320}
-	/>
+	<div class="site-footer__deco" aria-hidden="true">
+		<div class="site-footer__deco-cloth"></div>
+		<img
+			alt=""
+			class="site-footer__deco-img"
+			height={220}
+			loading="lazy"
+			src="/illustrations/bowl.png"
+			width={320}
+		/>
+		<span class="sparkle sparkle--footer-1">✦</span>
+		<span class="sparkle sparkle--footer-2">✦</span>
+	</div>
 	<div class="site-footer__grid">
 		<div class="site-footer__brand">
 			<p class="site-footer__title">{siteConfig.title}</p>
