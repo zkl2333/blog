@@ -1,5 +1,4 @@
 ---
-import BrandMark from "@/components/BrandMark.astro";
 import PageLayout from "@/layouts/Base.astro";
 
 const meta = {
@@ -10,7 +9,15 @@ const meta = {
 
 <PageLayout meta={meta}>
 	<section class="not-found">
-		<BrandMark size={88} class="not-found__mark" />
+		<img
+			alt=""
+			aria-hidden="true"
+			class="not-found__deco"
+			height={220}
+			loading="eager"
+			src="/illustrations/bowl.png"
+			width={320}
+		/>
 		<p class="not-found__code">404</p>
 		<h1 class="not-found__title">这道菜不在了 🥲</h1>
 		<p class="not-found__desc">

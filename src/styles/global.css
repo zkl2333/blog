@@ -1268,6 +1268,23 @@
 	.about-aside {
 		min-width: 0;
 	}
+	.about-aside__deco {
+		display: none;
+	}
+	@media (min-width: 880px) {
+		.about-aside__deco {
+			display: block;
+			width: 12rem;
+			height: auto;
+			margin: 1rem auto 0;
+			pointer-events: none;
+			user-select: none;
+			opacity: 0.95;
+		}
+	}
+	[data-theme="dark"] .about-aside__deco {
+		opacity: 0.8;
+	}
 
 	.about-card {
 		position: relative;
@@ -1491,6 +1508,18 @@
 		opacity: 0.95;
 		filter: drop-shadow(0 6px 18px color-mix(in oklch, var(--color-accent) 25%, transparent));
 	}
+	.not-found__deco {
+		width: 16rem;
+		max-width: 70%;
+		height: auto;
+		opacity: 0.95;
+		filter: drop-shadow(0 10px 24px color-mix(in oklch, var(--color-accent) 22%, transparent));
+		pointer-events: none;
+		user-select: none;
+	}
+	[data-theme="dark"] .not-found__deco {
+		opacity: 0.85;
+	}
 	.not-found__code {
 		font-family: var(--font-family-mono);
 		font-size: 0.85rem;
@@ -1522,6 +1551,7 @@
 
 	/* —— 站点页脚 —— */
 	.site-footer {
+		position: relative;
 		margin-top: 5rem;
 		padding-top: 2.5rem;
 		padding-bottom: 1.5rem;
@@ -1529,16 +1559,31 @@
 		font-size: 0.82rem;
 		color: var(--color-muted);
 	}
+	.site-footer__deco {
+		display: none;
+	}
+	@media (min-width: 960px) {
+		.site-footer__deco {
+			display: block;
+			position: absolute;
+			right: 0;
+			bottom: 4.5rem;
+			width: 11rem;
+			height: auto;
+			pointer-events: none;
+			user-select: none;
+			opacity: 0.95;
+			filter: drop-shadow(0 8px 18px color-mix(in oklch, var(--color-accent-2) 28%, transparent));
+		}
+	}
+	[data-theme="dark"] .site-footer__deco {
+		opacity: 0.78;
+		filter: drop-shadow(0 8px 18px color-mix(in oklch, black 50%, transparent));
+	}
 	.site-footer__grid {
 		display: grid;
-		grid-template-columns: 1fr;
-		gap: 2rem;
-	}
-	@media (min-width: 480px) {
-		.site-footer__grid {
-			grid-template-columns: 1fr 1fr;
-			gap: 2rem 2.5rem;
-		}
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1.5rem 1rem;
 	}
 	@media (min-width: 720px) {
 		.site-footer__grid {
