@@ -1,14 +1,24 @@
 ---
+import { Icon } from "astro-icon/components";
 import PageLayout from "@/layouts/Base.astro";
 
 const meta = {
 	description: "关于多吃点——前端工程师，业余 AI 折腾选手，小饭桌主理人。",
 	title: "关于",
 };
+
+const contacts: { icon: string; label: string; href: string; sub: string }[] = [
+	{ icon: "mdi:github", label: "GitHub", href: "https://github.com/zkl2333", sub: "@zkl2333" },
+	{ icon: "mdi:rss", label: "RSS 订阅", href: "/rss.xml", sub: "/rss.xml" },
+];
 ---
 
 <PageLayout meta={meta}>
-	<h1 class="title mb-12">关于</h1>
+	<header class="page-head">
+		<span class="section-head__dot" aria-hidden="true"></span>
+		<h1 class="page-head__title">关于我 <span class="hero-board__emoji">🥣</span></h1>
+	</header>
+
 	<div class="prose prose-cactus !max-w-none">
 		<p>
 			这里是我的博客，也是我的小饭桌 🍚
@@ -23,9 +33,26 @@ const meta = {
 			博客也跟我吃饭一个路子，啥都来点：碰上想琢磨明白的东西就一篇长的，平时一句话两句话的就丢碎念，全看那段时间在玩啥。
 		</p>
 		<p>反正我自己端出来的，每道都是先自己尝过、觉得不错的。</p>
-		<p>
-			想找我玩可以来 <a href="https://github.com/zkl2333" target="_blank" rel="noreferrer">GitHub</a
-			>，@zkl2333。
-		</p>
 	</div>
+
+	<section class="contact-grid" aria-label="联系方式">
+		{
+			contacts.map((c) => (
+				<a
+					class="contact-card"
+					href={c.href}
+					rel={c.href.startsWith("http") ? "noreferrer" : undefined}
+					target={c.href.startsWith("http") ? "_blank" : undefined}
+				>
+					<span class="contact-card__icon" aria-hidden="true">
+						<Icon name={c.icon} />
+					</span>
+					<span class="contact-card__body">
+						<span class="contact-card__label">{c.label}</span>
+						<span class="contact-card__sub">{c.sub}</span>
+					</span>
+				</a>
+			))
+		}
+	</section>
 </PageLayout>

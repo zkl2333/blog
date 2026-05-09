@@ -31,29 +31,33 @@ const latestNotes = allNotes
 
 <PageLayout meta={{ title: "首页" }}>
 	<section class="hero-board">
-		<span class="hero-board__stamp" aria-hidden="true">今日营业中</span>
+		<div class="hero-board__meta">
+			<span class="hero-board__stamp" aria-hidden="true">OPEN</span>
+			<span class="hero-board__comment">// 今日营业中 · 招待散客</span>
+		</div>
+		<h1 class="hero-board__title">
+			嘿，欢迎来到我的小饭桌 <span class="hero-board__emoji">🍚</span>
+		</h1>
 		<p class="hero-board__line">
-			嘿，到小饭桌了 <span class="hero-board__emoji">🍚</span> 这是我的博客。本来想叫「菜谱」「菜单」，听着像正经餐厅太端着，最后选了「小饭桌」——支张桌、摆几道菜，谁路过都能坐，扒两口就走也行。
+			这是我的博客，本来想叫「菜谱」「菜单」，听着像正经餐厅太端着，最后选了「小饭桌」——支张桌、摆几道菜，谁路过都能坐，扒两口就走也行。
 		</p>
 		<p class="hero-board__line">
 			桌上端的都是自己做的：写的代码、追的源码、折腾的小工具，外加一堆没啥用但挺好玩的念头。有的是大菜配图配流程图，有的就一口炸鸡
 			<span class="hero-board__emoji">🍗</span> 看心情上。
 		</p>
-		<p class="hero-board__line text-muted">
-			想吃硬菜就翻 <a class="cactus-link font-semibold" href="/posts/">文章</a>，想配点小酒闲聊就去 <a
-				class="cactus-link font-semibold"
-				href="/notes/">碎念</a
-			> 那边坐坐——那边更下饭。
-		</p>
-		<div class="mt-5"><SocialList /></div>
+		<div class="hero-board__cta">
+			<a class="btn btn--primary" href="/posts/">去看看文章</a>
+			<a class="btn btn--ghost" href="/about/">关于我</a>
+		</div>
+		<div class="hero-board__social"><SocialList /></div>
 	</section>
 
 	{
 		pinnedPosts.length > 0 && (
-			<section class="mt-20">
+			<section class="mt-16">
 				<header class="section-head">
-					<span class="section-head__badge">招牌菜</span>
-					<h2 class="section-head__title">置顶文章</h2>
+					<span class="section-head__dot" aria-hidden="true" />
+					<h2 class="section-head__title">招牌菜 · 置顶</h2>
 				</header>
 				<ul class="dish-grid" role="list">
 					{pinnedPosts.map((p) => (
@@ -66,12 +70,11 @@ const latestNotes = allNotes
 		)
 	}
 
-	<section class="mt-20">
+	<section class="mt-16">
 		<header class="section-head">
-			<span class="section-head__badge section-head__badge--main">今日主菜</span>
-			<h2 class="section-head__title">
-				<a class="hover:text-accent transition-colors" href="/posts/">文章 →</a>
-			</h2>
+			<span class="section-head__dot" aria-hidden="true"></span>
+			<h2 class="section-head__title">今日上菜 · 精选文章</h2>
+			<a class="section-head__more" href="/posts/">查看全部 →</a>
 		</header>
 		<ul class="dish-grid" role="list">
 			{
@@ -86,14 +89,13 @@ const latestNotes = allNotes
 
 	{
 		latestNotes.length > 0 && (
-			<section class="mt-20">
+			<section class="mt-16">
 				<header class="section-head section-head--sub">
-					<span class="section-head__badge section-head__badge--side">下酒小菜</span>
-					<h2 class="section-head__title section-head__title--sub">
-						<a class="hover:text-accent transition-colors" href="/notes/">
-							碎念 →
-						</a>
-					</h2>
+					<span class="section-head__dot section-head__dot--side" aria-hidden="true" />
+					<h2 class="section-head__title section-head__title--sub">下酒小菜 · 碎念</h2>
+					<a class="section-head__more" href="/notes/">
+						查看全部 →
+					</a>
 				</header>
 				<ul class="note-list" role="list">
 					{latestNotes.map((note) => (

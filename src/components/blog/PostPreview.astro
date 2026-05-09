@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import type { HTMLTag, Polymorphic } from "astro/types";
 import FormattedDate from "@/components/FormattedDate.astro";
@@ -9,19 +10,41 @@ type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }> & {
 };
 
 const { as: Tag = "h3", post, withDesc = false } = Astro.props;
+const cover = post.data.coverImage;
+const tags = post.data.tags?.slice(0, 5) ?? [];
 ---
 
-<article class="dish-card">
-	<div class="dish-card__meta">
-		<FormattedDate
-			class="text-muted text-xs font-medium tracking-wide"
-			date={post.data.publishDate}
-		/>
-		{post.data.draft && <span class="dish-card__tag dish-card__tag--draft">草稿</span>}
-		{post.data.pinned && <span class="dish-card__tag dish-card__tag--pin">招牌</span>}
+<article class={`dish-card ${cover ? "dish-card--has-cover" : ""}`}>
+	{
+		cover && (
+			<a class="dish-card__cover" href={`/posts/${post.id}/`} tabindex="-1" aria-hidden="true">
+				<Image alt={cover.alt} src={cover.src} width={240} height={160} />
+			</a>
+		)
+	}
+	<div class="dish-card__body">
+		<div class="dish-card__meta">
+			<FormattedDate class="dish-card__date" date={post.data.publishDate} />
+			{post.data.draft && <span class="dish-card__tag dish-card__tag--draft">draft</span>}
+			{post.data.pinned && <span class="dish-card__tag dish-card__tag--pin">★ pin</span>}
+		</div>
+		<Tag class="dish-card__title">
+			<a class="dish-card__link" href={`/posts/${post.id}/`}>{post.data.title}</a>
+		</Tag>
+		{withDesc && post.data.description && <p class="dish-card__desc">{post.data.description}</p>}
+		{
+			tags.length > 0 && (
+				<ul class="dish-card__tags" role="list">
+					{tags.map((t) => (
+						<li>
+							<a class="dish-card__chip" href={`/tags/${t}/`}>
+								<span aria-hidden="true">#</span>
+								{t}
+							</a>
+						</li>
+					))}
+				</ul>
+			)
+		}
 	</div>
-	<Tag class="dish-card__title">
-		<a class="dish-card__link" href={`/posts/${post.id}/`}>{post.data.title}</a>
-	</Tag>
-	{withDesc && post.data.description && <p class="dish-card__desc">{post.data.description}</p>}
 </article>

@@ -17,7 +17,7 @@ const { Content } = await render(note);
 	compact ? (
 		<a class="note-chip group" href={`/notes/${note.id}/`}>
 			<span class="note-chip__dot" aria-hidden="true">
-				·
+				▸
 			</span>
 			<span class="note-chip__title">{note.data.title}</span>
 			<FormattedDate class="note-chip__date" date={note.data.publishDate} />

@@ -14,6 +14,11 @@ const candidateLinks = [
 	{ domain: "zrj96.com", label: "初行博客" },
 ];
 
+const initial = (label: string) => {
+	const trimmed = label.replace(/^Hi[,，]?\s*/i, "").trim();
+	return trimmed[0] ?? label[0] ?? "·";
+};
+
 const meta = {
 	description: "多吃点的小饭桌 — 友链列表",
 	title: "友链",
@@ -21,30 +26,35 @@ const meta = {
 ---
 
 <PageLayout meta={meta}>
-	<h1 class="title mb-6">友链</h1>
-	<p class="text-muted mb-8 max-w-2xl">
-		曾经交换过友链的小伙伴们，来自 2019 年 Typecho 时代的回忆 ✨<br />
-		从 Wayback Machine 快照和 diygod.cc 友邻列表中找回，已验证存活。
+	<header class="page-head">
+		<span class="section-head__dot" aria-hidden="true"></span>
+		<h1 class="page-head__title">友链 <span class="hero-board__emoji">🍻</span></h1>
+	</header>
+	<p class="page-head__desc">
+		曾经交换过友链的小伙伴，来自 2019 年 Typecho 时代的回忆 ✨ 从 Wayback Machine 快照和 diygod.cc
+		友邻列表中找回，已验证存活。
 	</p>
 
-	<section aria-labelledby="links-title">
-		<h2 id="links-title" class="title mb-4 text-xl">友链</h2>
-		<ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3" role="list">
-			{
-				candidateLinks.map((link) => (
-					<li>
-						<a
-							class="border-muted/30 bg-global-text/5 hover:border-link hover:bg-global-text/8 block rounded-md border px-4 py-3 transition-colors"
-							href={`https://${link.domain}/`}
-							rel="noreferrer noopener"
-							target="_blank"
-						>
-							<span class="block text-base font-semibold">{link.label}</span>
-							<span class="text-muted block text-sm">{link.domain}</span>
-						</a>
-					</li>
-				))
-			}
-		</ul>
-	</section>
+	<ul class="link-grid" role="list">
+		{
+			candidateLinks.map((link, i) => (
+				<li>
+					<a
+						class="link-card"
+						href={`https://${link.domain}/`}
+						rel="noreferrer noopener"
+						target="_blank"
+					>
+						<span class={`link-card__avatar link-card__avatar--c${i % 5}`} aria-hidden="true">
+							{initial(link.label)}
+						</span>
+						<span class="link-card__body">
+							<span class="link-card__label">{link.label}</span>
+							<span class="link-card__domain">{link.domain}</span>
+						</span>
+					</a>
+				</li>
+			))
+		}
+	</ul>
 </PageLayout>

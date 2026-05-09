@@ -15,6 +15,7 @@ export const siteConfig: SiteConfig = {
 	author: "多吃点",
 	// Used as the default description meta property and webmanifest description
 	description: "多吃点的个人博客——技术、折腾与日常",
+	tagline: "好好吃饭，认真生活，写点代码",
 	// HTML lang property, found in src/layouts/Base.astro L:18 & astro.config.ts L:48
 	lang: "zh-CN",
 	// Meta property, found in src/components/BaseHead.astro L:42
