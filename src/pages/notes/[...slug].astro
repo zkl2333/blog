@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
 import Note from "@/components/note/Note.astro";
 import PageLayout from "@/layouts/Base.astro";
 
@@ -26,5 +27,12 @@ const meta = {
 ---
 
 <PageLayout meta={meta}>
+	<Breadcrumb
+		items={[
+			{ label: "首页", href: "/" },
+			{ label: "碎念", href: "/notes/" },
+			{ label: note.data.title },
+		]}
+	/>
 	<Note as="h1" note={note} />
 </PageLayout>
