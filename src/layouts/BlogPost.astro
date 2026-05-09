@@ -1,6 +1,7 @@
 ---
 import { type CollectionEntry, render } from "astro:content";
 
+import Breadcrumb from "@/components/Breadcrumb.astro";
 import Masthead from "@/components/blog/Masthead.astro";
 import TOC from "@/components/blog/TOC.astro";
 import WebMentions from "@/components/blog/webmentions/index.astro";
@@ -20,7 +21,6 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 ---
 
 <BaseLayout
-	bodyClass="lg:max-w-6xl"
 	meta={{
 		articleDate,
 		description,
@@ -28,8 +28,15 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 		title,
 	}}
 >
+	<Breadcrumb
+		items={[
+			{ label: "首页", href: "/" },
+			{ label: "文章", href: "/posts/" },
+			{ label: title },
+		]}
+	/>
 	<article class="grow wrap-break-word" data-pagefind-body>
-		<div id="blog-hero" class="mb-12"><Masthead content={post} readingTime={readingTime} /></div>
+		<div id="blog-hero" class="mb-10"><Masthead content={post} readingTime={readingTime} /></div>
 		<div class="flex min-w-0 flex-col gap-10 lg:flex-row lg:items-start lg:justify-between lg:gap-12">
 			{!!headings.length && <TOC headings={headings} />}
 			<div
