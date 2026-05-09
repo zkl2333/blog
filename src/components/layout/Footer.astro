@@ -1,5 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
+import BrandMark from "@/components/BrandMark.astro";
 import { siteConfig } from "@/site.config";
 
 const year = new Date().getFullYear();
@@ -8,8 +9,16 @@ const year = new Date().getFullYear();
 <footer class="site-footer">
 	<div class="site-footer__grid">
 		<div class="site-footer__brand">
-			<p class="site-footer__title">{siteConfig.title}</p>
-			{siteConfig.tagline && <p class="site-footer__tagline">{siteConfig.tagline}</p>}
+			<a class="site-footer__brand-link" href="/">
+				<BrandMark size={36} />
+				<span class="site-footer__brand-text">
+					<span class="site-footer__title">{siteConfig.title}</span>
+					{siteConfig.tagline && <span class="site-footer__tagline">{siteConfig.tagline}</span>}
+				</span>
+			</a>
+			<p class="site-footer__note">
+				一张桌、摆几道菜，谁路过都能坐，扒两口就走也行。
+			</p>
 		</div>
 		<nav class="site-footer__col" aria-label="栏目">
 			<p class="site-footer__heading">栏目</p>
