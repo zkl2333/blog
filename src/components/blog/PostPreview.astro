@@ -35,7 +35,7 @@ const tags = post.data.tags?.slice(0, 5) ?? [];
 		{
 			tags.length > 0 && (
 				<ul class="dish-card__tags" role="list">
-					{tags.map((t) => (
+					{tags.map((t: string) => (
 						<li>
 							<a class="dish-card__chip" href={`/tags/${t}/`}>
 								<span aria-hidden="true">#</span>
