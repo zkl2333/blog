@@ -1,4 +1,5 @@
 ---
+import Breadcrumb from "@/components/Breadcrumb.astro";
 import { getAllPosts, getUniqueTagsWithCount } from "@/data/post";
 import PageLayout from "@/layouts/Base.astro";
 
@@ -12,19 +13,27 @@ const meta = {
 ---
 
 <PageLayout meta={meta}>
-	<h1 class="title mb-6">标签</h1>
-	<ul class="space-y-4">
+	<Breadcrumb items={[{ label: "首页", href: "/" }, { label: "标签" }]} />
+
+	<header class="page-head">
+		<span class="section-head__dot" aria-hidden="true"></span>
+		<h1 class="page-head__title">标签 <span class="hero-board__emoji">🏷️</span></h1>
+	</header>
+	<p class="page-head__desc">
+		把吃过的菜按主题分类——配菜风味、口味偏好、用过的料。点进去看具体那篇文章。
+	</p>
+
+	<ul class="tag-list" role="list">
 		{
-			allTags.map(([tag, val]) => (
-				<li class="flex items-center gap-x-2">
-					<a
-						class="cactus-link inline-block"
-						href={`/tags/${tag}/`}
-						title={`查看带有标签：${tag} 的文章`}
-					>
-						&#35;{tag}
+			allTags.map(([tag, count]) => (
+				<li>
+					<a class="tag-list__item" href={`/tags/${tag}/`} title={`查看带有标签：${tag} 的文章`}>
+						<span class="tag-list__name">
+							<span aria-hidden="true">#</span>
+							{tag}
+						</span>
+						<span class="tag-list__count">{count}</span>
 					</a>
-					<span class="inline-block">- {val} 篇文章</span>
 				</li>
 			))
 		}

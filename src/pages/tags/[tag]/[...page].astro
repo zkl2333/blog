@@ -1,7 +1,7 @@
 ---
 import { render } from "astro:content";
 import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
-import { Icon } from "astro-icon/components";
+import Breadcrumb from "@/components/Breadcrumb.astro";
 import PostPreview from "@/components/blog/PostPreview.astro";
 import Pagination from "@/components/Paginator.astro";
 import { getAllPosts, getTagMeta, getUniqueTags } from "@/data/post";
@@ -52,20 +52,34 @@ const paginationProps = {
 ---
 
 <PageLayout meta={meta}>
-	<nav class="mb-8" aria-label="面包屑导航">
-		<ul class="flex items-center">
-			<li class="flex items-center">
-				<a class="text-accent" href="/tags/">标签</a>
-				<Icon aria-hidden="true" name="mdi:chevron-right" class="mx-1.5" />
-			</li>
-			<li aria-current="page" class=""><span aria-hidden="true">#</span>{tag}</li>
-		</ul>
-	</nav>
-	<h1 class="title capitalize">{tagMeta?.data.title ?? `关于 ${tag} 的文章`}</h1>
-	<div class="prose prose-cactus !max-w-none mb-16">
-		{tagMeta?.data.description && <p>{tagMeta.data.description}</p>}
-		{TagContent && <TagContent />}
-	</div>
+	<Breadcrumb
+		items={[
+			{ label: "首页", href: "/" },
+			{ label: "标签", href: "/tags/" },
+			{ label: `#${tag}` },
+		]}
+	/>
+
+	<header class="page-head">
+		<span class="section-head__dot" aria-hidden="true"></span>
+		<h1 class="page-head__title">
+			{tagMeta?.data.title ?? (
+				<>
+					<span class="post-meta-line__hash" aria-hidden="true">#</span>{tag}
+				</>
+			)}
+		</h1>
+	</header>
+
+	{
+		(tagMeta?.data.description || TagContent) && (
+			<div class="prose prose-cactus !max-w-none mb-10">
+				{tagMeta?.data.description && <p>{tagMeta.data.description}</p>}
+				{TagContent && <TagContent />}
+			</div>
+		)
+	}
+
 	<ul class="dish-grid" role="list">
 		{
 			page.data.map((p) => (

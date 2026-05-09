@@ -1097,6 +1097,90 @@
 		}
 	}
 
+	/* —— 全部标签页 —— */
+	.tag-list {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 0.55rem;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	@media (min-width: 480px) {
+		.tag-list {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+	@media (min-width: 768px) {
+		.tag-list {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+	@media (min-width: 1024px) {
+		.tag-list {
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+		}
+	}
+	.tag-list__item {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+		padding: 0.6rem 0.85rem;
+		border-radius: 0.5rem;
+		border: 1px solid var(--color-border);
+		background: var(--color-surface);
+		text-decoration: none;
+		color: var(--color-global-text);
+		transition:
+			border-color 180ms ease,
+			background 180ms ease,
+			transform 180ms ease;
+	}
+	.tag-list__item:hover {
+		border-color: color-mix(in oklch, var(--color-accent) 35%, var(--color-border));
+		background: color-mix(in oklch, var(--color-accent) 4%, var(--color-surface));
+		transform: translateY(-1px);
+	}
+	.tag-list__name {
+		display: inline-flex;
+		align-items: baseline;
+		gap: 0.15rem;
+		font-family: var(--font-family-mono);
+		font-size: 0.86rem;
+		font-weight: 600;
+		color: var(--color-accent-2);
+		min-width: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	.tag-list__name > span:first-child {
+		opacity: 0.55;
+	}
+	.tag-list__item:hover .tag-list__name {
+		color: var(--color-accent);
+	}
+	.tag-list__count {
+		flex: none;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 1.55rem;
+		height: 1.5rem;
+		padding: 0 0.4rem;
+		border-radius: 999px;
+		font-family: var(--font-family-mono);
+		font-size: 0.72rem;
+		font-weight: 600;
+		color: var(--color-muted);
+		background: color-mix(in oklch, var(--color-muted) 10%, transparent);
+	}
+	.tag-list__item:hover .tag-list__count {
+		color: var(--color-accent);
+		background: color-mix(in oklch, var(--color-accent) 10%, transparent);
+	}
+
 	/* —— 标签云（侧栏）—— */
 	.tag-cloud {
 		padding: 1rem 1.05rem 1.05rem;
