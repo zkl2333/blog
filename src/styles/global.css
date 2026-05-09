@@ -88,15 +88,18 @@
 
 		&[data-theme="dark"] {
 			color-scheme: dark;
-			--color-global-bg: oklch(23.64% 0.0045 248);
-			--color-global-text: oklch(83.54% 0 264);
-			--color-muted: oklch(70.7% 0.022 261.325);
-			--color-link: oklch(70.44% 0.1133 349);
-			--color-accent: oklch(70.91% 0.1415 163.7);
-			--color-accent-2: oklch(94.66% 0 0);
-			--color-quote: oklch(94.8% 0.106 136.49);
-			--color-surface: oklch(27% 0.006 248);
-			--color-border: oklch(33% 0.008 248);
+			/* 小饭桌夜景：木桌 + 油灯，深棕底 + 琥珀暖光 */
+			--color-global-bg: oklch(22% 0.018 50);
+			--color-global-text: oklch(88% 0.022 70);
+			--color-muted: oklch(66% 0.03 65);
+			--color-accent: oklch(72% 0.14 55);
+			--color-accent-2: oklch(95% 0.018 75);
+			--color-quote: oklch(80% 0.13 60);
+			--color-link: oklch(74% 0.13 55);
+			--color-surface: oklch(25% 0.022 50);
+			--color-border: oklch(34% 0.025 55);
+			--color-accent-soft: oklch(35% 0.05 55);
+			--color-accent-warm: oklch(70% 0.13 80);
 		}
 
 		/* 补充：表面色与边框色（不动 @theme，避免被 linter 回滚） */
