@@ -1,3 +1,4 @@
+// Renders per-post OG images via satori
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { Resvg } from "@resvg/resvg-js";
@@ -56,7 +57,7 @@ export async function GET(context: APIContext) {
 		month: "long",
 		weekday: "long",
 	});
-	const svg = await satori(ogMarkup(title, postDate), ogOptions);
+	const svg = await satori(ogMarkup(title, `桌边碎念 · ${postDate}`), ogOptions);
 	const pngBuffer = new Resvg(svg).render().asPng();
 	const png = new Uint8Array(pngBuffer);
 	return new Response(png, {

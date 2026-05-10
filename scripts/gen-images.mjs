@@ -10,9 +10,9 @@
  * 输出：public/illustrations/<name>.png
  */
 
-import { fileURLToPath } from "node:url";
-import { dirname, join } from "node:path";
 import { mkdir, writeFile } from "node:fs/promises";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const outDir = join(__dirname, "..", "public", "illustrations");
@@ -31,6 +31,16 @@ Cozy, Ghibli-adjacent, storybook feel. Subject centered with generous breathing 
 Output: PNG with transparent background.`;
 
 const TASKS = {
+	"logo-bowl": {
+		size: "1024x1024",
+		subject: `A single small round ceramic rice bowl, centered, viewed slightly from the front-top (about 30 degrees).
+The bowl is warm coral-orange glazed (like terracotta), with a subtle blue rim line.
+Inside: a small fluffy mound of white rice peeking just above the rim, with 2-3 tiny sesame seeds on top.
+Above the bowl: three soft wisps of curling steam rising upward, drawn as gentle ink line strokes.
+NO chopsticks, NO utensils sticking out of the bowl (important: this is a Chinese cultural taboo).
+Tight composition, the bowl fills most of the frame. Designed to read clearly even at very small size (favicon).
+Minimal detail, iconic and recognizable silhouette.`,
+	},
 	"hero-scene": {
 		size: "1024x1024",
 		subject: `A warm cozy dining table corner scene, 3/4 top-down view, square composition.

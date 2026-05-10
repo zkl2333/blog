@@ -262,33 +262,7 @@
 	/* —— 品牌标志：饭碗 logo —— */
 	.brand-mark {
 		display: block;
-	}
-	.brand-mark__steam {
-		fill: none;
-		stroke: var(--color-accent);
-		opacity: 0.7;
-	}
-	.brand-mark__steam--side {
-		opacity: 0.45;
-	}
-	.brand-mark__rice {
-		fill: color-mix(in oklch, var(--color-surface) 88%, var(--color-accent));
-	}
-	.brand-mark__rim {
-		fill: color-mix(in oklch, var(--color-accent) 16%, var(--color-surface));
-		opacity: 0.75;
-	}
-	.brand-mark__bowl {
-		fill: var(--color-accent);
-	}
-	.brand-mark__bowl-line {
-		fill: none;
-		stroke: color-mix(in oklch, var(--color-accent) 65%, #000);
-		opacity: 0.45;
-	}
-	.brand-mark__seed {
-		fill: color-mix(in oklch, var(--color-accent) 55%, var(--color-accent-2));
-		opacity: 0.55;
+		object-fit: contain;
 	}
 
 	/* —— 站点 header 横排骨架 —— */

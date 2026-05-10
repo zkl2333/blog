@@ -1,35 +1,59 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { html } from "satori-html";
 import { siteConfig } from "@/site.config";
 
-// OG image markup, use https://og-playground.vercel.app/ to design your own.
-export const ogMarkup = (title: string, pubDate: string) =>
-	html`<div
+const logoBase64 = readFileSync(
+	resolve(process.cwd(), "public", "illustrations", "logo-bowl-256.png"),
+).toString("base64");
+const logoSrc = `data:image/png;base64,${logoBase64}`;
+
+// satori-html 用 ultrahtml 解析，会把 text 节点里的 & 转成 &amp;。
+// 递归把 text 节点的 HTML 实体解码回去，保证标题里的 "&" 能正确显示。
+const decodeEntities = (s: string) =>
+	s
+		.replace(/&amp;/g, "&")
+		.replace(/&lt;/g, "<")
+		.replace(/&gt;/g, ">")
+		.replace(/&quot;/g, '"')
+		.replace(/&#39;/g, "'");
+
+type VNode = { type?: string; props?: { children?: unknown } } | string | null | undefined;
+
+const decodeTree = (node: VNode): VNode => {
+	if (node == null) return node;
+	if (typeof node === "string") return decodeEntities(node);
+	if (typeof node !== "object") return node;
+	const { props } = node;
+	if (props && "children" in props) {
+		const c = props.children;
+		props.children = Array.isArray(c)
+			? c.map((x) => decodeTree(x as VNode))
+			: decodeTree(c as VNode);
+	}
+	return node;
+};
+
+export const ogMarkup = (title: string, subtitle: string) =>
+	decodeTree(html`<div
 		lang="zh-CN"
 		style="font-family: 'LXGW WenKai Lite', 'Roboto Mono'"
-		tw="flex flex-col w-full h-full bg-[#1d1f21] text-[#c9cacc]"
+		tw="flex w-full h-full bg-[#f6efe4] text-[#3d2f24]"
 	>
-		<div tw="flex flex-col flex-1 w-full p-10 justify-center">
-			<p tw="text-2xl mb-6">${pubDate}</p>
-			<h1 tw="text-6xl font-bold leading-snug text-white">${title}</h1>
-		</div>
-		<div tw="flex items-center justify-between w-full p-10 border-t border-[#2bbc89] text-xl">
-			<div tw="flex items-center">
-				<svg height="60" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 272 480">
-					<path
-						fill="#cdffb8"
-						d="M181.334 93.333v-40L226.667 80v40zM136.001 53.333 90.667 26.667v426.666L136.001 480zM45.333 220 0 193.334v140L45.333 360z"
-					/>
-					<path
-						fill="#d482ab"
-						d="M90.667 26.667 136.001 0l45.333 26.667-45.333 26.666zM181.334 53.33l45.333-26.72L272 53.33 226.667 80zM136 240l-45.333-26.67v53.34zM0 193.33l45.333-26.72 45.334 26.72L45.333 220zM181.334 93.277 226.667 120l-45.333 26.67z"
-					/>
-					<path
-						fill="#2abc89"
-						d="m136 53.333 45.333-26.666v120L226.667 120V80L272 53.333V160l-90.667 53.333v240L136 480V306.667L45.334 360V220l45.333-26.667v73.334L136 240z"
-					/>
-				</svg>
-				<p tw="ml-3 font-semibold">${siteConfig.title}</p>
+		<div tw="flex w-3 h-full bg-[#d97757]"></div>
+
+		<div tw="flex flex-col flex-1 h-full">
+			<div tw="flex flex-col flex-1 px-20 pt-20 pb-12 justify-center">
+				<p tw="flex text-3xl mb-8 text-[#8a6d56]">${subtitle}</p>
+				<h1 tw="flex text-7xl font-bold leading-snug text-[#2a1f17]">${title}</h1>
 			</div>
-			<p>by ${siteConfig.author}</p>
+
+			<div tw="flex items-center justify-between px-20 py-8 border-t-2 border-[#e6d4be] text-2xl">
+				<div tw="flex items-center">
+					<img src="${logoSrc}" tw="w-18 h-18" />
+					<p tw="flex ml-4 font-semibold text-[#2a1f17]">${siteConfig.title}</p>
+				</div>
+				<p tw="flex text-[#8a6d56]">by ${siteConfig.author}</p>
+			</div>
 		</div>
-	</div>`;
+	</div>`);
