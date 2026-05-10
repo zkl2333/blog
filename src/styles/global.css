@@ -620,33 +620,8 @@
 			animation: none;
 		}
 	}
-	.sparkle--hero-1 {
-		display: none;
-	}
-	@media (min-width: 720px) {
-		.sparkle--hero-1 {
-			display: block;
-			top: 0.4rem;
-			left: -0.5rem;
-			font-size: 1.05rem;
-		}
-		.sparkle--hero-2 {
-			display: block;
-			top: 38%;
-			left: 30%;
-			font-size: 0.7rem;
-			animation-delay: 0.6s;
-		}
-		.sparkle--hero-3 {
-			display: block;
-			bottom: 4rem;
-			right: -0.4rem;
-			font-size: 0.85rem;
-			animation-delay: 1.4s;
-		}
-	}
 
-	/* —— 今日推荐：木质小菜牌 —— */
+	/* —— 今日推荐：木质小菜牌（备用，hero 现在用单图）—— */
 	.day-board {
 		position: relative;
 		width: 100%;
@@ -732,67 +707,6 @@
 		opacity: 0.6;
 	}
 
-	/* —— 特色菜系：四件套 —— */
-	.feature-row {
-		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 0.75rem;
-		margin-top: 1.25rem;
-	}
-	@media (min-width: 640px) {
-		.feature-row {
-			grid-template-columns: repeat(4, minmax(0, 1fr));
-			gap: 0.9rem;
-			margin-top: 1.5rem;
-		}
-	}
-	.feature-pill {
-		display: flex;
-		align-items: center;
-		gap: 0.65rem;
-		padding: 0.7rem 0.85rem;
-		border-radius: 0.6rem;
-		background: var(--color-surface);
-		border: 1px solid var(--color-border);
-		transition:
-			border-color 200ms ease,
-			background 200ms ease,
-			transform 200ms ease;
-	}
-	.feature-pill:hover {
-		border-color: color-mix(in oklch, var(--color-accent) 35%, var(--color-border));
-		background: color-mix(in oklch, var(--color-accent) 4%, var(--color-surface));
-		transform: translateY(-1px);
-	}
-	.feature-pill__icon {
-		flex: none;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 2rem;
-		height: 2rem;
-		border-radius: 0.5rem;
-		background: color-mix(in oklch, var(--color-accent) 12%, transparent);
-		font-size: 1.05rem;
-		line-height: 1;
-	}
-	.feature-pill__body {
-		display: flex;
-		flex-direction: column;
-		min-width: 0;
-		line-height: 1.25;
-	}
-	.feature-pill__title {
-		font-size: 0.84rem;
-		font-weight: 700;
-		color: var(--color-accent-2);
-		letter-spacing: 0.01em;
-	}
-	.feature-pill__sub {
-		font-size: 0.7rem;
-		color: var(--color-muted);
-		margin-top: 0.15rem;
-	}
 
 	/* —— 章节标题：菜单分隔条 —— */
 	.section-head {
@@ -1354,7 +1268,7 @@
 			width: 100%;
 			max-width: 16rem;
 			height: auto;
-			margin: 1.25rem auto 0;
+			margin: 0 auto;
 			pointer-events: none;
 			user-select: none;
 			opacity: 0.96;
@@ -1363,63 +1277,6 @@
 	}
 	[data-theme="dark"] .about-aside__deco {
 		opacity: 0.85;
-	}
-
-	.about-card {
-		position: relative;
-		padding: 1.1rem 1.15rem 1.05rem;
-		border-radius: 0.65rem;
-		background: linear-gradient(
-			180deg,
-			color-mix(in oklch, var(--color-accent-warm, var(--color-accent)) 14%, var(--color-surface)),
-			var(--color-surface)
-		);
-		border: 1px solid color-mix(in oklch, var(--color-accent) 22%, var(--color-border));
-		box-shadow:
-			0 1px 0 color-mix(in oklch, var(--color-accent-2) 8%, transparent),
-			0 12px 24px -22px color-mix(in oklch, var(--color-accent-2) 30%, transparent);
-	}
-	.about-card__heading {
-		display: flex;
-		align-items: center;
-		gap: 0.4rem;
-		margin: 0 0 0.85rem;
-		font-size: 0.85rem;
-		font-weight: 700;
-		color: var(--color-accent-2);
-		letter-spacing: 0.01em;
-	}
-	.about-card__heading::before {
-		content: "";
-		display: inline-block;
-		width: 0.45rem;
-		height: 0.45rem;
-		border-radius: 999px;
-		background: var(--color-accent);
-	}
-	.about-card__list {
-		display: flex;
-		flex-direction: column;
-		gap: 0.55rem;
-		margin: 0;
-		padding: 0;
-	}
-	.about-card__list > div {
-		display: grid;
-		grid-template-columns: 3rem 1fr;
-		gap: 0.6rem;
-		font-size: 0.82rem;
-		line-height: 1.5;
-	}
-	.about-card__list dt {
-		color: var(--color-muted);
-		font-weight: 500;
-		font-size: 0.78rem;
-		letter-spacing: 0.04em;
-	}
-	.about-card__list dd {
-		color: var(--color-global-text);
-		margin: 0;
 	}
 
 	/* —— 联系方式卡片（about 页）—— */
