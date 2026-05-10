@@ -7,18 +7,24 @@ import FormattedDate from "@/components/FormattedDate.astro";
 type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }> & {
 	post: CollectionEntry<"post">;
 	withDesc?: boolean;
+	vertical?: boolean;
 };
 
-const { as: Tag = "h3", post, withDesc = false } = Astro.props;
+const { as: Tag = "h3", post, withDesc = false, vertical = false } = Astro.props;
 const cover = post.data.coverImage;
 const tags = post.data.tags?.slice(0, 5) ?? [];
+const cls = [
+	"dish-card",
+	cover && !vertical ? "dish-card--has-cover" : "",
+	vertical ? "dish-card--vertical" : "",
+].filter(Boolean).join(" ");
 ---
 
-<article class={`dish-card ${cover ? "dish-card--has-cover" : ""}`}>
+<article class={cls}>
 	{
 		cover && (
 			<a class="dish-card__cover" href={`/posts/${post.id}/`} tabindex="-1" aria-hidden="true">
-				<Image alt={cover.alt} src={cover.src} width={240} height={160} />
+				<Image alt={cover.alt} src={cover.src} width={vertical ? 480 : 240} height={vertical ? 270 : 160} />
 			</a>
 		)
 	}

@@ -758,6 +758,54 @@
 		color: var(--color-accent);
 	}
 
+	/* —— 置顶卡片网格 —— */
+	.pinned-grid {
+		display: grid;
+		gap: 1.25rem;
+		grid-template-columns: 1fr;
+	}
+	@media (min-width: 640px) {
+		.pinned-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+	@media (min-width: 960px) {
+		.pinned-grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+	.dish-card--vertical {
+		display: flex;
+		flex-direction: column;
+		padding: 0;
+		overflow: hidden;
+		height: 100%;
+	}
+	.dish-card--vertical .dish-card__cover {
+		aspect-ratio: 16 / 9;
+		border-radius: 0.5rem 0.5rem 0 0;
+	}
+	.dish-card--vertical .dish-card__body {
+		padding: 0.85rem 1rem 1rem;
+		flex: 1;
+	}
+	.dish-card--vertical .dish-card__title {
+		font-size: 1.05rem;
+		line-height: 1.5;
+	}
+	@media (min-width: 640px) {
+		.dish-card--vertical .dish-card__title {
+			font-size: 1.15rem;
+		}
+	}
+	.dish-card--vertical .dish-card__desc {
+		font-size: 0.78rem;
+		-webkit-line-clamp: 2;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
 	/* —— 文章菜卡 —— */
 	.dish-grid {
 		display: grid;

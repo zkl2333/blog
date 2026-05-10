@@ -3,6 +3,10 @@ title: "解剖 Hermes Agent 的「自我进化」：后台 Skill 自动生成链
 description: "从昨晚发现一堆搞不清来源的 Skill 说起，顺藤摸瓜追踪 run_agent.py 源码、配置项、Fork 机制、Prompt 设计，再到社区几个积压 Issue 和 146 个 Skill 年烧 8000 万 Token 的成本账。一个会自动生长但从不会修剪的系统。"
 publishDate: "2026-04-29"
 tags: ["hermes-agent", "source-code", "skill", "ai", "deep-dive"]
+pinned: true
+coverImage:
+  alt: "机器人在花园中修剪疯长的技能藤蔓"
+  src: "./cover.png"
 ---
 
 ## 先说说这篇博客是怎么来的，我为什么研究这个

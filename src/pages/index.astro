@@ -11,7 +11,6 @@ import { collectionDateSort } from "@/utils/date";
 const MAX_POSTS = 10;
 const allPosts = await getAllPosts();
 const allPostsByDate = allPosts.sort(collectionDateSort) as CollectionEntry<"post">[];
-const latestPosts = allPostsByDate.slice(0, MAX_POSTS);
 
 // Pinned Posts, set to a max of 3;
 const MAX_PINNED_POSTS = 3;
@@ -20,6 +19,9 @@ const pinnedPosts = allPostsByDate
 	.filter((p) => p.data.pinned)
 	.take(MAX_PINNED_POSTS)
 	.toArray();
+
+const pinnedIds = new Set(pinnedPosts.map((p) => p.id));
+const latestPosts = allPostsByDate.filter((p) => !pinnedIds.has(p.id)).slice(0, MAX_POSTS);
 
 // Notes — 桌边碎念，份量轻一点
 const MAX_NOTES = 5;
@@ -39,10 +41,10 @@ const latestNotes = allNotes
 					<span class="section-head__dot" aria-hidden="true" />
 					<h2 class="section-head__title">招牌菜 · 置顶</h2>
 				</header>
-				<ul class="dish-grid" role="list">
+				<ul class="pinned-grid" role="list">
 					{pinnedPosts.map((p) => (
 						<li>
-							<PostPreview post={p} withDesc as="h3" />
+							<PostPreview post={p} withDesc vertical as="h3" />
 						</li>
 					))}
 				</ul>
