@@ -32,15 +32,14 @@ Output: PNG with transparent background.`;
 
 const TASKS = {
 	"hero-scene": {
-		size: "1536x1024",
-		subject: `A wooden tabletop corner shown from a slight 3/4 top-down angle.
-On it: a steaming ramen bowl with soft-boiled egg on the left,
-an open laptop with a glowing pastel screen in the center,
-a small potted succulent on the right back,
-a stacked pair of books with a coffee mug on top behind,
-a wooden chair back peeking up from behind.
-Tiny gold sparkles drifting upward.
-Composition: leave the right third lighter / less dense so text can sit there.`,
+		size: "1024x1024",
+		subject: `A warm cozy dining table corner scene, 3/4 top-down view, square composition.
+Center: a blue-and-white ceramic rice bowl with fluffy white rice and a pair of wooden chopsticks resting on top.
+Around it: a small plate of green vegetables (bok choy), a fried egg sunny side up on a tiny plate,
+a tall glass of iced tea with a straw, a small sprig of herbs as garnish.
+Behind: a hanging paper menu scroll/tag with cute handwritten text "今日推荐" and bullet items.
+A few scattered gold sparkles. The whole scene sits on a warm wooden table surface.
+Mood: inviting home-cooked meal, warm afternoon light.`,
 	},
 	breakfast: {
 		size: "1024x1024",

@@ -263,29 +263,28 @@
 	.brand-mark {
 		display: block;
 	}
-	.brand-mark__ring {
-		fill: none;
-		stroke: var(--color-accent);
-		opacity: 0.85;
-	}
-	.brand-mark__bg {
-		fill: color-mix(in oklch, var(--color-accent) 9%, var(--color-surface));
-	}
 	.brand-mark__steam {
 		fill: none;
 		stroke: var(--color-accent);
-		opacity: 0.6;
+		opacity: 0.7;
+	}
+	.brand-mark__steam--side {
+		opacity: 0.45;
+	}
+	.brand-mark__rice {
+		fill: color-mix(in oklch, var(--color-surface) 88%, var(--color-accent));
+	}
+	.brand-mark__rim {
+		fill: color-mix(in oklch, var(--color-accent) 16%, var(--color-surface));
+		opacity: 0.75;
 	}
 	.brand-mark__bowl {
 		fill: var(--color-accent);
 	}
-	.brand-mark__rim {
-		fill: color-mix(in oklch, var(--color-accent) 18%, var(--color-surface));
-		stroke: color-mix(in oklch, var(--color-accent-2) 65%, transparent);
-		stroke-width: 0.6;
-	}
-	.brand-mark__rice {
-		fill: color-mix(in oklch, var(--color-surface) 92%, var(--color-accent));
+	.brand-mark__bowl-line {
+		fill: none;
+		stroke: color-mix(in oklch, var(--color-accent) 65%, #000);
+		opacity: 0.45;
 	}
 	.brand-mark__seed {
 		fill: color-mix(in oklch, var(--color-accent) 55%, var(--color-accent-2));
@@ -433,69 +432,55 @@
 		background: var(--color-surface);
 		border: 1px solid var(--color-border);
 		overflow: hidden;
-		box-shadow: 0 1px 0 color-mix(in oklch, var(--color-muted) 6%, transparent);
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1.25rem;
+		box-shadow:
+			0 2px 8px color-mix(in oklch, var(--color-accent) 8%, transparent),
+			0 1px 2px color-mix(in oklch, var(--color-muted) 6%, transparent);
+		position: relative;
 	}
 	@media (min-width: 720px) {
 		.hero-board {
-			grid-template-columns: minmax(0, 1fr) 12rem;
-			gap: 2rem;
-			padding: 1.85rem 1.85rem 1.85rem 2rem;
-			align-items: start;
-		}
-	}
-	.hero-board__main {
-		min-width: 0;
-	}
-	.hero-board__menu {
-		display: none;
-	}
-	@media (min-width: 720px) {
-		.hero-board {
-			grid-template-columns: minmax(0, 1fr) 16rem;
-		}
-		.hero-board__menu {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-		}
-		.hero-board__scene {
-			width: 100%;
-			max-width: 18rem;
-			height: auto;
-			pointer-events: none;
-			user-select: none;
-			filter: drop-shadow(0 10px 22px color-mix(in oklch, var(--color-accent-2) 22%, transparent));
+			padding: 1.85rem 18rem 1.85rem 2rem;
 		}
 	}
 	@media (min-width: 960px) {
 		.hero-board {
-			grid-template-columns: minmax(0, 1fr) 18rem;
-			gap: 2.5rem;
+			padding: 2rem 22rem 2rem 2.25rem;
 		}
+	}
+	.hero-board__main {
+		min-width: 0;
+		position: relative;
+		z-index: 1;
+	}
+	.hero-board__scene {
+		display: none;
+	}
+	@media (min-width: 720px) {
 		.hero-board__scene {
-			max-width: 20rem;
-			margin-right: -2rem;
+			display: block;
+			position: absolute;
+			right: -0.5rem;
+			bottom: -0.5rem;
+			width: 20rem;
+			height: auto;
+			pointer-events: none;
+			user-select: none;
+			filter: drop-shadow(0 6px 16px color-mix(in oklch, var(--color-accent-2) 18%, transparent));
+			opacity: 0.92;
+		}
+	}
+	@media (min-width: 960px) {
+		.hero-board__scene {
+			width: 24rem;
+			right: -1rem;
+			bottom: -1rem;
 		}
 	}
 	[data-theme="dark"] .hero-board__scene {
-		opacity: 0.85;
+		opacity: 0.8;
 	}
 	.hero-board::before {
-		/* 左侧 accent 立柱：饭桌的"灶火" */
-		content: "";
-		position: absolute;
-		left: 0;
-		top: 0;
-		bottom: 0;
-		width: 3px;
-		background: linear-gradient(
-			180deg,
-			var(--color-accent),
-			color-mix(in oklch, var(--color-accent) 35%, transparent)
-		);
+		display: none;
 	}
 	.hero-board__meta {
 		display: flex;
@@ -574,15 +559,37 @@
 	.hero-board__line:last-of-type {
 		margin-bottom: 1.4rem;
 	}
-	.hero-board__cta {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.55rem;
-		margin-bottom: 1.4rem;
+	.hero-board__highlight {
+		color: var(--color-accent);
+		font-weight: 700;
+		text-decoration: none;
+		border-bottom: 2px solid color-mix(in oklch, var(--color-accent) 30%, transparent);
+		transition: border-color 200ms ease;
 	}
-	.hero-board__social {
-		padding-top: 1.1rem;
-		border-top: 1px dashed color-mix(in oklch, var(--color-border) 80%, transparent);
+	.hero-board__highlight:hover {
+		border-bottom-color: var(--color-accent);
+	}
+	.hero-board__follow {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		padding: 0.45rem 1rem;
+		border-radius: 0.4rem;
+		border: 1px solid var(--color-border);
+		background: var(--color-surface);
+		color: var(--color-accent-2);
+		font-size: 0.85rem;
+		font-weight: 600;
+		text-decoration: none;
+		transition: border-color 200ms ease, box-shadow 200ms ease;
+	}
+	.hero-board__follow svg {
+		width: 1.15rem;
+		height: 1.15rem;
+	}
+	.hero-board__follow:hover {
+		border-color: var(--color-accent);
+		box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-accent) 10%, transparent);
 	}
 	.hero-board__emoji {
 		display: inline-block;

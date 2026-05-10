@@ -16,24 +16,35 @@ const { size = 40, class: className = "" } = Astro.props;
 	width={size}
 	xmlns="http://www.w3.org/2000/svg"
 >
-	<circle class="brand-mark__ring" cx="32" cy="32" r="29" stroke-width="2"></circle>
-	<circle class="brand-mark__bg" cx="32" cy="32" r="27"></circle>
 	<path
-		class="brand-mark__steam"
-		d="M22 14c2.4 2.5-2.4 4.5 0 7M32 12c2.4 2.5-2.4 4.5 0 7M42 14c2.4 2.5-2.4 4.5 0 7"
+		class="brand-mark__steam brand-mark__steam--side"
+		d="M24 16c2.6 2.8-2.6 5 0 7.8"
 		stroke-linecap="round"
 		stroke-width="2"
 	></path>
 	<path
-		class="brand-mark__bowl"
-		d="M14 33c0 8 6.6 14 14.5 16.5h7C43.4 47 50 41 50 33z"
+		class="brand-mark__steam"
+		d="M32 13c2.6 2.8-2.6 5 0 7.8"
+		stroke-linecap="round"
+		stroke-width="2"
 	></path>
-	<ellipse class="brand-mark__rim" cx="32" cy="33" rx="18" ry="2.6"></ellipse>
+	<path
+		class="brand-mark__steam brand-mark__steam--side"
+		d="M40 16c2.6 2.8-2.6 5 0 7.8"
+		stroke-linecap="round"
+		stroke-width="2"
+	></path>
 	<path
 		class="brand-mark__rice"
-		d="M19 32.4c2-2.6 6.5-4.4 13-4.4s11 1.8 13 4.4c-2 .6-6.5 1.1-13 1.1s-11-.5-13-1.1z"
+		d="M18 33c1.8-2.4 6.2-3.8 14-3.8s12.2 1.4 14 3.8c-1.8 2-6.2 3-14 3s-12.2-1-14-3z"
 	></path>
-	<circle class="brand-mark__seed" cx="26" cy="31" r="0.9"></circle>
-	<circle class="brand-mark__seed" cx="32" cy="30.4" r="0.9"></circle>
-	<circle class="brand-mark__seed" cx="38" cy="31" r="0.9"></circle>
+	<ellipse class="brand-mark__rim" cx="32" cy="33" rx="14" ry="2.2"></ellipse>
+	<path
+		class="brand-mark__bowl"
+		d="M14 34c0 8.5 7 15 16 16.5h4C43 49 50 42.5 50 34z"
+	></path>
+	<path class="brand-mark__bowl-line" d="M14 34h36" stroke-linecap="round" stroke-width="1.2"></path>
+	<circle class="brand-mark__seed" cx="26" cy="32" r="0.9"></circle>
+	<circle class="brand-mark__seed" cx="32" cy="31.5" r="0.9"></circle>
+	<circle class="brand-mark__seed" cx="38" cy="32" r="0.9"></circle>
 </svg>
