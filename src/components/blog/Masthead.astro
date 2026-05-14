@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import FormattedDate from "@/components/FormattedDate.astro";
+import { getEffectiveCover } from "@/data/post";
 import { siteConfig } from "@/site.config";
 
 interface Props {
@@ -10,9 +11,11 @@ interface Props {
 }
 
 const {
+	content,
 	content: { data },
 	readingTime,
 } = Astro.props;
+const cover = getEffectiveCover(content);
 
 const dateTimeOptions: Intl.DateTimeFormatOptions = {
 	month: "long",
@@ -63,16 +66,20 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
 }
 
 {
-	data.coverImage && (
+	cover && (
 		<div class="post-cover">
-			<Image
-				alt={data.coverImage.alt}
-				layout="constrained"
-				width={1024}
-				height={576}
-				priority
-				src={data.coverImage.src}
-			/>
+			{cover.kind === "local" ? (
+				<Image
+					alt={cover.alt}
+					layout="constrained"
+					width={1024}
+					height={576}
+					priority
+					src={cover.src}
+				/>
+			) : (
+				<img alt={cover.alt} src={cover.src} width={1024} height={576} loading="eager" decoding="async" />
+			)}
 		</div>
 	)
 }

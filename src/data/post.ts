@@ -1,3 +1,4 @@
+import type { ImageMetadata } from "astro";
 import { type CollectionEntry, getCollection } from "astro:content";
 
 /** filter out draft posts based on the environment */
@@ -5,6 +6,55 @@ export async function getAllPosts(): Promise<CollectionEntry<"post">[]> {
 	return await getCollection("post", ({ data }) => {
 		return import.meta.env.PROD ? !data.draft : true;
 	});
+}
+
+// ─── 自动封面 fallback ────────────────────────────────
+// frontmatter 没设 coverImage 时，扫 markdown 正文第一张 ![]() 当封面。
+// 本地图（./xxx.png）走 import.meta.glob 解析成 ImageMetadata，可被 <Image> 优化；
+// 远程图（https://...）保持字符串，调用方用 <img> 渲染（绕开 image.domains 白名单约束）。
+const postImageModules = import.meta.glob<{ default: ImageMetadata }>(
+	"../content/post/**/*.{png,jpg,jpeg,webp,gif,avif,svg}",
+	{ eager: true },
+);
+
+const FIRST_MD_IMAGE = /!\[([^\]]*)\]\(\s*([^)\s]+)(?:\s+"[^"]*")?\s*\)/;
+
+export type EffectiveCover =
+	| { kind: "local"; alt: string; src: ImageMetadata }
+	| { kind: "remote"; alt: string; src: string };
+
+export function getEffectiveCover(post: CollectionEntry<"post">): EffectiveCover | null {
+	// 1. frontmatter 显式覆盖优先
+	if (post.data.coverImage) {
+		return {
+			kind: "local",
+			alt: post.data.coverImage.alt,
+			src: post.data.coverImage.src,
+		};
+	}
+
+	// 2. fallback：正文第一张 markdown 图
+	const body = post.body;
+	if (!body) return null;
+	const match = body.match(FIRST_MD_IMAGE);
+	if (!match) return null;
+
+	const alt = match[1] || post.data.title;
+	const src = match[2]?.trim();
+	if (!src) return null;
+
+	if (/^https?:\/\//i.test(src)) {
+		return { kind: "remote", alt, src };
+	}
+
+	const cleanSrc = src.startsWith("./") ? src.slice(2) : src;
+	const key = `../content/post/${post.id}/${cleanSrc}`;
+	const mod = postImageModules[key];
+	if (mod) {
+		return { kind: "local", alt, src: mod.default };
+	}
+
+	return null;
 }
 
 /** Get tag metadata by tag name */

@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import type { HTMLTag, Polymorphic } from "astro/types";
 import FormattedDate from "@/components/FormattedDate.astro";
+import { getEffectiveCover } from "@/data/post";
 
 type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }> & {
 	post: CollectionEntry<"post">;
@@ -11,8 +12,10 @@ type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }> & {
 };
 
 const { as: Tag = "h3", post, withDesc = false, vertical = false } = Astro.props;
-const cover = post.data.coverImage;
+const cover = getEffectiveCover(post);
 const tags = post.data.tags?.slice(0, 5) ?? [];
+const coverW = vertical ? 480 : 240;
+const coverH = vertical ? 270 : 160;
 const cls = [
 	"dish-card",
 	cover && !vertical ? "dish-card--has-cover" : "",
@@ -24,7 +27,11 @@ const cls = [
 	{
 		cover && (
 			<a class="dish-card__cover" href={`/posts/${post.id}/`} tabindex="-1" aria-hidden="true">
-				<Image alt={cover.alt} src={cover.src} width={vertical ? 480 : 240} height={vertical ? 270 : 160} />
+				{cover.kind === "local" ? (
+					<Image alt={cover.alt} src={cover.src} width={coverW} height={coverH} />
+				) : (
+					<img alt={cover.alt} src={cover.src} width={coverW} height={coverH} loading="lazy" decoding="async" />
+				)}
 			</a>
 		)
 	}
