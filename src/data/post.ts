@@ -1,5 +1,5 @@
-import type { ImageMetadata } from "astro";
 import { type CollectionEntry, getCollection } from "astro:content";
+import type { ImageMetadata } from "astro";
 
 /** filter out draft posts based on the environment */
 export async function getAllPosts(): Promise<CollectionEntry<"post">[]> {

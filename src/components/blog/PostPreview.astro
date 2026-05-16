@@ -20,7 +20,9 @@ const cls = [
 	"dish-card",
 	cover && !vertical ? "dish-card--has-cover" : "",
 	vertical ? "dish-card--vertical" : "",
-].filter(Boolean).join(" ");
+]
+	.filter(Boolean)
+	.join(" ");
 ---
 
 <article class={cls}>

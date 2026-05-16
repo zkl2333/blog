@@ -409,7 +409,6 @@
 		box-shadow:
 			0 2px 8px color-mix(in oklch, var(--color-accent) 8%, transparent),
 			0 1px 2px color-mix(in oklch, var(--color-muted) 6%, transparent);
-		position: relative;
 	}
 	@media (min-width: 720px) {
 		.hero-board {
@@ -555,7 +554,9 @@
 		font-size: 0.85rem;
 		font-weight: 600;
 		text-decoration: none;
-		transition: border-color 200ms ease, box-shadow 200ms ease;
+		transition:
+			border-color 200ms ease,
+			box-shadow 200ms ease;
 	}
 	.hero-board__follow svg {
 		width: 1.15rem;
@@ -577,7 +578,11 @@
 	.sparkle {
 		position: absolute;
 		display: inline-block;
-		color: color-mix(in oklch, var(--color-accent-warm, var(--color-accent)) 80%, var(--color-accent));
+		color: color-mix(
+			in oklch,
+			var(--color-accent-warm, var(--color-accent)) 80%,
+			var(--color-accent)
+		);
 		font-size: 0.95rem;
 		line-height: 1;
 		pointer-events: none;
@@ -688,7 +693,6 @@
 		opacity: 0.6;
 	}
 
-
 	/* —— 章节标题：菜单分隔条 —— */
 	.section-head {
 		display: flex;
@@ -755,38 +759,6 @@
 			grid-template-columns: repeat(3, 1fr);
 		}
 	}
-	.dish-card--vertical {
-		display: flex;
-		flex-direction: column;
-		padding: 0;
-		overflow: hidden;
-		height: 100%;
-	}
-	.dish-card--vertical .dish-card__cover {
-		aspect-ratio: 16 / 9;
-		border-radius: 0.5rem 0.5rem 0 0;
-	}
-	.dish-card--vertical .dish-card__body {
-		padding: 0.85rem 1rem 1rem;
-		flex: 1;
-	}
-	.dish-card--vertical .dish-card__title {
-		font-size: 1.05rem;
-		line-height: 1.5;
-	}
-	@media (min-width: 640px) {
-		.dish-card--vertical .dish-card__title {
-			font-size: 1.15rem;
-		}
-	}
-	.dish-card--vertical .dish-card__desc {
-		font-size: 0.78rem;
-		-webkit-line-clamp: 2;
-		display: -webkit-box;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-	}
-
 	/* —— 文章菜卡 —— */
 	.dish-grid {
 		display: grid;
@@ -968,6 +940,37 @@
 		text-wrap: pretty;
 		display: -webkit-box;
 		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+	.dish-card--vertical {
+		display: flex;
+		flex-direction: column;
+		padding: 0;
+		overflow: hidden;
+		height: 100%;
+	}
+	.dish-card--vertical .dish-card__cover {
+		aspect-ratio: 16 / 9;
+		border-radius: 0.5rem 0.5rem 0 0;
+	}
+	.dish-card--vertical .dish-card__body {
+		padding: 0.85rem 1rem 1rem;
+		flex: 1;
+	}
+	.dish-card--vertical .dish-card__title {
+		font-size: 1.05rem;
+		line-height: 1.5;
+	}
+	@media (min-width: 640px) {
+		.dish-card--vertical .dish-card__title {
+			font-size: 1.15rem;
+		}
+	}
+	.dish-card--vertical .dish-card__desc {
+		font-size: 0.78rem;
+		-webkit-line-clamp: 2;
+		display: -webkit-box;
 		-webkit-box-orient: vertical;
 		overflow: hidden;
 	}
@@ -1885,12 +1888,7 @@
 	.post-toc__item {
 		margin: 0.05rem 0;
 	}
-	.post-toc__item--sub .post-toc__link {
-		font-size: 0.72rem;
-		opacity: 0.85;
-	}
 	.post-toc__link {
-		display: block;
 		padding: 0.25rem 0.4rem;
 		color: var(--color-muted);
 		text-decoration: none;
@@ -1904,6 +1902,10 @@
 		display: -webkit-box;
 		-webkit-line-clamp: 2;
 		-webkit-box-orient: vertical;
+	}
+	.post-toc__item--sub .post-toc__link {
+		font-size: 0.72rem;
+		opacity: 0.85;
 	}
 	.post-toc__link:hover {
 		color: var(--color-accent);

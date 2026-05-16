@@ -1,7 +1,7 @@
-import sharp from "sharp";
-import { fileURLToPath } from "node:url";
-import { dirname, join } from "node:path";
 import { mkdir } from "node:fs/promises";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import sharp from "sharp";
 
 /**
  * Crop named regions out of public/illustrations/sprites.png.
@@ -32,8 +32,6 @@ for (const r of regions) {
 	const w = Math.min(r.w, meta.width - r.x);
 	const h = Math.min(r.h, meta.height - r.y);
 	const out = join(outputDir, `${r.name}.png`);
-	await sharp(inputPath)
-		.extract({ left: r.x, top: r.y, width: w, height: h })
-		.toFile(out);
+	await sharp(inputPath).extract({ left: r.x, top: r.y, width: w, height: h }).toFile(out);
 	console.log(`✓ ${r.name}.png ${w}x${h}`);
 }
