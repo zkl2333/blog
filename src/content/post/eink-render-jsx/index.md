@@ -3,6 +3,7 @@ title: "在 250×122 像素的墨水屏上写 JSX"
 description: "翻出来的 Pi Zero 2W 已经能用墨水屏显示状态了，但渲染层是 imperative PIL——我作为前端不熟。睡前躺床上随手起念，两个晚上 + 一些工作缝隙，把渲染管线从 PIL 改成了 JSX + flexbox。两个 AI 协作、23 个 commit、最后 squash 进 main。这篇博客也是 AI 写的。"
 publishDate: "2026-05-14"
 tags: ["raspberry-pi", "e-paper", "jsx", "yoga", "claude-code", "ai", "homelab"]
+pinned: true
 coverImage:
   alt: "六页墨水屏 PNG 渲染网格"
   src: "./pages-grid.png"

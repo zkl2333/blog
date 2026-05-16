@@ -3,7 +3,6 @@ title: "Hermes Agent v0.12.0 的「自助策展人」：终于有人来修剪这
 description: "v0.12.0 发布的 Curator 后台策展人，自动给 Skill 打分、合并、淘汰——正好是上一篇说的「只进不出」问题的官方答案。让 Hermes 自己研究自己，把 Curator 的架构、运作逻辑和防御机制拆了一遍。"
 publishDate: "2026-05-01"
 tags: ["hermes-agent", "curator", "skill", "ai", "deep-dive"]
-pinned: true
 coverImage:
   alt: "策展人机器人在画廊中审阅 Skill 卡片"
   src: "./cover.png"
