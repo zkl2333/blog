@@ -5,7 +5,7 @@ publishDate: "2026-05-16"
 tags: ["raspberry-pi", "e-paper", "freetype", "wasm", "claude-code", "ai", "homelab"]
 pinned: true
 coverImage:
-  alt: "六页墨水屏，全部由重写后的纯 Node FreeType-WASM 引擎渲染"
+  alt: "杂志风封面：两个引擎的缝被焊合成单一来源，墨水屏时钟终于正中"
   src: "./cover.png"
 ---
 
