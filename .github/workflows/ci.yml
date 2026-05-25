@@ -9,8 +9,6 @@ on:
 
 permissions:
   contents: read
-  id-token: write
-  pages: write
 
 jobs:
   build:
@@ -51,26 +49,44 @@ jobs:
       - name: 构建站点
         run: pnpm build
 
-      - name: 配置 GitHub Pages
+      - name: 上传 dist 构建产物
         if: github.event_name != 'pull_request'
-        uses: actions/configure-pages@v6
-
-      - name: 上传 GitHub Pages 构建产物
-        if: github.event_name != 'pull_request'
-        uses: actions/upload-pages-artifact@v5
+        uses: actions/upload-artifact@v4
         with:
+          name: dist
           path: dist
+          retention-days: 1
 
-  deploy:
-    name: 部署到 GitHub Pages
+  deploy-server:
+    name: 部署到阿里云服务器（CDN 回源）
     if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - name: 部署到 GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
+      - name: 下载构建产物
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: 配置 SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/id_ed25519 ~/.ssh/known_hosts
+
+      - name: rsync 同步到服务器
+        env:
+          SSH_HOST: ${{ secrets.DEPLOY_HOST }}
+          SSH_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        run: |
+          rsync -az --delete --chmod=D755,F644 \
+            -e "ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes" \
+            dist/ "$SSH_USER@$SSH_HOST:$DEPLOY_PATH/" \
+            > /dev/null
