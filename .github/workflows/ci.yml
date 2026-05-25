@@ -86,7 +86,7 @@ jobs:
           SSH_USER: ${{ secrets.DEPLOY_USER }}
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         run: |
-          rsync -az --delete --chmod=D755,F644 \
+          rsync -az --delete --mkpath --chmod=D755,F644 \
             -e "ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes" \
             dist/ "$SSH_USER@$SSH_HOST:$DEPLOY_PATH/" \
             > /dev/null
