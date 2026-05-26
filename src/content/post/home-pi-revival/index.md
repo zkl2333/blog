@@ -149,4 +149,4 @@ PiSugar 3 自带 DS3231 RTC 芯片，正确做法是 `/boot/config.txt` 加 `dto
 
 仓库：[github.com/zkl2333/home-pi](https://github.com/zkl2333/home-pi)
 
-如果你也有类似"一年前装好但没玩起来"的硬件——掏出来吧，找个 AI 陪着。
+如果你也有类似"曾经心血来潮但是被搁置"的硬件或者开发板，那就翻出来吧，现在的 AI 能力已经能覆盖这种小项目了。
