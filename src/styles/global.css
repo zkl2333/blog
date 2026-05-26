@@ -2001,19 +2001,24 @@ html :where(.prose) {
 	}
 
 	:where(.mermaid-code .mm-keyword) {
-		color: oklch(76% 0.13 290);
+		/* 琥珀橙，对齐站点 --color-accent */
+		color: var(--color-accent);
 	}
 	:where(.mermaid-code .mm-arrow) {
-		color: oklch(78% 0.14 25);
+		/* 暖橙箭头，保持原有暖色 */
+		color: oklch(78% 0.14 42);
 	}
 	:where(.mermaid-code .mm-bracket) {
-		color: oklch(80% 0.12 200);
+		/* 暖棕括号 */
+		color: oklch(74% 0.08 65);
 	}
 	:where(.mermaid-code .mm-string) {
-		color: oklch(82% 0.13 130);
+		/* 绿色字符串保持可读性 */
+		color: oklch(72% 0.13 145);
 	}
 	:where(.mermaid-code .mm-comment) {
-		color: oklch(55% 0.02 250);
+		/* 跟随主题 muted 色，自动适配明暗 */
+		color: var(--color-muted);
 		font-style: italic;
 	}
 
@@ -2043,6 +2048,6 @@ html :where(.prose) {
 
 	:where(pre.mermaid svg .edgeLabel rect) {
 		/* biome-ignore lint/complexity/noImportantStyles: Mermaid SVG uses inline styles */
-		fill: #131414 !important;
+		fill: var(--color-surface) !important;
 	}
 }

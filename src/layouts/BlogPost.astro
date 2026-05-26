@@ -91,8 +91,51 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 	import Panzoom from "@panzoom/panzoom";
 	import mermaid from "mermaid";
 
-	let mermaidInitialized = false;
+	let mermaidTheme: string | null = null;
 	const viewerInstances = new WeakMap();
+
+	/** 根据当前 data-theme 返回暖色系 Mermaid 配置 */
+	function getMermaidConfig() {
+		const isDark = document.documentElement.dataset.theme === "dark";
+		return {
+			startOnLoad: false,
+			securityLevel: "loose",
+			theme: "base",
+			flowchart: { useMaxWidth: false, htmlLabels: true },
+			sequence: { useMaxWidth: false },
+			themeVariables: isDark
+				? {
+						background: "transparent",
+						mainBkg: "#38241a",
+						primaryColor: "#38241a",
+						secondaryColor: "#2e1c12",
+						tertiaryColor: "#2e1c12",
+						primaryBorderColor: "#5a3c2a",
+						primaryTextColor: "#e8d4b8",
+						nodeBorder: "#5a3c2a",
+						lineColor: "#a08068",
+						textColor: "#e8d4b8",
+						edgeLabelBackground: "#2e1c12",
+						clusterBkg: "transparent",
+						clusterBorder: "#5a3c2a",
+					}
+				: {
+						background: "transparent",
+						mainBkg: "#faf4e8",
+						primaryColor: "#faf4e8",
+						secondaryColor: "#f0e8d4",
+						tertiaryColor: "#f0e8d4",
+						primaryBorderColor: "#c4a882",
+						primaryTextColor: "#3a2218",
+						nodeBorder: "#c4a882",
+						lineColor: "#9a7860",
+						textColor: "#3a2218",
+						edgeLabelBackground: "#faf4e8",
+						clusterBkg: "transparent",
+						clusterBorder: "#c4a882",
+					},
+		};
+	}
 
 	const MERMAID_KEYWORDS =
 		/\b(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram(?:-v2)?|erDiagram|gantt|pie|journey|mindmap|timeline|gitGraph|requirementDiagram|quadrantChart|xychart-beta|sankey-beta|subgraph|end|direction|click|class|classDef|style|linkStyle|note|loop|alt|opt|par|rect|activate|deactivate|participant|actor|as|TB|TD|BT|RL|LR)\b/g;
@@ -136,7 +179,7 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 	};
 
 	const TOOLBAR_BUTTON_CLASS =
-		"mermaid-btn relative z-10 inline-flex h-8 w-8 items-center justify-center rounded-full border border-transparent text-[#e6e6e6] hover:bg-white/10 hover:border-white/15 focus-visible:bg-white/10 focus-visible:border-white/15 outline-none cursor-pointer transition-colors";
+		"mermaid-btn relative z-10 inline-flex h-8 w-8 items-center justify-center rounded-full border border-transparent text-[var(--color-global-text)] hover:bg-[var(--color-accent-soft)] hover:border-[var(--color-border)] focus-visible:bg-[var(--color-accent-soft)] focus-visible:border-[var(--color-border)] outline-none cursor-pointer transition-colors";
 
 	function createToolbarButton(icon: string, action: string, title: string) {
 		const button = document.createElement("button");
@@ -153,15 +196,15 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 
 	function createFloatingButton(icon: string, action: string, title: string) {
 		const button = createToolbarButton(icon, action, title);
-		button.className = `${TOOLBAR_BUTTON_CLASS} h-9 w-9 rounded-none border-0 hover:bg-white/[0.08] [&+&]:border-t [&+&]:border-white/10`;
+		button.className = `${TOOLBAR_BUTTON_CLASS} h-9 w-9 rounded-none border-0 hover:bg-[var(--color-accent-soft)] [&+&]:border-t [&+&]:border-[var(--color-border)]`;
 		return button;
 	}
 
 	function createViewerLabel() {
 		const label = document.createElement("div");
 		label.className =
-			"inline-flex items-center gap-2 text-sm font-bold leading-none text-[#e6e6e6]";
-		label.innerHTML = `<span aria-hidden="true" class="font-mono text-xs tracking-tighter text-[#9aa0a6]">&lt;/&gt;</span><span>Mermaid</span>`;
+			"inline-flex items-center gap-2 text-sm font-bold leading-none text-[var(--color-global-text)]";
+		label.innerHTML = `<span aria-hidden="true" class="font-mono text-xs tracking-tighter text-[var(--color-muted)]">&lt;/&gt;</span><span>Mermaid</span>`;
 		return label;
 	}
 
@@ -173,19 +216,19 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 
 		const viewer = document.createElement("figure");
 		viewer.className =
-			"mermaid-viewer not-prose my-7 overflow-hidden rounded-2xl border border-white/[0.06] bg-[#1c1d1d] p-2.5 shadow-[0_16px_34px_-26px_rgba(0,0,0,0.7)]";
+			"mermaid-viewer not-prose my-7 overflow-hidden rounded border border-[var(--color-border)] bg-[var(--color-surface)] p-2.5";
 
 		const toolbar = document.createElement("figcaption");
 		toolbar.className = "flex items-center justify-between gap-4 pb-2";
 
 		const controls = document.createElement("div");
 		controls.className =
-			"mermaid-controls relative flex flex-none items-center gap-0.5 rounded-full bg-white/[0.08] p-0.5";
+			"mermaid-controls relative flex flex-none items-center gap-0.5 rounded-full bg-[var(--color-accent-soft)] p-0.5";
 		controls.ariaLabel = "切换视图";
 
 		const indicator = document.createElement("div");
 		indicator.className =
-			"mermaid-indicator pointer-events-none absolute left-0.5 top-0.5 h-8 w-8 rounded-full bg-[#1c1d1d] shadow-[0_1px_6px_-4px_rgba(0,0,0,0.6)] transition-transform duration-200";
+			"mermaid-indicator pointer-events-none absolute left-0.5 top-0.5 h-8 w-8 rounded-full bg-[var(--color-surface)] shadow-sm transition-transform duration-200";
 		indicator.ariaHidden = "true";
 		controls.append(indicator);
 
@@ -198,13 +241,13 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 
 		const viewport = document.createElement("div");
 		viewport.className =
-			"mermaid-viewport relative flex items-center justify-center overflow-hidden rounded-xl border border-white/5 bg-[#131414] cursor-grab touch-none active:cursor-grabbing";
+			"mermaid-viewport relative flex items-center justify-center overflow-hidden rounded border border-[var(--color-border)] bg-[var(--color-surface)] cursor-grab touch-none active:cursor-grabbing";
 		viewport.style.minHeight = "20rem";
 		viewport.style.maxHeight = "min(78vh, 48rem)";
 
 		const zoomControls = document.createElement("div");
 		zoomControls.className =
-			"mermaid-zoom pointer-events-none absolute bottom-3 right-3 z-10 flex flex-col overflow-hidden rounded-full border border-white/10 bg-[#26282b] opacity-0 shadow-[0_12px_28px_-18px_rgba(0,0,0,0.8)] transition-opacity duration-150";
+			"mermaid-zoom pointer-events-none absolute bottom-3 right-3 z-10 flex flex-col overflow-hidden rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] opacity-0 shadow-sm transition-opacity duration-150";
 
 		zoomControls.append(
 			createFloatingButton(toolbarIcons.zoomIn, "zoom-in", "放大图表"),
@@ -213,7 +256,7 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 
 		const codeView = document.createElement("pre");
 		codeView.className =
-			"mermaid-code m-0 overflow-auto whitespace-pre rounded-xl bg-transparent px-4 py-3 font-mono text-sm leading-relaxed text-[#e6e6e6]";
+			"mermaid-code m-0 overflow-auto whitespace-pre rounded bg-transparent px-4 py-3 font-mono text-sm leading-relaxed text-[var(--color-global-text)]";
 		codeView.hidden = true;
 
 		diagram.before(viewer);
@@ -340,30 +383,10 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 			return;
 		}
 
-		if (!mermaidInitialized) {
-			mermaid.initialize({
-				startOnLoad: false,
-				securityLevel: "loose",
-				theme: "dark",
-				flowchart: { useMaxWidth: false, htmlLabels: true },
-				sequence: { useMaxWidth: false },
-				themeVariables: {
-					background: "transparent",
-					mainBkg: "#1c1d1d",
-					primaryColor: "#1c1d1d",
-					secondaryColor: "#1c1d1d",
-					tertiaryColor: "#1c1d1d",
-					primaryBorderColor: "#d0d0d0",
-					primaryTextColor: "#e6e6e6",
-					nodeBorder: "#d0d0d0",
-					lineColor: "#9aa0a6",
-					textColor: "#e6e6e6",
-					edgeLabelBackground: "#131414",
-					clusterBkg: "transparent",
-					clusterBorder: "#9aa0a6",
-				},
-			});
-			mermaidInitialized = true;
+		const currentTheme = document.documentElement.dataset.theme ?? "light";
+		if (mermaidTheme !== currentTheme) {
+			mermaid.initialize(getMermaidConfig());
+			mermaidTheme = currentTheme;
 		}
 
 		for (const diagram of diagrams) {
@@ -378,6 +401,31 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 		}
 	}
 
+	/** 主题切换时重新渲染已有图表 */
+	async function reRenderMermaid() {
+		const diagrams = Array.from(
+			document.querySelectorAll<HTMLPreElement>("pre.mermaid[data-mermaid-rendered]"),
+		);
+		if (!diagrams.length) return;
+		for (const diagram of diagrams) {
+			const source = diagram.dataset.mermaidSource ?? "";
+			diagram.innerHTML = "";
+			diagram.textContent = source;
+			diagram.removeAttribute("data-mermaid-rendered");
+			// 清除 Mermaid 内部的"已处理"标记，否则 mermaid.run() 会跳过该元素
+			diagram.removeAttribute("data-processed");
+		}
+		mermaidTheme = null;
+		await renderMermaid();
+	}
+
 	renderMermaid();
 	document.addEventListener("astro:page-load", renderMermaid);
+
+	// 监听 data-theme 变化，重新渲染图表配色
+	const themeObserver = new MutationObserver(reRenderMermaid);
+	themeObserver.observe(document.documentElement, {
+		attributes: true,
+		attributeFilter: ["data-theme"],
+	});
 </script>
