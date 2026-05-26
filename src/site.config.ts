@@ -64,8 +64,13 @@ export const expressiveCodeOptions: AstroExpressiveCodeOptions = {
 		codeFontSize: "0.875rem",
 		codeLineHeight: "1.7142857rem",
 		codePaddingInline: "1rem",
+		// 让代码块背景跟随站点 --color-surface，自动适配明暗切换
+		codeBackground: "var(--color-surface)",
+		borderColor: "var(--color-border)",
 		frames: {
 			frameBoxShadowCssValue: "none",
+			editorBackground: "var(--color-surface)",
+			terminalBackground: "var(--color-surface)",
 		},
 		uiLineHeight: "inherit",
 	},
@@ -80,7 +85,7 @@ export const expressiveCodeOptions: AstroExpressiveCodeOptions = {
 		// return default selector
 		return `[data-theme="${theme.name}"]`;
 	},
-	// One dark, one light theme => https://expressive-code.com/guides/themes/#available-themes
-	themes: ["dracula", "github-light"],
+	// houston（深色）语法色偏琥珀橙，与"小饭桌"暖色调一致；github-light 适配奶油米白浅色
+	themes: ["houston", "github-light"],
 	useThemedScrollbars: false,
 };
