@@ -96,15 +96,27 @@ function Overview({ p }) {
 
 底下走的管线：
 
-```
-JSX  →  vnode (React 自动运行时，{type, props})
-     →  normalizeTree() 摊平函数组件 + Fragment
-     →  Yoga calculateLayout()
-     →  emit ops JSON: [{op: "text", x, y, text, font, size}, ...]
-     →  stdin 喂给 Python daemon
-     →  PIL ImageDraw on mode='1' canvas (FreeType MONO 自动 hint)
-     →  真 1-bit PNG（250×122，~1KB/页）
-     →  HTTP 返给 eink-status，丢给 e-paper 驱动上屏
+```mermaid
+flowchart TD
+    subgraph JS["JavaScript · Node.js"]
+        A[JSX 页面] --> B["vnode\n虚拟节点树"]
+        B --> C["normalizeTree()\n摊平函数组件 + Fragment"]
+        C --> D["Yoga calculateLayout()\nflexbox 算坐标与尺寸"]
+        D --> E["绘制指令 JSON\n{op, x, y, text, size}"]
+    end
+
+    subgraph PY["Python daemon"]
+        direction LR
+        F["PIL ImageDraw\nPython 绘图库（FreeType MONO）"] --> G["1-bit PNG\n250×122"]
+    end
+
+    subgraph HW["e-paper 设备"]
+        direction LR
+        H["eink-status\nHTTP 接收 · 转 1-bit"] --> I["e-paper 驱动 · 上屏"]
+    end
+
+    JS -->|stdin 跨进程| PY
+    PY -->|HTTP| HW
 ```
 
 写起来跟 RN 没两样：`flex / flexDirection / justifyContent / padding / gap / fontSize`，加几个 e-ink 特有的（背景色只认黑白，灰色当黑处理）。

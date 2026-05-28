@@ -88,11 +88,9 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 </script>
 
 <script>
-	import Panzoom from "@panzoom/panzoom";
 	import mermaid from "mermaid";
 
 	let mermaidTheme: string | null = null;
-	const viewerInstances = new WeakMap();
 
 	/** 根据当前 data-theme 返回暖色系 Mermaid 配置 */
 	function getMermaidConfig() {
@@ -105,273 +103,68 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 			sequence: { useMaxWidth: false },
 			themeVariables: isDark
 				? {
+						// —— 基础色 ——
 						background: "transparent",
 						mainBkg: "#38241a",
 						primaryColor: "#38241a",
 						secondaryColor: "#2e1c12",
-						tertiaryColor: "#2e1c12",
+						tertiaryColor: "#3c2850",
 						primaryBorderColor: "#5a3c2a",
 						primaryTextColor: "#e8d4b8",
 						nodeBorder: "#5a3c2a",
 						lineColor: "#a08068",
 						textColor: "#e8d4b8",
 						edgeLabelBackground: "#2e1c12",
-						clusterBkg: "transparent",
-						clusterBorder: "#5a3c2a",
+						// —— 深夜食堂色板：8色循环，subgraph 自动取色 ——
+						cScale0: "#38241a", // 深棕 · 底色
+						cScale1: "#5c3818", // 琥珀棕
+						cScale2: "#5a3010", // 焦糖
+						cScale3: "#3c2850", // 深紫
+						cScale4: "#1e3c28", // 深林绿
+						cScale5: "#1a2e4a", // 深海蓝
+						cScale6: "#4a1e30", // 深玫红
+						cScale7: "#2c3c10", // 橄榄
+						cScalePeer0: "#5a3c2a",
+						cScalePeer1: "#8a5828",
+						cScalePeer2: "#8a5020",
+						cScalePeer3: "#6a4880",
+						cScalePeer4: "#3a6048",
+						cScalePeer5: "#2a4870",
+						cScalePeer6: "#783050",
+						cScalePeer7: "#486020",
 					}
 				: {
+						// —— 基础色 ——
 						background: "transparent",
 						mainBkg: "#faf4e8",
 						primaryColor: "#faf4e8",
 						secondaryColor: "#f0e8d4",
-						tertiaryColor: "#f0e8d4",
+						tertiaryColor: "#cdb8e0",
 						primaryBorderColor: "#c4a882",
 						primaryTextColor: "#3a2218",
 						nodeBorder: "#c4a882",
 						lineColor: "#9a7860",
 						textColor: "#3a2218",
 						edgeLabelBackground: "#faf4e8",
-						clusterBkg: "transparent",
-						clusterBorder: "#c4a882",
+						// —— 食材色板：8色循环，subgraph 自动取色 ——
+						cScale0: "#faf4e8", // 奶油白 · 底色
+						cScale1: "#f5d98c", // 蜂蜜金
+						cScale2: "#f0a870", // 橘橙
+						cScale3: "#cdb8e0", // 薰衣紫
+						cScale4: "#a8c89c", // 抹茶绿
+						cScale5: "#96bdd8", // 青瓷蓝
+						cScale6: "#f0a0a8", // 樱花粉
+						cScale7: "#c4d870", // 嫩豆绿
+						cScalePeer0: "#c4a882",
+						cScalePeer1: "#c49840",
+						cScalePeer2: "#c07840",
+						cScalePeer3: "#9878c0",
+						cScalePeer4: "#709868",
+						cScalePeer5: "#5888a8",
+						cScalePeer6: "#c07080",
+						cScalePeer7: "#90a840",
 					},
 		};
-	}
-
-	const MERMAID_KEYWORDS =
-		/\b(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram(?:-v2)?|erDiagram|gantt|pie|journey|mindmap|timeline|gitGraph|requirementDiagram|quadrantChart|xychart-beta|sankey-beta|subgraph|end|direction|click|class|classDef|style|linkStyle|note|loop|alt|opt|par|rect|activate|deactivate|participant|actor|as|TB|TD|BT|RL|LR)\b/g;
-
-	function escapeHtml(value: string) {
-		return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-	}
-
-	function highlightMermaid(source: string) {
-		const lines = source.split("\n");
-		return lines
-			.map((line) => {
-				const commentMatch = line.match(/^(\s*)(%%.*)$/);
-				if (commentMatch) {
-					return `${commentMatch[1]}<span class="mm-comment">${escapeHtml(commentMatch[2]!)}</span>`;
-				}
-				let html = escapeHtml(line);
-				html = html.replace(
-					/(&quot;[^&]*?&quot;|&#39;[^&]*?&#39;|"[^"]*"|'[^']*')/g,
-					'<span class="mm-string">$1</span>',
-				);
-				html = html.replace(
-					/(--&gt;|--[xo]|==&gt;|-\.-&gt;|-\.-|---|--|&lt;--&gt;|&lt;--|::|:::)/g,
-					'<span class="mm-arrow">$1</span>',
-				);
-				html = html.replace(
-					/(\[\[?|\]\]?|\{\{?|\}\}?|\(\(?|\)\)?|&gt;|&lt;)/g,
-					'<span class="mm-bracket">$1</span>',
-				);
-				html = html.replace(MERMAID_KEYWORDS, '<span class="mm-keyword">$1</span>');
-				return html;
-			})
-			.join("\n");
-	}
-
-	const toolbarIcons = {
-		code: `<svg aria-hidden="true" viewBox="0 0 20 20"><path d="m7.4 6.6-3 3.4 3 3.4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"></path><path d="m12.6 6.6 3 3.4-3 3.4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"></path><path d="m11.1 5.2-2.2 9.6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"></path></svg>`,
-		preview: `<svg aria-hidden="true" viewBox="0 0 20 20"><path d="M7.2 5.3v9.4c0 .8.9 1.3 1.6.9l7-4.7c.6-.4.6-1.4 0-1.8l-7-4.7c-.7-.5-1.6 0-1.6.9Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.5"></path></svg>`,
-		zoomIn: `<svg aria-hidden="true" viewBox="0 0 20 20"><path d="M10 4v12M4 10h12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path></svg>`,
-		zoomOut: `<svg aria-hidden="true" viewBox="0 0 20 20"><path d="M4 10h12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path></svg>`,
-	};
-
-	const TOOLBAR_BUTTON_CLASS =
-		"mermaid-btn relative z-10 inline-flex h-8 w-8 items-center justify-center rounded-full border border-transparent text-[var(--color-global-text)] hover:bg-[var(--color-accent-soft)] hover:border-[var(--color-border)] focus-visible:bg-[var(--color-accent-soft)] focus-visible:border-[var(--color-border)] outline-none cursor-pointer transition-colors";
-
-	function createToolbarButton(icon: string, action: string, title: string) {
-		const button = document.createElement("button");
-		button.type = "button";
-		button.className = TOOLBAR_BUTTON_CLASS;
-		button.dataset.action = action;
-		button.ariaLabel = title;
-		button.title = title;
-		button.innerHTML = icon;
-		const svg = button.querySelector("svg");
-		if (svg) svg.classList.add("h-[1.05rem]", "w-[1.05rem]");
-		return button;
-	}
-
-	function createFloatingButton(icon: string, action: string, title: string) {
-		const button = createToolbarButton(icon, action, title);
-		button.className = `${TOOLBAR_BUTTON_CLASS} h-9 w-9 rounded-none border-0 hover:bg-[var(--color-accent-soft)] [&+&]:border-t [&+&]:border-[var(--color-border)]`;
-		return button;
-	}
-
-	function createViewerLabel() {
-		const label = document.createElement("div");
-		label.className =
-			"inline-flex items-center gap-2 text-sm font-bold leading-none text-[var(--color-global-text)]";
-		label.innerHTML = `<span aria-hidden="true" class="font-mono text-xs tracking-tighter text-[var(--color-muted)]">&lt;/&gt;</span><span>Mermaid</span>`;
-		return label;
-	}
-
-	function ensureViewer(diagram: HTMLElement) {
-		const currentViewer = diagram.closest<HTMLElement>(".mermaid-viewer");
-		if (currentViewer) {
-			return currentViewer;
-		}
-
-		const viewer = document.createElement("figure");
-		viewer.className =
-			"mermaid-viewer not-prose my-7 overflow-hidden rounded border border-[var(--color-border)] bg-[var(--color-surface)] p-2.5";
-
-		const toolbar = document.createElement("figcaption");
-		toolbar.className = "flex items-center justify-between gap-4 pb-2";
-
-		const controls = document.createElement("div");
-		controls.className =
-			"mermaid-controls relative flex flex-none items-center gap-0.5 rounded-full bg-[var(--color-accent-soft)] p-0.5";
-		controls.ariaLabel = "切换视图";
-
-		const indicator = document.createElement("div");
-		indicator.className =
-			"mermaid-indicator pointer-events-none absolute left-0.5 top-0.5 h-8 w-8 rounded-full bg-[var(--color-surface)] shadow-sm transition-transform duration-200";
-		indicator.ariaHidden = "true";
-		controls.append(indicator);
-
-		const codeButton = createToolbarButton(toolbarIcons.code, "code", "查看源码");
-		const previewButton = createToolbarButton(toolbarIcons.preview, "preview", "预览图表");
-		controls.append(codeButton, previewButton);
-		controls.dataset.active = "preview";
-		indicator.style.transform = "translateX(calc(100% + 0.125rem))";
-		toolbar.append(createViewerLabel(), controls);
-
-		const viewport = document.createElement("div");
-		viewport.className =
-			"mermaid-viewport relative flex items-center justify-center overflow-hidden rounded border border-[var(--color-border)] bg-[var(--color-surface)] cursor-grab touch-none active:cursor-grabbing";
-		viewport.style.minHeight = "20rem";
-		viewport.style.maxHeight = "min(78vh, 48rem)";
-
-		const zoomControls = document.createElement("div");
-		zoomControls.className =
-			"mermaid-zoom pointer-events-none absolute bottom-3 right-3 z-10 flex flex-col overflow-hidden rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] opacity-0 shadow-sm transition-opacity duration-150";
-
-		zoomControls.append(
-			createFloatingButton(toolbarIcons.zoomIn, "zoom-in", "放大图表"),
-			createFloatingButton(toolbarIcons.zoomOut, "zoom-out", "缩小图表"),
-		);
-
-		const codeView = document.createElement("pre");
-		codeView.className =
-			"mermaid-code m-0 overflow-auto whitespace-pre rounded bg-transparent px-4 py-3 font-mono text-sm leading-relaxed text-[var(--color-global-text)]";
-		codeView.hidden = true;
-
-		diagram.before(viewer);
-		viewport.append(diagram);
-		viewport.append(zoomControls);
-		viewer.append(toolbar, viewport, codeView);
-
-		return viewer;
-	}
-
-	function fitDiagram(svg: SVGSVGElement, panzoom: any, viewport: HTMLElement) {
-		panzoom.reset({ animate: false });
-		const viewportRect = viewport.getBoundingClientRect();
-		const svgRect = svg.getBoundingClientRect();
-
-		if (!viewportRect.width || !svgRect.width || !svgRect.height) {
-			return;
-		}
-
-		const padding = 24;
-		const scaleX = (viewportRect.width - padding) / svgRect.width;
-		const scaleY = (viewportRect.height - padding) / svgRect.height;
-		const scale = Math.min(Math.max(Math.min(scaleX, scaleY), 0.4), 3);
-		panzoom.zoom(scale, { animate: true });
-		panzoom.pan(0, 0, { animate: true });
-	}
-
-	function enablePanzoom(diagram: HTMLElement) {
-		const svg = diagram.querySelector("svg");
-		if (!svg || viewerInstances.has(svg)) {
-			return;
-		}
-
-		svg.removeAttribute("style");
-		svg.style.maxWidth = "100%";
-		svg.style.height = "auto";
-
-		const viewer = ensureViewer(diagram);
-		const viewport = viewer.querySelector<HTMLDivElement>(".mermaid-viewport");
-		if (!viewport) {
-			return;
-		}
-
-		const panzoom = Panzoom(svg, {
-			maxScale: 6,
-			minScale: 0.2,
-			startScale: 1,
-		});
-
-		viewerInstances.set(svg, panzoom);
-		viewport.addEventListener("wheel", panzoom.zoomWithWheel, { passive: false });
-		viewport.addEventListener("dblclick", () => {
-			panzoom.zoomIn({ animate: true });
-		});
-
-		viewport.addEventListener("mouseenter", () => {
-			const zoom = viewer.querySelector<HTMLDivElement>(".mermaid-zoom");
-			if (zoom) {
-				zoom.style.opacity = "1";
-				zoom.style.pointerEvents = "auto";
-			}
-		});
-		viewport.addEventListener("mouseleave", () => {
-			const zoom = viewer.querySelector<HTMLDivElement>(".mermaid-zoom");
-			if (zoom) {
-				zoom.style.opacity = "0";
-				zoom.style.pointerEvents = "none";
-			}
-		});
-
-		const controls = viewer.querySelector<HTMLDivElement>(".mermaid-controls");
-		const indicator = viewer.querySelector<HTMLDivElement>(".mermaid-indicator");
-		const codeView = viewer.querySelector<HTMLPreElement>(".mermaid-code");
-		const source = diagram.dataset.mermaidSource ?? "";
-		if (codeView) {
-			codeView.innerHTML = highlightMermaid(source);
-		}
-
-		function setMode(mode: "preview" | "code") {
-			if (!controls) return;
-			controls.dataset.active = mode;
-			if (indicator) {
-				indicator.style.transform =
-					mode === "preview" ? "translateX(calc(100% + 0.125rem))" : "translateX(0)";
-			}
-			if (mode === "code") {
-				viewport!.hidden = true;
-				if (codeView) codeView.hidden = false;
-			} else {
-				viewport!.hidden = false;
-				if (codeView) codeView.hidden = true;
-			}
-		}
-
-		viewer.addEventListener("click", (event) => {
-			const button = event.target instanceof Element ? event.target.closest(".mermaid-btn") : null;
-			if (!button) {
-				return;
-			}
-
-			const action = (button as HTMLButtonElement).dataset.action;
-			if (action === "zoom-in") {
-				panzoom.zoomIn({ animate: true });
-			} else if (action === "zoom-out") {
-				panzoom.zoomOut({ animate: true });
-			} else if (action === "reset") {
-				panzoom.reset({ animate: true });
-			} else if (action === "code") {
-				setMode("code");
-			} else if (action === "preview") {
-				setMode("preview");
-			}
-		});
-
-		requestAnimationFrame(() => fitDiagram(svg as SVGSVGElement, panzoom, viewport!));
 	}
 
 	async function renderMermaid() {
@@ -379,9 +172,7 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 			(node) => !node.dataset.mermaidRendered,
 		);
 
-		if (!diagrams.length) {
-			return;
-		}
+		if (!diagrams.length) return;
 
 		const currentTheme = document.documentElement.dataset.theme ?? "light";
 		if (mermaidTheme !== currentTheme) {
@@ -396,8 +187,15 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 
 		await mermaid.run({ nodes: diagrams });
 
+		// 渲染后：保留 Mermaid 自算的像素宽度（不强制 100%），仅防溢出 + 居中
 		for (const diagram of diagrams) {
-			enablePanzoom(diagram);
+			const svg = diagram.querySelector("svg");
+			if (svg) {
+				svg.style.display = "block";
+				svg.style.maxWidth = "100%";
+				svg.style.height = "auto";
+				svg.style.marginInline = "auto";
+			}
 		}
 	}
 

@@ -124,24 +124,42 @@ w += freetype.glyph(font, fontSize, ch).advance;
 
 ```mermaid
 flowchart TD
-    A[JSX 页面] --> B[Yoga 布局 · JS<br/>量字靠猜 ×0.55]
-    B --> C[ops]
-    C -->|JS ↔ Python · 进程缝| D[render_ops.py · PIL 画字 · 准]
-    D --> E[1-bit PNG]
-    E -->|HTTP| F[eink-status · Python · 没动<br/>只把 PNG 转 1-bit 再推屏]
-    F --> G[墨水屏]
+    subgraph JS["JavaScript · Node.js · 量字靠猜"]
+        A[JSX 页面] --> B["Yoga 布局\n量字靠猜 ×0.55"]
+        B --> C["绘制指令 JSON"]
+    end
+
+    subgraph PY["Python · render_ops.py · 量字准"]
+        direction LR
+        D["PIL ImageDraw\n真实字宽（FreeType MONO）"] --> E[1-bit PNG]
+    end
+
+    subgraph HW["e-paper 设备"]
+        direction LR
+        F["eink-status\n只把 PNG 转 1-bit 再推屏"] --> G[墨水屏]
+    end
+
+    JS -->|"JS ↔ Python · 进程缝"| PY
+    PY -->|HTTP| HW
 ```
 
 **现在**——渲染器纯 Node，单一引擎：
 
 ```mermaid
 flowchart TD
-    A[JSX 页面] --> B[Yoga 布局 · JS]
-    B --> C[ops]
-    C --> D[FreeType-WASM · Node<br/>量字 = 画字 = 同一个]
-    D --> E[1-bit PNG]
-    E -->|HTTP| F[eink-status · Python · 没动]
-    F --> G[墨水屏]
+    subgraph Node["Node.js · 单一引擎"]
+        A[JSX 页面] --> B[Yoga 布局]
+        B --> C["绘制指令 JSON"]
+        C --> D["FreeType-WASM\n量字 = 画字 = 同一个"]
+        D --> E[1-bit PNG]
+    end
+
+    subgraph HW["e-paper 设备"]
+        direction LR
+        F["eink-status · Python · 没动"] --> G[墨水屏]
+    end
+
+    Node -->|HTTP| HW
 ```
 
 那条「JS ↔ Python 进程缝」就是旧架构的病根——JS 这边猜字多宽，Python 那边才知道真宽，居中歪就歪在这。新的把缝抹了：一个语言，一个进程，量出来多宽就画多宽，没有第二套数去对不上。时钟居中，不是靠小聪明绕的，是它本来就该这么准。

@@ -64,13 +64,10 @@ export const expressiveCodeOptions: AstroExpressiveCodeOptions = {
 		codeFontSize: "0.875rem",
 		codeLineHeight: "1.7142857rem",
 		codePaddingInline: "1rem",
-		// 让代码块背景跟随站点 --color-surface，自动适配明暗切换
-		codeBackground: "var(--color-surface)",
+		// andromeeda 深色背景 #23262E 与博客深棕底形成层次，学自 DIYgod 博客
 		borderColor: "var(--color-border)",
 		frames: {
 			frameBoxShadowCssValue: "none",
-			editorBackground: "var(--color-surface)",
-			terminalBackground: "var(--color-surface)",
 		},
 		uiLineHeight: "inherit",
 	},
@@ -85,7 +82,7 @@ export const expressiveCodeOptions: AstroExpressiveCodeOptions = {
 		// return default selector
 		return `[data-theme="${theme.name}"]`;
 	},
-	// houston（深色）语法色偏琥珀橙，与"小饭桌"暖色调一致；github-light 适配奶油米白浅色
-	themes: ["houston", "github-light"],
+	// andromeeda（深色）语法色清冷，与博客暖背景形成反差层次；github-light 适配奶油米白浅色
+	themes: ["andromeeda", "github-light"],
 	useThemedScrollbars: false,
 };
