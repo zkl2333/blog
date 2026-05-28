@@ -37,14 +37,12 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 	/>
 	<article class="grow wrap-break-word" data-pagefind-body>
 		<div id="blog-hero" class="mb-10"><Masthead content={post} readingTime={readingTime} /></div>
-		<div class="flex min-w-0 flex-col gap-10 lg:flex-row lg:items-start lg:justify-between lg:gap-12">
-			{!!headings.length && <TOC headings={headings} />}
-			<div
-				class="prose min-w-0 !max-w-none prose-headings:font-semibold prose-h2:font-bold prose-headings:text-accent-2 prose-headings:before:absolute prose-headings:before:-ms-4 prose-headings:before:text-muted prose-headings:hover:before:text-accent sm:prose-headings:before:content-['#'] sm:prose-th:before:content-none lg:max-w-[52rem] xl:max-w-[56rem]"
-			>
-				<slot />
-				<WebMentions />
-			</div>
+		{!!headings.length && <TOC headings={headings} />}
+		<div
+			class="prose min-w-0 !max-w-none prose-headings:font-semibold prose-h2:font-bold prose-headings:text-accent-2 prose-headings:before:absolute prose-headings:before:-ms-4 prose-headings:before:text-muted prose-headings:hover:before:text-accent sm:prose-headings:before:content-['#'] sm:prose-th:before:content-none lg:max-w-[52rem] xl:max-w-[56rem]"
+		>
+			<slot />
+			<WebMentions />
 		</div>
 	</article>
 	<button
@@ -88,12 +86,12 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 </script>
 
 <script>
-	import mermaid from "mermaid";
+	import mermaid, { type MermaidConfig } from "mermaid";
 
 	let mermaidTheme: string | null = null;
 
 	/** 根据当前 data-theme 返回暖色系 Mermaid 配置 */
-	function getMermaidConfig() {
+	function getMermaidConfig(): MermaidConfig {
 		const isDark = document.documentElement.dataset.theme === "dark";
 		return {
 			startOnLoad: false,

@@ -97,3 +97,25 @@ export function getUniqueTagsWithCount(posts: CollectionEntry<"post">[]): [strin
 		),
 	].sort((a, b) => b[1] - a[1]);
 }
+
+// ─── 分类 helpers ────────────────────────────────────────
+/** 所有非空分类（去重） */
+export function getUniqueCategories(posts: CollectionEntry<"post">[]): string[] {
+	return [
+		...new Set(
+			posts.map((p) => p.data.category).filter((c): c is string => Boolean(c)),
+		),
+	];
+}
+
+/** [[categoryName, count], ...]，按文章数降序 */
+export function getUniqueCategoriesWithCount(
+	posts: CollectionEntry<"post">[],
+): [string, number][] {
+	const map = new Map<string, number>();
+	for (const p of posts) {
+		const c = p.data.category;
+		if (c) map.set(c, (map.get(c) ?? 0) + 1);
+	}
+	return [...map].sort((a, b) => b[1] - a[1]);
+}

@@ -1,6 +1,7 @@
 ---
 title: "好耶~又复活一个吃灰小屏幕"
 description: "抽屉里又翻出一块吃灰的墨水屏，这次是 ESP32 的云模块，换 ESPHome 玩，接进 Home Assistant 显示天气。前后两个晚上，中间一串坑（代理、欠压回滚、工具链下坏）基本是 Claude 自己 SSH 进服务器趟掉的，我动动嘴就完事。这篇博客也是 AI 写的。"
+category: "墨水屏"
 publishDate: "2026-05-22"
 tags: ["e-paper", "esp32", "esphome", "home-assistant", "claude-code", "ai", "homelab"]
 coverImage:

@@ -1,6 +1,7 @@
 ---
 title: "Vite 的打包优化"
 description: "记录使用 rollup-plugin-visualizer 分析 Vite 项目打包产物，并通过手动分包、按需加载等手段进行优化的过程。"
+category: "前端"
 publishDate: "2023-10-23T00:00:00+08:00"
 tags: ["vite", "rollup", "前端工程化", "性能优化"]
 ---

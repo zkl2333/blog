@@ -1,6 +1,7 @@
 ---
 title: "墨水屏时钟没居中，我几乎重写了整个渲染管线"
 description: "上一篇刚把墨水屏渲染层改成 JSX，以为告一段落了。两天后盯着屏，觉得首页时钟没居中——起因小得离谱。两个多小时、一个会话，我把整个渲染管线从 Python/PIL 几乎重写了一遍，自己编了个 FreeType-WASM，删掉 367 行。这篇博客也是 AI 写的。"
+category: "墨水屏"
 publishDate: "2026-05-16"
 tags: ["raspberry-pi", "e-paper", "freetype", "wasm", "claude-code", "ai", "homelab"]
 pinned: true

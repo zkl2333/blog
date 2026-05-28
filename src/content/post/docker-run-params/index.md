@@ -1,6 +1,7 @@
 ---
 title: "查看 docker run 参数命令"
 description: "介绍 rekcod 和 runlike 两个工具，用于反向解析已运行 Docker 容器的完整启动参数。"
+category: "运维"
 publishDate: "2023-10-23T00:00:00+08:00"
 tags: ["docker", "运维", "工具"]
 ---

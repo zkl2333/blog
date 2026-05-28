@@ -40,6 +40,17 @@ const cls = [
 	<div class="dish-card__body">
 		<div class="dish-card__meta">
 			<FormattedDate class="dish-card__date" date={post.data.publishDate} />
+			{post.data.category && (
+				<>
+					<span class="dish-card__meta-sep" aria-hidden="true">·</span>
+					<a
+						class="dish-card__category"
+						href={`/categories/${encodeURIComponent(post.data.category)}/`}
+					>
+						{post.data.category}
+					</a>
+				</>
+			)}
 			{post.data.draft && <span class="dish-card__tag dish-card__tag--draft">draft</span>}
 			{post.data.pinned && <span class="dish-card__tag dish-card__tag--pin">★ pin</span>}
 		</div>

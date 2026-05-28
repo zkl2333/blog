@@ -1,0 +1,42 @@
+---
+import Breadcrumb from "@/components/Breadcrumb.astro";
+import { getAllPosts, getUniqueCategoriesWithCount } from "@/data/post";
+import PageLayout from "@/layouts/Base.astro";
+
+const allPosts = await getAllPosts();
+const allCategories = getUniqueCategoriesWithCount(allPosts);
+
+const meta = {
+	description: "按主题分门别类的所有文章",
+	title: "全部分类",
+};
+---
+
+<PageLayout meta={meta}>
+	<Breadcrumb items={[{ label: "首页", href: "/" }, { label: "分类" }]} />
+
+	<header class="page-head">
+		<span class="section-head__dot" aria-hidden="true"></span>
+		<h1 class="page-head__title">分类 <span class="hero-board__emoji">🗂️</span></h1>
+	</header>
+	<p class="page-head__desc">
+		桌上几口大菜——主菜区、家常菜、汤水。点进去看每一类下面具体写过什么。
+	</p>
+
+	<ul class="tag-list" role="list">
+		{
+			allCategories.map(([category, count]) => (
+				<li>
+					<a
+						class="tag-list__item"
+						href={`/categories/${encodeURIComponent(category)}/`}
+						title={`查看分类：${category} 的文章`}
+					>
+						<span class="tag-list__name">{category}</span>
+						<span class="tag-list__count">{count}</span>
+					</a>
+				</li>
+			))
+		}
+	</ul>
+</PageLayout>

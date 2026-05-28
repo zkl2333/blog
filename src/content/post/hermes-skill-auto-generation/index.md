@@ -1,6 +1,7 @@
 ---
 title: "解剖 Hermes Agent 的「自我进化」：后台 Skill 自动生成链路完全追踪"
 description: "从昨晚发现一堆搞不清来源的 Skill 说起，顺藤摸瓜追踪 run_agent.py 源码、配置项、Fork 机制、Prompt 设计，再到社区几个积压 Issue 和 146 个 Skill 年烧 8000 万 Token 的成本账。一个会自动生长但从不会修剪的系统。"
+category: "AI 智能体"
 publishDate: "2026-04-29"
 tags: ["hermes-agent", "source-code", "skill", "ai", "deep-dive"]
 coverImage:

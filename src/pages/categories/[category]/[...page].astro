@@ -1,0 +1,77 @@
+---
+import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
+import PostPreview from "@/components/blog/PostPreview.astro";
+import Pagination from "@/components/Paginator.astro";
+import { getAllPosts, getUniqueCategories } from "@/data/post";
+import PageLayout from "@/layouts/Base.astro";
+import { collectionDateSort } from "@/utils/date";
+
+export const getStaticPaths = (async ({ paginate }) => {
+	const allPosts = await getAllPosts();
+	const sortedPosts = allPosts.sort(collectionDateSort);
+	const uniqueCategories = getUniqueCategories(sortedPosts);
+
+	return uniqueCategories.flatMap((category) => {
+		const postsInCategory = sortedPosts.filter((post) => post.data.category === category);
+		return paginate(postsInCategory, {
+			pageSize: 10,
+			params: { category },
+		});
+	});
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { page } = Astro.props as Props;
+const { category } = Astro.params;
+
+const meta = {
+	description: `分类「${category}」下的所有文章`,
+	title: `分类：${category}`,
+};
+
+const paginationProps = {
+	...(page.url.prev && {
+		prevUrl: {
+			text: "← 上一组",
+			url: page.url.prev,
+		},
+	}),
+	...(page.url.next && {
+		nextUrl: {
+			text: "下一组 →",
+			url: page.url.next,
+		},
+	}),
+};
+---
+
+<PageLayout meta={meta}>
+	<Breadcrumb
+		items={[
+			{ label: "首页", href: "/" },
+			{ label: "分类", href: "/categories/" },
+			{ label: category },
+		]}
+	/>
+
+	<header class="page-head">
+		<span class="section-head__dot" aria-hidden="true"></span>
+		<h1 class="page-head__title">{category}</h1>
+	</header>
+	<p class="page-head__desc">
+		这一类下面有 {page.total} 篇。
+	</p>
+
+	<ul class="dish-grid" role="list">
+		{
+			page.data.map((p) => (
+				<li>
+					<PostPreview as="h2" post={p} withDesc />
+				</li>
+			))
+		}
+	</ul>
+	<Pagination {...paginationProps} />
+</PageLayout>

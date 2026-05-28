@@ -1,6 +1,7 @@
 ---
 title: "翻出书架上的树莓派，和 Claude 一晚上把它玩起来"
 description: "一台买回来装好就吃灰的 Pi Zero 2W + PiSugar 3 + 2.13 寸墨水屏，搬家翻出来，今晚和 AI 一起从零调通：事件驱动的状态显示 daemon、内核接入 RTC、GitHub 公钥同步、bootstrap 一键复盘。整套配置归档到 GitHub，下次 SD 卡挂了也能 git clone 出来。"
+category: "墨水屏"
 publishDate: "2026-05-09"
 tags: ["raspberry-pi", "pisugar", "e-paper", "claude-code", "ai", "homelab"]
 pinned: true

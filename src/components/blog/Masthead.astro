@@ -30,6 +30,17 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
 	<FormattedDate date={data.publishDate} dateTimeOptions={dateTimeOptions} />
 	<span class="post-meta-line__sep" aria-hidden="true">·</span>
 	<span>{readingTime}</span>
+	{data.category && (
+		<>
+			<span class="post-meta-line__sep" aria-hidden="true">·</span>
+			<a
+				class="post-meta-line__category"
+				href={`/categories/${encodeURIComponent(data.category)}/`}
+			>
+				{data.category}
+			</a>
+		</>
+	)}
 	<span class="post-meta-line__sep" aria-hidden="true">·</span>
 	<span class="post-meta-line__hash" aria-hidden="true">//</span>
 	<span class="post-meta-line__label">post</span>
