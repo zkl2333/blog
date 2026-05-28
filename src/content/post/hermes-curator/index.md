@@ -140,7 +140,7 @@ for row in _u.agent_created_report():
 
 先看一个具体例子，再讲它怎么做到的。假设你的 Skill 库里有这样三个条目：
 
-```
+```text
 hermes-config-debug/SKILL.md      ← 某次调试 config.yaml 的经验
 hermes-config-migration/SKILL.md  ← 升级后迁移旧配置的步骤
 hermes-config-rollback/SKILL.md   ← 配置改崩了怎么回滚
@@ -148,7 +148,7 @@ hermes-config-rollback/SKILL.md   ← 配置改崩了怎么回滚
 
 这三个 Skill 各自独立时，Hermes 每次做配置相关的任务都要搜三遍、匹配三次。策展 agent 看到 `hermes-config-` 这个共同前缀，判断它们属于同一个领域，于是执行合并。合并之后变成：
 
-```
+```text
 hermes-config/SKILL.md            ← 一个 Skill，内含三节
   ## Debug
   之前的 debug 经验...
