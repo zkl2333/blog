@@ -1,47 +1,23 @@
 ---
-// Artalk 评论区。后端部署在独立子域名 comment.zkl2333.com。
-// pageKey 用路径（/posts/{cid}/、/notes/{cid}/），与历史评论导入时的 page_key 对应。
+// Waline 评论区。后端部署在独立子域名 comment.zkl2333.com。
+// path 用 location.pathname，与导入数据的 url 字段（/posts/{cid}/、/notes/{cid}/ 等）对应。
 ---
 
-<section class="mt-12" data-pagefind-ignore>
-	<div id="artalk"></div>
-</section>
+<div id="waline" class="mt-12" data-pagefind-ignore></div>
 
 <script>
-	import Artalk from "artalk";
-	import "artalk/Artalk.css";
+	import { init } from "@waline/client";
+	import "@waline/client/style";
 
-	const SERVER = "https://comment.zkl2333.com";
-	const SITE = "多吃点的小饭桌";
-
-	let artalk: ReturnType<typeof Artalk.init> | null = null;
-
-	const isDark = () => document.documentElement.dataset.theme === "dark";
-
-	function mount() {
-		const el = document.getElementById("artalk");
-		if (!el) return;
-		artalk?.destroy();
-		artalk = Artalk.init({
-			el,
-			server: SERVER,
-			site: SITE,
-			pageKey: location.pathname,
-			pageTitle: document.title,
-			darkMode: isDark(),
-		});
-	}
-
-	mount();
-
-	// 跟随站点明暗主题：Artalk 用根元素的 .atk-dark-mode class 控制深浅，
-	// 这里直接 toggle（2.9.1 的 setDarkMode 不会改这个 class，故不依赖它）
-	function syncDarkMode() {
-		document.getElementById("artalk")?.classList.toggle("atk-dark-mode", isDark());
-	}
-	const observer = new MutationObserver(syncDarkMode);
-	observer.observe(document.documentElement, {
-		attributes: true,
-		attributeFilter: ["data-theme"],
+	init({
+		el: "#waline",
+		serverURL: "https://comment.zkl2333.com",
+		path: location.pathname,
+		lang: "zh-CN",
+		// 深色模式跟随站点主题：当 <html data-theme="dark"> 时启用（Waline 内置监听，无需手动）
+		dark: "html[data-theme='dark']",
+		locale: {
+			placeholder: "随便聊点什么吧……（支持 Markdown）",
+		},
 	});
 </script>
