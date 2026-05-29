@@ -21,6 +21,7 @@
 		"@astrojs/sitemap": "3.7.2",
 		"@panzoom/panzoom": "^4.6.2",
 		"@tailwindcss/vite": "4.2.4",
+		"artalk": "^2.9.1",
 		"astro": "6.2.1",
 		"astro-expressive-code": "^0.41.7",
 		"astro-icon": "^1.1.5",
@@ -63,7 +64,12 @@
 		"typescript": "^5.9.3"
 	},
 	"pnpm": {
-		"onlyBuiltDependencies": ["@biomejs/biome", "@tailwindcss/oxide", "esbuild", "sharp"],
+		"onlyBuiltDependencies": [
+			"@biomejs/biome",
+			"@tailwindcss/oxide",
+			"esbuild",
+			"sharp"
+		],
 		"overrides": {
 			"sharp": "^0.34.5"
 		}

@@ -1,0 +1,24 @@
+---
+import Breadcrumb from "@/components/Breadcrumb.astro";
+import Comments from "@/components/Comments.astro";
+import PageLayout from "@/layouts/Base.astro";
+
+const meta = {
+	description: "多吃点的小饭桌 — 留言板，随便聊点什么。",
+	title: "留言板",
+};
+---
+
+<PageLayout meta={meta}>
+	<Breadcrumb items={[{ label: "首页", href: "/" }, { label: "留言板" }]} />
+
+	<header class="page-head">
+		<span class="section-head__dot" aria-hidden="true"></span>
+		<h1 class="page-head__title">留言板 <span class="hero-board__emoji">📖</span></h1>
+	</header>
+	<p class="page-head__desc">
+		坐下歇会儿，随便聊点什么 ☕ 下面也搬来了 2016 年 Typecho 时代的老留言。
+	</p>
+
+	<Comments />
+</PageLayout>

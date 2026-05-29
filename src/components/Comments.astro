@@ -1,0 +1,47 @@
+---
+// Artalk 评论区。后端部署在独立子域名 comment.zkl2333.com。
+// pageKey 用路径（/posts/{cid}/、/notes/{cid}/），与历史评论导入时的 page_key 对应。
+---
+
+<section class="mt-12" data-pagefind-ignore>
+	<div id="artalk"></div>
+</section>
+
+<script>
+	import Artalk from "artalk";
+	import "artalk/Artalk.css";
+
+	const SERVER = "https://comment.zkl2333.com";
+	const SITE = "多吃点的小饭桌";
+
+	let artalk: ReturnType<typeof Artalk.init> | null = null;
+
+	const isDark = () => document.documentElement.dataset.theme === "dark";
+
+	function mount() {
+		const el = document.getElementById("artalk");
+		if (!el) return;
+		artalk?.destroy();
+		artalk = Artalk.init({
+			el,
+			server: SERVER,
+			site: SITE,
+			pageKey: location.pathname,
+			pageTitle: document.title,
+			darkMode: isDark(),
+		});
+	}
+
+	mount();
+
+	// 跟随站点明暗主题：Artalk 用根元素的 .atk-dark-mode class 控制深浅，
+	// 这里直接 toggle（2.9.1 的 setDarkMode 不会改这个 class，故不依赖它）
+	function syncDarkMode() {
+		document.getElementById("artalk")?.classList.toggle("atk-dark-mode", isDark());
+	}
+	const observer = new MutationObserver(syncDarkMode);
+	observer.observe(document.documentElement, {
+		attributes: true,
+		attributeFilter: ["data-theme"],
+	});
+</script>

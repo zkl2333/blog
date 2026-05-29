@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
 import Breadcrumb from "@/components/Breadcrumb.astro";
+import Comments from "@/components/Comments.astro";
 import Note from "@/components/note/Note.astro";
 import PageLayout from "@/layouts/Base.astro";
 
@@ -35,4 +36,5 @@ const meta = {
 		]}
 	/>
 	<Note as="h1" note={note} />
+	<Comments />
 </PageLayout>
