@@ -48,6 +48,9 @@ jobs:
 
       - name: 构建站点
         run: pnpm build
+        env:
+          WEBMENTION_API_KEY: ${{ secrets.WEBMENTION_API_KEY }}
+          WEBMENTION_URL: https://webmention.io/blog.zkl2333.com/webmention
 
       - name: 上传 dist 构建产物
         if: github.event_name != 'pull_request'
