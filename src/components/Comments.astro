@@ -21,3 +21,49 @@
 		},
 	});
 </script>
+
+<style is:global>
+	/* 让 Waline 评论区融入博客「小饭桌」暖色系统，并自动跟随明暗主题：
+	   把 Waline 的颜色变量映射到博客现成的 theme-aware 变量即可，
+	   light/dark 由 --color-* 自身切换，无需为 Waline 单独写暗色。 */
+	#waline {
+		/* 主色 → 焦糖橙 accent */
+		--waline-theme-color: var(--color-accent);
+		--waline-active-color: color-mix(in oklch, var(--color-accent) 85%, var(--color-accent-2));
+		/* 文字 / 背景：融入页面、随明暗切换 */
+		--waline-color: var(--color-global-text);
+		--waline-bg-color: transparent;
+		--waline-bg-color-light: var(--color-surface);
+		--waline-bg-color-hover: color-mix(in oklch, var(--color-accent) 8%, transparent);
+		--waline-border-color: var(--color-border);
+		--waline-border: 1px solid var(--color-border);
+		/* 引用块 / 禁用态 / 底部信息栏 */
+		--waline-bq-color: color-mix(in oklch, var(--color-accent) 6%, var(--color-surface));
+		--waline-disable-bg-color: var(--color-surface);
+		--waline-disable-color: var(--color-muted);
+		--waline-info-bg-color: color-mix(in oklch, var(--color-surface) 70%, transparent);
+		--waline-info-color: var(--color-muted);
+		/* 徽章用强调色，替掉默认的蓝 */
+		--waline-badge-color: var(--color-accent);
+		/* 字体跟随博客（霞鹜文楷） */
+		font-family: var(--font-family-sans);
+	}
+
+	/* 输入框聚焦：暖色描边 + 柔光环，呼应博客交互风格 */
+	#waline .wl-editor:focus,
+	#waline .wl-input:focus {
+		border-color: color-mix(in oklch, var(--color-accent) 45%, var(--color-border));
+		box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-accent) 12%, transparent);
+	}
+
+	/* 主发送按钮：实心焦糖橙，对齐博客 .btn--primary */
+	#waline .wl-btn.primary {
+		color: var(--color-global-bg);
+		background: var(--color-accent);
+		border-color: var(--color-accent);
+	}
+	#waline .wl-btn.primary:hover {
+		background: color-mix(in oklch, var(--color-accent) 88%, black);
+		border-color: color-mix(in oklch, var(--color-accent) 88%, black);
+	}
+</style>
