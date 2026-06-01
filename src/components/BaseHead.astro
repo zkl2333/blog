@@ -73,6 +73,9 @@ const socialImageURL = new URL(ogImage ? ogImage : "/social-card.png", Astro.url
 <link href="/rss.xml" title="博客" rel="alternate" type="application/rss+xml" />
 <link href="/notes/rss.xml" title="碎念" rel="alternate" type="application/rss+xml" />
 
+{/* IndieWeb：rel="me" 身份验证，webmention.io 认领域名用 */}
+<link href="https://github.com/zkl2333" rel="me" />
+
 {/* Webmentions */}
 {
 	WEBMENTION_URL && (
