@@ -1,25 +1,54 @@
 ---
-// Waline 评论区。后端部署在独立子域名 comment.zkl2333.com。
-// path 用 location.pathname，与导入数据的 url 字段（/posts/{cid}/、/notes/{cid}/ 等）对应。
+// Waline 评论区。后端在独立子域名 comment.zkl2333.com。
+// 合规策略（个人备案禁止评论交互）：挂载前先探测后端，连不上
+// （如关闭 Waline docker）就彻底移除评论区——不显示空框、报错或
+// 任何残留，与“没有评论功能”完全一致。一关 docker 即自动隐身。
 ---
 
-<div id="waline" class="mt-12" data-pagefind-ignore></div>
+<div id="waline" class="mt-12" data-pagefind-ignore hidden></div>
 
 <script>
 	import { init } from "@waline/client";
 	import "@waline/client/style";
 
-	init({
-		el: "#waline",
-		serverURL: "https://comment.zkl2333.com",
-		path: location.pathname,
-		lang: "zh-CN",
-		// 深色模式跟随站点主题：当 <html data-theme="dark"> 时启用（Waline 内置监听，无需手动）
-		dark: "html[data-theme='dark']",
-		locale: {
-			placeholder: "随便聊点什么吧……（支持 Markdown）",
-		},
-	});
+	const serverURL = "https://comment.zkl2333.com";
+	const el = document.querySelector<HTMLElement>("#waline");
+
+	void (async () => {
+		if (!el) return;
+		try {
+			// 探测后端：带超时请求评论接口，确认在线且正常响应
+			const ctrl = new AbortController();
+			const timer = setTimeout(() => ctrl.abort(), 4000);
+			const res = await fetch(
+				`${serverURL}/api/comment?path=${encodeURIComponent(location.pathname)}&pageSize=1&page=1`,
+				{ signal: ctrl.signal, headers: { Accept: "application/json" } },
+			);
+			clearTimeout(timer);
+			if (!res.ok) throw new Error(`HTTP ${res.status}`);
+			const data = await res.json();
+			if (data && typeof data.errno !== "undefined" && data.errno !== 0) {
+				throw new Error(`Waline errno ${data.errno}`);
+			}
+
+			// 后端在线 → 显示并挂载评论
+			el.hidden = false;
+			init({
+				el,
+				serverURL,
+				path: location.pathname,
+				lang: "zh-CN",
+				// 深色模式跟随站点主题（Waline 内置监听）
+				dark: "html[data-theme='dark']",
+				locale: {
+					placeholder: "随便聊点什么吧……（支持 Markdown）",
+				},
+			});
+		} catch {
+			// 后端连不上（如已关闭 Waline docker）→ 彻底移除，页面如同无评论功能
+			el.remove();
+		}
+	})();
 </script>
 
 <style is:global>
