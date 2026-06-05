@@ -3,6 +3,9 @@ title: "越来越多的技术债，逼我关掉了自己的 AI 早报工厂"
 description: "我用 hermes 给自己搭了套 AI 早报：几十个源抓进来，自己定规则去重、合并、分级，每早八点半当管家递给我。跑了 52 天还是关了。它不是败给谁，是败给我从一开始就不肯付的那点代价。"
 publishDate: "2026-06-04"
 tags: ["hermes-agent", "ai", "homelab", "claude-code", "rss", "deep-dive"]
+coverImage:
+  alt: "小机器人给停转的 AI 早报机盖上布、拔下插头，轻轻道别，墙上挂着「AI 早报」的木牌"
+  src: "./cover.png"
 ---
 
 ## 一个"我上我也行"的起点
