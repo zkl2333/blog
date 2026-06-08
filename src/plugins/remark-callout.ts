@@ -1,3 +1,4 @@
+import type { Properties } from "hastscript";
 import type { Paragraph, PhrasingContent, Root } from "mdast";
 import type { Plugin } from "unified";
 import { visit } from "unist-util-visit";
@@ -70,10 +71,11 @@ export const remarkCallout: Plugin<[], Root> = () => (tree) => {
 		} else if (first?.type === "text") {
 			// 退路：`[!note]` 作为纯文本出现
 			const m = first.value.match(/^\[!(\w+)\]/);
-			if (!m) return;
-			type = ALIASES[m[1].toLowerCase()];
+			const rawType = m?.[1];
+			if (!m || !rawType) return;
+			type = ALIASES[rawType.toLowerCase()];
 			if (!type) return;
-			first.value = first.value.slice(m[0].length);
+			first.value = first.value.slice(m[0]?.length ?? 0);
 		} else {
 			return;
 		}
@@ -86,7 +88,7 @@ export const remarkCallout: Plugin<[], Root> = () => (tree) => {
 			const hm = head.value.match(/^([+-]?)[ \t]*([^\n]*)(\n[\s\S]*)?$/);
 			if (hm) {
 				fold = hm[1] ?? "";
-				const titleStr = hm[2].trim();
+				const titleStr = (hm[2] ?? "").trim();
 				if (titleStr) titleNodes = [{ type: "text", value: titleStr }];
 				head.value = hm[3] ? hm[3].replace(/^\n/, "") : "";
 			}
@@ -105,7 +107,7 @@ export const remarkCallout: Plugin<[], Root> = () => (tree) => {
 		const titleEl = h(fold ? "summary" : "div", { class: "callout-title" }, titleNodes);
 		const bodyEl = h("div", { class: "callout-content" }, node.children);
 
-		const props: Record<string, unknown> = { class: "callout", "data-callout": type };
+		const props: Properties = { class: "callout", "data-callout": type };
 		if (fold === "+") props.open = true;
 
 		parent.children[index] = h(fold ? "details" : "aside", props, [titleEl, bodyEl]);
