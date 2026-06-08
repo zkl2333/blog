@@ -1,0 +1,91 @@
+/* =====================================================================
+ * Obsidian / GitHub 风格 callout（> [!note] 标题）
+ * 由 remark-callout 生成，全局生效，与 Obsidian 笔记互通。
+ * 配色复用主题变量 + 少量语义色，亮 / 暗自动适配。
+ * ===================================================================== */
+
+.callout {
+	--cal: var(--color-accent);
+	display: block;
+	margin: 1.5em 0;
+	border: 1px solid color-mix(in oklch, var(--cal) 28%, var(--color-border));
+	border-inline-start: 3px solid var(--cal);
+	border-radius: 0.5rem;
+	background: color-mix(in oklch, var(--cal) 7%, var(--color-global-bg));
+	overflow: hidden;
+}
+
+.callout-title {
+	display: flex;
+	align-items: center;
+	gap: 0.45em;
+	padding: 0.55em 1em;
+	font-size: 0.95em;
+	font-weight: 700;
+	letter-spacing: 0.01em;
+	color: var(--cal);
+	background: color-mix(in oklch, var(--cal) 9%, transparent);
+}
+
+/* 标题前的小圆点标记 */
+.callout-title::before {
+	content: "";
+	flex: none;
+	width: 0.5em;
+	height: 0.5em;
+	border-radius: 999px;
+	background: var(--cal);
+}
+
+.callout-content {
+	padding: 0.2em 1em 0.7em;
+}
+.callout-content > :first-child {
+	margin-top: 0.7em;
+}
+.callout-content > :last-child {
+	margin-bottom: 0;
+}
+
+/* —— 折叠（details / summary）—— */
+details.callout > summary.callout-title {
+	cursor: pointer;
+	list-style: none;
+}
+details.callout > summary.callout-title::-webkit-details-marker {
+	display: none;
+}
+details.callout > summary.callout-title::after {
+	content: "›";
+	margin-inline-start: auto;
+	font-weight: 700;
+	transition: transform 0.2s ease;
+}
+details.callout[open] > summary.callout-title::after {
+	transform: rotate(90deg);
+}
+
+/* —— 类型配色 —— */
+.callout[data-callout="note"],
+.callout[data-callout="info"],
+.callout[data-callout="quote"] {
+	--cal: var(--color-accent);
+}
+.callout[data-callout="tip"],
+.callout[data-callout="success"] {
+	--cal: oklch(62% 0.13 155);
+}
+.callout[data-callout="warning"],
+.callout[data-callout="todo"] {
+	--cal: oklch(70% 0.14 75);
+}
+.callout[data-callout="danger"],
+.callout[data-callout="failure"] {
+	--cal: oklch(60% 0.18 25);
+}
+.callout[data-callout="question"],
+.callout[data-callout="example"],
+.callout[data-callout="abstract"],
+.callout[data-callout="important"] {
+	--cal: oklch(62% 0.15 300);
+}

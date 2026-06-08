@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* 全局正文精修（不包 @layer，优先级高于 typography 的 :where 默认值） */
+@import "./components/prose-enhance.css";
 /* tailwind to ignore satori generated og-image */
 @source not "../pages/og-image";
 /* config for tailwindcss-typography plugin */
@@ -162,6 +164,7 @@
 @layer components {
 	@import "./components/admonition.css";
 	@import "./components/github-card.css";
+	@import "./components/callout.css";
 
 	.cactus-link {
 		@apply hover:decoration-link underline underline-offset-2 hover:decoration-2;
@@ -1673,7 +1676,7 @@
 		font-size: 0.78rem;
 		font-variant-numeric: tabular-nums;
 		color: var(--color-muted);
-		letter-spacing: 0.02em;
+		letter-spacing: 0.05em;
 	}
 	.post-meta-line__hash {
 		opacity: 0.55;
@@ -1770,6 +1773,7 @@
 		border-radius: 0.35rem;
 		font-family: var(--font-family-mono);
 		font-size: 0.74rem;
+		letter-spacing: 0.04em;
 		color: var(--color-muted);
 		text-decoration: none;
 		background: color-mix(in oklch, var(--color-muted) 6%, transparent);
@@ -1902,7 +1906,7 @@ html :where(.prose) {
 
 @utility prose {
 	font-family: var(--font-family-sans);
-	line-height: 1.9;
+	line-height: 1.95;
 	letter-spacing: 0.01em;
 
 	:where(h1, h2, h3, h4) {

@@ -1,0 +1,176 @@
+/* =====================================================================
+ * 全局正文精修（所有文章自动生效，无需任何开关 / frontmatter）
+ *
+ * 在博客原有「奶油米白 + 霞鹜文楷」暖色气质上，叠加一层「编辑 / 杂志感」：
+ * 首字下沉、标题层次与分隔、引文、列表标记、表格、行内代码、图片图注，
+ * 外加全站 grain 质感。配色全部复用主题变量，亮 / 暗自动适配。
+ *
+ * 选择器特意「不包 @layer」——优先级高于 typography 插件的 :where() 默认值，
+ * 用 .prose 作用域确保只影响文章正文，不碰其它组件。
+ * ===================================================================== */
+
+/* —— 块级元素统一纵向节奏（让展示块从正文流里「浮」出来）—— */
+.prose {
+	--prose-block-gap: 2em;
+	counter-reset: prose-h2;
+}
+.prose blockquote,
+.prose figure,
+.prose table,
+.prose .callout {
+	margin-block: var(--prose-block-gap);
+}
+.prose hr {
+	margin-block: calc(var(--prose-block-gap) * 1.4);
+}
+
+/* —— 首段首字：行内放大 + accent 上色（仿海报稿，不 float 下沉，中文也稳）—— */
+.prose > p:first-of-type::first-letter {
+	font-size: 1.85em;
+	font-weight: 600;
+	line-height: 1;
+	color: var(--color-accent);
+	margin-inline-end: 0.04em;
+}
+
+/* —— 标题：加大字号对比 + 分隔呼吸（章节层级，非海报巨字）—— */
+.prose h2 {
+	counter-increment: prose-h2;
+	margin-top: 3.3em;
+	margin-bottom: 1.2em;
+	padding-top: 1em;
+	border-top: 1px solid var(--color-border);
+	font-size: 1.72em;
+	letter-spacing: 0.01em;
+}
+/* h2 上方 mono 章节编号 §01（覆盖 typography 的 # 锚点 ::before；无 @layer 优先级足够）*/
+.prose h2::before {
+	content: "§ " counter(prose-h2, decimal-leading-zero);
+	position: static;
+	display: block;
+	margin: 0 0 0.45em;
+	font-family: var(--font-family-mono);
+	font-size: 0.7rem;
+	font-weight: 400;
+	letter-spacing: 0.2em;
+	color: var(--color-accent);
+}
+.prose h3 {
+	margin-top: 2.2em;
+	font-size: 1.3em;
+	font-weight: 600;
+}
+
+/* —— 引文：放大让金句立起来 + mono 出处行 —— */
+.prose blockquote {
+	padding: 0.3em 0 0.3em 1.25em;
+	border-inline-start: 3px solid var(--color-accent);
+	font-size: 1.15em;
+	line-height: 1.5;
+	font-style: normal;
+	color: var(--color-muted);
+}
+.prose blockquote p {
+	margin: 0.4em 0;
+}
+/* 引文出处：在引文里用 <cite>来源</cite>（MDX/HTML）即得 mono 小标签 */
+.prose blockquote cite {
+	display: block;
+	margin-top: 0.6em;
+	font-family: var(--font-family-mono);
+	font-size: 0.78em;
+	font-style: normal;
+	letter-spacing: 0.06em;
+	color: var(--color-muted);
+}
+
+/* —— 列表标记用 accent —— */
+.prose ul > li::marker {
+	content: "›  ";
+	color: var(--color-accent);
+}
+.prose ol > li::marker {
+	color: var(--color-accent);
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+}
+
+/* —— 行内代码（避开 expressive-code / mermaid 代码块）—— */
+.prose :is(p, li, td, th, dd, h1, h2, h3, h4, h5, h6, blockquote) code {
+	padding: 0.12em 0.4em;
+	border-radius: 0.3em;
+	background: var(--color-accent-soft);
+	font-size: 0.9em;
+}
+
+/* —— 分隔线 —— */
+.prose hr {
+	margin: 2.8em 0;
+	height: 1px;
+	border: 0;
+	background: linear-gradient(
+		to right,
+		transparent,
+		var(--color-border) 20%,
+		var(--color-border) 80%,
+		transparent
+	);
+}
+
+/* —— 表格 —— */
+.prose table {
+	border-collapse: collapse;
+}
+.prose thead th {
+	background: var(--color-surface);
+	color: var(--color-accent-2);
+	font-weight: 700;
+	border-bottom: 2px solid var(--color-border);
+}
+.prose th,
+.prose td {
+	padding: 0.5em 0.9em;
+}
+.prose tbody tr:nth-child(even) {
+	background: color-mix(in oklch, var(--color-surface) 55%, transparent);
+}
+/* 表格涨跌语义色（在 MDX/HTML 单元格加 class="is-up" / "is-down"）—— 文字色不满块，保持阅读页轻量 */
+.prose td.is-up {
+	color: oklch(58% 0.13 155);
+}
+.prose td.is-down {
+	color: oklch(58% 0.18 25);
+}
+
+/* —— 图片：圆角 + 轻阴影；紧跟的 em 作图注 —— */
+.prose img {
+	border-radius: 0.5rem;
+	box-shadow: 0 1px 4px rgb(0 0 0 / 0.1);
+}
+.prose img + em,
+.prose figcaption {
+	display: block;
+	margin-top: 0.6em;
+	font-size: 0.85em;
+	font-style: normal;
+	text-align: center;
+	color: var(--color-muted);
+}
+
+/* —— 强调更醒目 —— */
+.prose strong {
+	color: var(--color-accent-2);
+	font-weight: 700;
+}
+
+/* —— 全站 grain 质感（极淡胶片颗粒，亮 / 暗都适配）—— */
+body::after {
+	content: "";
+	position: fixed;
+	inset: 0;
+	z-index: 9999;
+	pointer-events: none;
+	opacity: 0.28;
+	mix-blend-mode: soft-light;
+	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}

@@ -16,6 +16,8 @@ import rehypeUnwrapImages from "rehype-unwrap-images";
 // Remark plugins
 import remarkDirective from "remark-directive"; /* Handle ::: directives as nodes */
 import { remarkAdmonitions } from "./src/plugins/remark-admonitions"; /* Add admonitions */
+import { remarkBlockquoteCite } from "./src/plugins/remark-blockquote-cite"; /* 引文末段「—— 出处」→ <cite> */
+import { remarkCallout } from "./src/plugins/remark-callout"; /* Obsidian/GitHub > [!note] callout */
 import { remarkGithubCard } from "./src/plugins/remark-github-card";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time";
 import { expressiveCodeOptions, siteConfig } from "./src/site.config";
@@ -81,7 +83,14 @@ export default defineConfig({
 			rehypeUnwrapImages,
 			[rehypeMermaid, { strategy: "pre-mermaid" }],
 		],
-		remarkPlugins: [remarkReadingTime, remarkDirective, remarkGithubCard, remarkAdmonitions],
+		remarkPlugins: [
+			remarkReadingTime,
+			remarkDirective,
+			remarkGithubCard,
+			remarkAdmonitions,
+			remarkCallout,
+			remarkBlockquoteCite,
+		],
 		remarkRehype: {
 			footnoteLabelProperties: {
 				className: [""],

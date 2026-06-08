@@ -30,17 +30,15 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 	}}
 >
 	<Breadcrumb
-		items={[
-			{ label: "首页", href: "/" },
-			{ label: "文章", href: "/posts/" },
-			{ label: title },
-		]}
+		items={[{ label: "首页", href: "/" }, { label: "文章", href: "/posts/" }, { label: title }]}
 	/>
 	<article class="grow wrap-break-word" data-pagefind-body>
 		<div id="blog-hero" class="mb-10"><Masthead content={post} readingTime={readingTime} /></div>
 		{!!headings.length && <TOC headings={headings} />}
 		<div
-			class="prose min-w-0 !max-w-none prose-headings:font-semibold prose-h2:font-bold prose-headings:text-accent-2 prose-headings:before:absolute prose-headings:before:-ms-4 prose-headings:before:text-muted prose-headings:hover:before:text-accent sm:prose-headings:before:content-['#'] sm:prose-th:before:content-none lg:max-w-[52rem] xl:max-w-[56rem]"
+			class:list={[
+				"prose prose-headings:font-semibold prose-h2:font-bold prose-headings:text-accent-2 prose-headings:before:absolute prose-headings:before:-ms-4 prose-headings:before:text-muted prose-headings:hover:before:text-accent sm:prose-headings:before:content-['#'] sm:prose-th:before:content-none !max-w-none min-w-0 lg:max-w-[52rem] xl:max-w-[56rem]",
+			]}
 		>
 			<slot />
 			<WebMentions />
