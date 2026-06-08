@@ -36,6 +36,8 @@ const post = defineCollection({
 				.optional()
 				.transform((str) => (str ? new Date(str) : undefined)),
 			pinned: z.boolean().default(false),
+			// 关闭文章内目录（特稿/海报式长文常不需要）。默认显示。
+			toc: z.boolean().default(true),
 		}),
 });
 
