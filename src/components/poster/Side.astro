@@ -1,0 +1,20 @@
+---
+/** 对比双栏的一栏。role=角色名；tone=win|lose 时出 ✓/✗ 与语义色（得失对比）。 */
+interface Props {
+	role?: string;
+	tone?: "win" | "lose";
+}
+const { role, tone } = Astro.props;
+---
+
+<div class:list={["pf-vs__col", tone && `pf-vs__col--${tone}`]}>
+	{
+		role && (
+			<div class="pf-vs__role">
+				{tone && <span class="pf-vs__mk">{tone === "win" ? "✓" : "✗"}</span>}
+				{role}
+			</div>
+		)
+	}
+	<div class="pf-vs__body"><slot /></div>
+</div>

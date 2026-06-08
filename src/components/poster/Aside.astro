@@ -1,0 +1,12 @@
+---
+/** 侧记盒子，标签骑左上角。标题用 title，内容用 slot。 */
+interface Props {
+	title?: string;
+}
+const { title = "侧记" } = Astro.props;
+---
+
+<aside class="pf-aside">
+	<div class="pf-aside__label">{title}</div>
+	<div class="pf-aside__body"><slot /></div>
+</aside>

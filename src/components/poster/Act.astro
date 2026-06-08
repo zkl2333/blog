@@ -1,0 +1,23 @@
+---
+/** 章节幕：mono 编号 + 大标题 + Bebas ghost 数字水印 + 副标题。标题用 slot。 */
+interface Props {
+	no?: string;
+	sub?: string;
+}
+const { no, sub } = Astro.props;
+---
+
+<div class="pf-act">
+	{no && <div class="pf-act__no">{no}</div>}
+	<div class="pf-act__title">
+		<slot />
+		{
+			no && (
+				<span class="pf-act__ghost" aria-hidden="true">
+					{no}
+				</span>
+			)
+		}
+	</div>
+	{sub && <div class="pf-act__sub">{sub}</div>}
+</div>

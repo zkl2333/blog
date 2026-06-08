@@ -1,0 +1,14 @@
+---
+/** 单张数据卡。value=大数字（Bebas）；label=说明；danger 用红。 */
+interface Props {
+	value: string;
+	label?: string;
+	danger?: boolean;
+}
+const { value, label, danger } = Astro.props;
+---
+
+<div class:list={["pf-stat", danger && "pf-stat--danger"]}>
+	<span class="pf-stat__value">{value}</span>
+	{label && <span class="pf-stat__label">{label}</span>}
+</div>

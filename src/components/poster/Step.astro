@@ -1,0 +1,12 @@
+---
+/** 单个步骤。title=小标题；描述用 slot。序号由 CSS 自动生成。 */
+interface Props {
+	title?: string;
+}
+const { title } = Astro.props;
+---
+
+<div class="pf-step">
+	{title && <div class="pf-step__title">{title}</div>}
+	<div class="pf-step__desc"><slot /></div>
+</div>

@@ -19,7 +19,6 @@ import { remarkAdmonitions } from "./src/plugins/remark-admonitions"; /* Add adm
 import { remarkBlockquoteCite } from "./src/plugins/remark-blockquote-cite"; /* 引文末段「—— 出处」→ <cite> */
 import { remarkCallout } from "./src/plugins/remark-callout"; /* Obsidian/GitHub > [!note] callout */
 import { remarkGithubCard } from "./src/plugins/remark-github-card";
-import { remarkPoster } from "./src/plugins/remark-poster"; /* 特稿/海报组件指令 */
 import { remarkReadingTime } from "./src/plugins/remark-reading-time";
 import { expressiveCodeOptions, siteConfig } from "./src/site.config";
 
@@ -91,7 +90,6 @@ export default defineConfig({
 			remarkAdmonitions,
 			remarkCallout,
 			remarkBlockquoteCite,
-			remarkPoster,
 		],
 		remarkRehype: {
 			footnoteLabelProperties: {

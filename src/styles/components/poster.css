@@ -253,12 +253,14 @@
 	color: color-mix(in oklch, var(--color-accent) 45%, transparent);
 }
 .pf-step__title {
+	grid-column: 2;
 	margin-bottom: 0.25em;
 	font-size: 1.02em;
 	font-weight: 600;
 	color: var(--color-accent-2);
 }
 .pf-step__desc {
+	grid-column: 2;
 	font-size: 0.9em;
 	line-height: 1.7;
 	color: var(--color-muted);

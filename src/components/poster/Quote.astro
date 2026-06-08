@@ -1,0 +1,12 @@
+---
+/** 大字 pull quote。引文用 slot，来源用 src。 */
+interface Props {
+	src?: string;
+}
+const { src } = Astro.props;
+---
+
+<blockquote class="pf-quote">
+	<div class="pf-quote__body"><slot /></div>
+	{src && <div class="pf-quote__src">{src}</div>}
+</blockquote>

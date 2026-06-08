@@ -1,0 +1,13 @@
+---
+/** 单张卡片。title=标题；tone=up|down 给标题语义色；描述用 slot。 */
+interface Props {
+	title?: string;
+	tone?: "up" | "down";
+}
+const { title, tone } = Astro.props;
+---
+
+<div class:list={["pf-card", tone && `pf-card--${tone}`]}>
+	{title && <div class="pf-card__title">{title}</div>}
+	<div class="pf-card__desc"><slot /></div>
+</div>
