@@ -1,6 +1,9 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
 /* 全局正文精修（不包 @layer，优先级高于 typography 的 :where 默认值） */
 @import "./components/prose-enhance.css";
+/* 特稿/海报组件（暖色，仅用到指令的文章生效） */
+@import "./components/poster.css";
 /* tailwind to ignore satori generated og-image */
 @source not "../pages/og-image";
 /* config for tailwindcss-typography plugin */

@@ -67,6 +67,34 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 </BaseLayout>
 
 <script>
+	// 特稿/海报组件：滚动渐入（仅含这些组件的文章生效；无 JS 时照常显示）
+	function initPosterReveal() {
+		const sel = ".pf-lead, .pf-act, .pf-quote, .pf-aside, .pf-vs, .pf-stats, .pf-steps, .pf-cards";
+		const targets = document.querySelectorAll(`.prose :is(${sel})`);
+		if (!targets.length) return;
+		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+		const io = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (entry.isIntersecting) {
+						entry.target.classList.add("is-in");
+						io.unobserve(entry.target);
+					}
+				}
+			},
+			{ threshold: 0.1, rootMargin: "0px 0px -40px 0px" },
+		);
+		for (const el of targets) {
+			if (el.classList.contains("pf-reveal")) continue;
+			el.classList.add("pf-reveal");
+			io.observe(el);
+		}
+	}
+	initPosterReveal();
+	document.addEventListener("astro:page-load", initPosterReveal);
+</script>
+
+<script>
 	const scrollBtn = document.getElementById("to-top-btn") as HTMLButtonElement;
 	const targetHeader = document.getElementById("blog-hero") as HTMLDivElement;
 
