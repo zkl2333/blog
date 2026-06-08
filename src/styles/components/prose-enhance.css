@@ -12,7 +12,6 @@
 /* —— 块级元素统一纵向节奏（让展示块从正文流里「浮」出来）—— */
 .prose {
 	--prose-block-gap: 2em;
-	counter-reset: prose-h2;
 }
 .prose blockquote,
 .prose figure,
@@ -35,25 +34,12 @@
 
 /* —— 标题：加大字号对比 + 分隔呼吸（章节层级，非海报巨字）—— */
 .prose h2 {
-	counter-increment: prose-h2;
 	margin-top: 3.3em;
 	margin-bottom: 1.2em;
 	padding-top: 1em;
 	border-top: 1px solid var(--color-border);
 	font-size: 1.72em;
 	letter-spacing: 0.01em;
-}
-/* h2 上方 mono 章节编号 §01（覆盖 typography 的 # 锚点 ::before；无 @layer 优先级足够）*/
-.prose h2::before {
-	content: "§ " counter(prose-h2, decimal-leading-zero);
-	position: static;
-	display: block;
-	margin: 0 0 0.45em;
-	font-family: var(--font-family-mono);
-	font-size: 0.7rem;
-	font-weight: 400;
-	letter-spacing: 0.2em;
-	color: var(--color-accent);
 }
 .prose h3 {
 	margin-top: 2.2em;

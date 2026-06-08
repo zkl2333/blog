@@ -37,7 +37,7 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 		{!!headings.length && <TOC headings={headings} />}
 		<div
 			class:list={[
-				"prose prose-headings:font-semibold prose-h2:font-bold prose-headings:text-accent-2 prose-headings:before:absolute prose-headings:before:-ms-4 prose-headings:before:text-muted prose-headings:hover:before:text-accent sm:prose-headings:before:content-['#'] sm:prose-th:before:content-none !max-w-none min-w-0 lg:max-w-[52rem] xl:max-w-[56rem]",
+				"prose prose-headings:font-semibold prose-h2:font-bold prose-headings:text-accent-2 sm:prose-th:before:content-none !max-w-none min-w-0 lg:max-w-[52rem] xl:max-w-[56rem]",
 			]}
 		>
 			<slot />
