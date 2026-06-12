@@ -27,7 +27,8 @@ description: Write personal blog posts for the user's Astro blog (git repo zkl23
 - **第一人称** — 是"我"不是"我们"，是"我做了"不是"实现了"
 - **平实有自嘲** — 大白话，敢承认"代码我没逐行看"、"FreeType MONO 我到现在也说不清"
 - **技术细节是 cool 的装饰** — 出场是为了让读者觉得"这人挺懂"，不是为了让读者学懂
-- **老实交代 AI 参与度** — 这是博客的特色调子（"这篇博客也是 AI 写的"），不藏着掖着
+- **AI 参与度潜移默化，不再专门点破**（2026-06 起）— 不写「这篇博客是 Claude 写的」式声明段，description 里的点破句也去掉；参与从叙事里自己冒出来（「Claude 算完账说」「它对着原理图说」）。但依旧不许假装 AI 没参与
+- **轻小说体是招牌体裁之一**（2026-06 起，用户：「我太喜欢这种风格了」）— 排障记 / 翻案记 / 连锁暴走类素材优先考虑，详见 [references/light-novel.md](references/light-novel.md)；思辨 / 挽歌类题材别硬套
 
 详见 [references/voice.md](references/voice.md)。
 
@@ -53,6 +54,7 @@ description: Write personal blog posts for the user's Astro blog (git repo zkl23
 - 读上一篇博客或同主题历史博客（建立调性参照）
 - 看博客仓库的 `CLAUDE.md` / `AGENTS.md` / `site.config.ts`
 - **深挖项目的运行记录 / 历史快照**（agent 会话日志、定时任务产物、配置文件的旧版本备份）——一手记录里常藏着连用户自己都不知道的真相。本 skill 实战靠 grep 配置的历史快照，挖出过「AI 在某次重构里把一个功能覆盖丢了、空转两月没人发现」，成了全文最硬的一笔，这种料采访绝对问不出来。
+- **相关项目仓库要看远端不止本地**——本地 clone 常落后，定案多在远端。`git fetch` 后用 `git show origin/main:path/file` 直接读远端版本（别动用户工作区），`git log -S"关键词"` 钉时间线。实战：hardware-lab 远端的「空片假性重启定案」commit 直接坐实了用户的翻案猜想；SPI 映射表的入库时间证明了「不算违反设计，当时压根没这页」。另外：**项目文档可能是 AI 替用户记的二手转述**（如「连接/断开声交替」），与用户当下记忆冲突时，用户是一手见证人，以他为准。
 
 **输出**：一份简短的"我手上有的素材"清单给用户看，让他知道你已经搞清楚了什么、还缺什么。
 
@@ -120,6 +122,8 @@ cd <blog-repo> && pnpm exec astro check
 
 **含 mermaid / 图表的文章，astro check 不够**：本博客 `rehype-mermaid` 用 `pre-mermaid` 策略 = **客户端渲染**，语法错 / 渲染瞎 astro check 抓不到。必须起 dev 真渲一次（`.claude/launch.json` 里已有 `blog` 配置：`pnpm -C <blog 路径> exec astro dev --port 4321`，用 `preview_start` 起），导航到该文章，确认：① 每个 mermaid 块都渲成 `<svg>` 不是 raw 文本；② **在正文窄栏下字大可读**——窄栏一律 `flowchart TD`（竖排）不要 `LR`（横排会被压到看不清）；③ 配图都 200 正常加载。**`preview_screenshot` 若超时或视口为 0（headless 浏览器常见），别卡在截图——改用 `preview_eval` 读 `.mermaid svg` 的 `viewBox`（高>宽即竖排正常）和 `.nodeLabel` 文本，照样能确认渲成 svg、节点没渲乱、含特殊字符的标签没出错。** 方言（实测，跟"别加引号 / 括号 / subgraph"这类旧说法不符，以跑通的文章为准）：节点纯中文可裸写 `A[文本]`，含 `+ （） : / ·` 等特殊字符就用双引号包 `A["文本"]`；换行用 `<br/>`；`subgraph` 能用（eink 那篇就用了）；别用 `classDef`。不确定先照现有 mermaid 文章抄方言。
 
+**含加粗的中文段落，astro check 也不够**：CommonMark 右翼定界规则——闭合 `**` 前是 CJK 标点（`。？！`）、后面直接跟文字时不算闭合，`**` 原样吐出（`…清楚了。**上一篇` 就炸过）。**闭合 `**` 后必须留一个空格**（本仓库原有惯例，别手痒删）。自查：`grep -nP '(。|？|！)\*\*[^\s*。？！，、）」—]' <file>`——命中的闭合定界是雷；「标点后开新加粗」会误报，人眼过一遍。修完起 dev 用 curl 验页面 `<strong>` 数量、确认零裸 `**`。
+
 ### 8. Commit
 
 按博客仓库的 commit 风格（`feat: ...` 中文 conventional commit）。详见根目录的 commit skill 或 `AGENTS.md`。
@@ -159,7 +163,7 @@ feat: 新增 <topic> 探索博客
 2. ❌ 问一次抛 5+ 个问题
 3. ❌ 替用户编造"那一刻我特别激动"之类的体感
 4. ❌ 把博客写成"X 技术教程"，附"读者应该掌握..."
-5. ❌ 假装 AI 没参与（"我和 Claude 调研后..."）—— 反过来要老实交代
+5. ❌ 假装 AI 没参与（"我和 Claude 调研后..."）—— 参与要写，但写进叙事；署名声明段也不要（见核心理念）
 6. ❌ 用"我们"代替"我"
 7. ❌ 给术语加教学性括注（"FreeType MONO（一种字体渲染模式）"）—— 信任读者
 8. ❌ 用拉满的修辞（"令人惊叹的"、"前所未有的"）—— 用户讨厌这种调
@@ -167,6 +171,9 @@ feat: 新增 <topic> 探索博客
 10. ❌ 不当 cover 加在 frontmatter，又同个图在正文重复出现
 11. ❌ 引用上一篇博客时凭印象转述 — 必须用 Grep 拉原文核对。用户对引文敏感，会发现转述与原话的偏差
 12. ❌ 一篇博客内堆积破折号（`——`）— 详见 [references/voice.md](references/voice.md) 破折号小节
+13. ❌ 开头用「[上一篇](…)……」回扣当模板 — 连着几篇都这么开 = AI 味（2026-06 用户点名）。默认冷开场直接进事件，系列链接织进正文自然回环处（「眼熟吗。云模块那篇翻的也是这个跟头」）
+14. ❌ 结尾硬塞制作花絮 / meta 交代（「这次连采访都没有……」被打回：生硬、破坏阅读体验）— 结尾停在内容本身，戛然而止
+15. ❌ 段尾金句腔对仗收束 + 工程化反讽（「这是 X，却不是 Y——…被我亲手毙了」）— 详见 voice.md 被否构造表新增两行
 
 ## 博客仓库（项目级 skill，无需再定位）
 
@@ -191,4 +198,5 @@ feat: 新增 <topic> 探索博客
 - [references/voice.md](references/voice.md) — 文风对照表（真实例子）
 - [references/frontmatter.md](references/frontmatter.md) — Astro content schema
 - [references/images.md](references/images.md) — 封面图 + 内联图处理
+- [references/light-novel.md](references/light-novel.md) — 轻小说体指南（何时用、装置库、底线）
 - [references/self-evolution.md](references/self-evolution.md) — 自我进化机制（每次写完反思 → 提案改 skill）
