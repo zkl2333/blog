@@ -6,7 +6,6 @@ tags: ["esp32", "esphome", "home-assistant", "claude-code", "ai", "pcb"]
 coverImage:
   alt: "焊好的第一块自画板：树莓派 Zero 外形的 ESP32-C3，蓝色焊垫上的正面照"
   src: "./cover.jpg"
-draft: true
 ---
 
 ## 序章：我觉得自己行了
