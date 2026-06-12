@@ -4,7 +4,7 @@ description: "就因为首页时钟差几像素没居中：两个多小时、一
 category: "墨水屏"
 publishDate: "2026-05-16"
 tags: ["raspberry-pi", "e-paper", "freetype", "wasm", "claude-code", "ai", "homelab"]
-pinned: true
+pinned: false
 coverImage:
   alt: "杂志风封面：两个引擎的缝被焊合成单一来源，墨水屏时钟终于正中"
   src: "./cover.png"

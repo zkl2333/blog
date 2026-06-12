@@ -4,7 +4,7 @@ description: "翻出来的 Pi Zero 2W 已经能用墨水屏显示状态了，但
 category: "墨水屏"
 publishDate: "2026-05-14"
 tags: ["raspberry-pi", "e-paper", "jsx", "yoga", "claude-code", "ai", "homelab"]
-pinned: true
+pinned: false
 coverImage:
   alt: "用 flexbox 盒子在墨水屏上拼出界面的杂志风封面"
   src: "./cover.png"

@@ -1,6 +1,7 @@
 ---
 title: "AI 让我膨胀之我要画板"
 description: "被 AI 惯出来的胆子：第一次自己画板，树莓派 Zero 外形的 ESP32-C3。打样回来无限重启，修了三回——第一回押错方向，第二回发现压根没烧过固件，第三回才是真欠压。最后一颗雷，Claude 排障排到了自己头上。"
+pinned: true
 publishDate: "2026-06-12"
 tags: ["esp32", "esphome", "home-assistant", "claude-code", "ai", "pcb"]
 coverImage:
