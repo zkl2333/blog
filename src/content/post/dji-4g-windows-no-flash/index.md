@@ -3,13 +3,15 @@ title: "不刷机，让大疆一代 4G 模块在 Windows 上收短信、连 4G"
 description: "实测大疆一代百旺 QDC507 模块：不改 VID/PID、不刷固件，只为 MI_02 和 MI_04 手动绑定签名驱动，即可在 Windows 使用 AT 指令、收发短信和通过中国电信 4G 上网。"
 category: "硬件折腾"
 publishDate: "2026-07-20T15:40:00+08:00"
-updatedDate: "2026-07-20T15:50:00+08:00"
+updatedDate: "2026-07-20T16:40:00+08:00"
 tags: ["dji", "4g", "windows", "quectel", "at-command"]
 ---
 
 最近群里不少小伙伴都在玩大疆一代 4G 模块，热度挺高。大家常见的玩法是把它接到 NAS 上，再用 Docker 跑 VoHive 管理短信和网络。看他们折腾得热闹，我也跟着买了一个。
 
 早上收到快递，我直接把模块带到了公司。NAS 在家，Docker 方案只能等晚上回去再玩；眼前正好有一台 Windows 电脑，那就先插上去，看看原厂状态能不能直接跑起来。
+
+其实我最先想到的，还是照群友们的思路：直接在这台 Windows 上用 Docker Desktop 跑 SIM 管理面板。Compose 本身不难，真正卡住的是 USB 设备透传——Windows 和 Docker 的 Linux 环境之间还隔着一层，挂载 `/dev:/dev` 也不会凭空把 Windows 里的模块送进容器。继续走下去还得折腾 WSL、usbipd 之类的转发链路，我当时只是想快速试机，便没有继续做 Windows Docker 方案，转而研究原生驱动。
 
 设备管理器很快热闹起来：一个 USB 复合设备，下面挂着五个叫 `Baiwang` 的未知设备，整整齐齐五个黄色感叹号。
 
