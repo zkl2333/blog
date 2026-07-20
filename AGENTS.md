@@ -1,5 +1,11 @@
 # Repository Guidelines
 
+## 博客写作
+
+创建、改写或审阅博客文章前，必须先完整读取 [`.agent/skills/blog/SKILL.md`](.agent/skills/blog/SKILL.md)；未经用户明确说“push”或“发布”，不得推送。
+
+写特稿、复盘或使用 `@/components/poster` 的 MDX 组件前，必须先完整读取 [`.agent/skills/poster-article/SKILL.md`](.agent/skills/poster-article/SKILL.md)。
+
 ## 项目结构与模块组织
 
 这是一个基于 Astro 的博客/站点仓库。应用代码位于 `src/`：页面在 `src/pages`，可复用 UI 在 `src/components`，布局在 `src/layouts`，通用工具在 `src/utils`，内容集合在 `src/content/{post,note,tag}`。站点级配置定义在 `src/site.config.ts` 与 `src/content.config.ts`。需要原样输出的静态资源放在 `public/`；字体等源码资源放在 `src/assets/`。
