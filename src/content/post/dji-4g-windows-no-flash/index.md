@@ -1,9 +1,9 @@
 ---
 title: "不刷机，让大疆一代 4G 模块在 Windows 上收短信、连 4G"
-description: "实测大疆一代百旺 QDC507 模块：不改 VID/PID、不刷固件，只为 MI_02 和 MI_04 手动绑定签名驱动，即可在 Windows 使用 AT 指令、收发短信和通过中国电信 4G 上网。"
+description: "实测大疆一代 4G 模块（设备自报 Baiwang，型号 QDC507）：不改 VID/PID、不刷固件，只为 MI_02 和 MI_04 手动绑定签名驱动，即可在 Windows 使用 AT 指令、收发短信和通过中国电信 4G 上网。"
 category: "硬件折腾"
 publishDate: "2026-07-20T15:40:00+08:00"
-updatedDate: "2026-07-20T16:40:00+08:00"
+updatedDate: "2026-07-20T17:00:00+08:00"
 tags: ["dji", "4g", "windows", "quectel", "at-command"]
 ---
 
@@ -13,7 +13,7 @@ tags: ["dji", "4g", "windows", "quectel", "at-command"]
 
 其实我最先想到的，还是照群友们的思路：直接在这台 Windows 上用 Docker Desktop 跑 SIM 管理面板。Compose 本身不难，真正卡住的是 USB 设备透传——Windows 和 Docker 的 Linux 环境之间还隔着一层，挂载 `/dev:/dev` 也不会凭空把 Windows 里的模块送进容器。继续走下去还得折腾 WSL、usbipd 之类的转发链路，我当时只是想快速试机，便没有继续做 Windows Docker 方案，转而研究原生驱动。
 
-设备管理器很快热闹起来：一个 USB 复合设备，下面挂着五个叫 `Baiwang` 的未知设备，整整齐齐五个黄色感叹号。
+设备管理器很快热闹起来：一个 USB 复合设备，下面挂着五个总线自报名称为 `Baiwang` 的未知设备，整整齐齐五个黄色感叹号。
 
 网上的教程大多从 Linux、OpenWrt 或 VoHive 开始，紧接着就是「改机」「改 ID」甚至「刷机」。我只想先确认一件事：**原厂状态能不能在 Windows 上收短信、上 4G？**
 
@@ -29,7 +29,7 @@ tags: ["dji", "4g", "windows", "quectel", "at-command"]
 | 项目        | 实测结果                                |
 | ----------- | --------------------------------------- |
 | AT 串口     | 正常，Windows 枚举为 `COM3`             |
-| 模块识别    | `Baiwang QDC507`                        |
+| 模块识别    | 自报 `Baiwang`，型号 `QDC507`           |
 | 固件        | `QDC507GLEFM21_01.001.02.001`           |
 | SIM         | 正常识别                                |
 | 短信        | PDU 收发正常，可区分模块存储与 SIM 存储 |
@@ -48,7 +48,7 @@ tags: ["dji", "4g", "windows", "quectel", "at-command"]
 VID_2CA3&PID_4006
 ```
 
-通过 `ATI` 和 `AT+QGMR` 查询，得到：
+通过 `ATI`、`AT+GMI`、`AT+GMM` 和 `AT+QGMR` 查询，得到：
 
 ```text
 Baiwang
@@ -56,7 +56,9 @@ QDC507
 Revision: QDC507GLEFM21
 ```
 
-它本质上是移远 EG25-G 系列方案，只是大疆/百旺使用了自己的 VID/PID。硬件和协议能力都在，Windows 不认识的只是这张「身份证」。
+这里的 `Baiwang` 是模块固件通过 `ATI`、`AT+GMI` 返回的原始字符串，Windows 读取到的 USB 总线设备描述也是它。
+
+它本质上是移远 EG25-G 系列方案，只是原厂状态使用 DJI 的 VID/PID `2CA3:4006`，而非常见的移远 VID/PID。硬件和协议能力都在，Windows 不认识的只是这张「身份证」。
 
 模块会枚举五个 USB 接口：
 
@@ -86,7 +88,7 @@ USB\VID_2CA3&PID_4006&MI_04
 很多教程所说的「刷机」，其实只是通过 AT 指令把 USB ID 从：
 
 ```text
-2CA3:4006  # DJI/Baiwang
+2CA3:4006  # DJI
 ```
 
 永久改成：
