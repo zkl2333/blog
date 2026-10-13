@@ -40,6 +40,8 @@
 				lang: "zh-CN",
 				// 深色模式跟随站点主题（Waline 内置监听）
 				dark: "html[data-theme='dark']",
+				// 未登录访客须填写昵称与邮箱，避免空昵称/邮箱匿名评论
+				requiredMeta: ["nick", "mail"],
 				locale: {
 					placeholder: "随便聊点什么吧……（支持 Markdown）",
 				},
