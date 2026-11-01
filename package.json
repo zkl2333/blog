@@ -22,7 +22,7 @@
 		"@panzoom/panzoom": "^4.6.2",
 		"@tailwindcss/vite": "4.3.3",
 		"@waline/client": "^3.15.2",
-		"astro": "6.2.1",
+		"astro": "6.4.8",
 		"astro-expressive-code": "^0.44.1",
 		"astro-icon": "^1.1.5",
 		"astro-robots-txt": "^1.0.0",
